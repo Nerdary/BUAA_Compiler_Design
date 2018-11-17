@@ -1,0 +1,26 @@
+const int max=+0123456789;
+const char plus='+-1
+23';
+int result,i,fac_i,n,AA[100];
+5@6
+  'a'
+ 'as'
+  'as  ww
+  ssss'
+"assdddsddsd"
+"23333dsdas  dsdad
+!
+' 22'
+'2'
+'a
+ ab'
+'a
+ '
+';'
+'233;3'
+'='
+'abbbbb;
+
+adaadadadas"
+"23333sdsd	
+	
