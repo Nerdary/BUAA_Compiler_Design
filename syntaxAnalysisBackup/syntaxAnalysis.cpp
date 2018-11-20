@@ -56,6 +56,11 @@ int constState();
 int factor();
 int item();
 int expr();
+int varDefine();
+int varState();
+int paraList();
+int complexSentence();
+int retValueFuncDefine();
 
 int unsignedInt(){                  // 文法中的无符号整数
     if(result==USINTSY){
@@ -158,7 +163,9 @@ int constState(){
                 constStateCount += 1;
                 getsym();
                 continue;
-            }else{
+         else{
+            getsym();
+        }   }else{
                 error();
                 return -1;
             }
@@ -168,6 +175,123 @@ int constState(){
     printf("a const statement.\n");
     return 0;
 }
+
+int declareHead(){
+    if(result==INTSY){
+        getsym();
+        if(result!=IDSY){
+            error();
+            retrun -1;
+        }else{
+            getsym();
+        }
+    }else if(result==CHARSY){
+        getsym();
+        if(result!=IDSY){
+            error();
+            retrun -1;
+        }else{
+            getsym();
+        }
+    }else{
+        error();
+        return -1;
+    }
+    return 0;
+}
+
+int varDefine(){
+    if(result!=INTSY&&result!=CHARSY){
+        error();
+        return -1;
+    }
+    // 开始识别标识符部分
+    getsym();
+    while(true){
+        if(result!=IDSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result==LBRACSY){
+            getsym();
+            unsignedInt();
+            if(result!=RBRACSY){
+                error();
+                return -1;
+            }else{
+                getsym();
+            }
+        }
+        if(result==COMMASY){
+            continue;
+        }else   break;
+    }
+}
+
+int varState(){
+
+}
+
+int paraList(){
+    while(true){
+        if(result==INTSY||result==CHARSY){
+            getsym();
+            if(result==IDSY){
+                getsym();
+                if(result==COMMASY){
+                    // 说明值参数表还没有结束
+                    getsym();
+                    continue;
+                }else{
+                    break;
+                }
+            }else{
+                error();
+                return -1;
+            }
+        }else{
+            error();
+            return -1;
+        }
+    }
+    return 0;
+}
+
+int retValueFuncDefine(){
+    declareHead();
+    // 处理值参数表部分（如果有）
+    if(result==LPARSY){
+        getsym();
+        paraList();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }
+        getsym();
+    }
+
+    if(result!=LBRACESY){   // "{"
+        error();
+        return -1;
+    }
+
+    complexSentence();
+    if(result!=RBRACESY){   // "}"
+        error();
+        return -1;
+    }
+    return 0;
+}
+
+int unretValueFuncDefine(){
+
+}
+
+int complexSentence(){
+
+}
+
 /*
 int factor(){
     if(result==LPARSY){             // result = "("

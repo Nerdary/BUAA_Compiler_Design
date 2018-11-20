@@ -23,6 +23,8 @@ char string[200] = "";
 char symbol[10] = "";
 int lc = 1;
 
+// 预读功能的实现
+
 
 // 词法分析子程序
 int getsym(){
