@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "error.cpp"
+#include "getsym.cpp"
 
 #define CONSTSY     1
 #define INTSY       2
@@ -40,55 +41,134 @@
 #define AEQUSY      38
 #define DBQUOSY     39
 #define LBRACSY     40
-#define RBRACS#define SYY     41
+#define RBRACSY     41
 #define LBRACESY    42
 #define RBRACESY    43
 
 
 extern int result;
 
+
+int unsignedInt();
+int signedInt();
+int constDefine();
+int constState();
 int factor();
 int item();
 int expr();
 
-int unsighedInt(){                  // 文法中的无符号整数
-
+int unsignedInt(){                  // 文法中的无符号整数
+    if(result==USINTSY){
+        while(true){
+            getsym();
+            if(result==USINTSY){
+                continue;
+            }else   break;
+        }
+    }else{
+        error();
+        return -1;
+    }
+    printf("an unsigned integer.\n");
+    return 0;
 }
 
 int signedInt(){                    // 对应文法中的整数
     if(result==PLUSSY||result==MINUSSY){
-
+        getsym();
     }
+
+    unsignedInt();
+    printf("a signed integer.\n");
+    return 0;
 }
 
-int constdefine(){
+int constDefine(){
     if(result==INTSY){              // INTSY
-        getsym();
-        if(result==IDSY){           // 标识符
-            getsym();
-            if(result==EQUSY){      // "="
+        int tmp_count = 0;
+                    while(true){
+                        getsym();
+                        if(result==IDSY){
+                            getsym();
+                            if(result==EQUSY){
+                                getsym();
+                                signedInt();
+                                // 这里signedInt已经预读了下一个symbol
+                                if(result==COMMASY){
+                                    tmp_count += 1;
+                                    continue;
+                                }else{
+                                    break;
+                                }
+                            }else{
+                                error();
+                                return -1;
+                            }
+                        }else{
+                            error();
+                            return -1;
+                        }
+                    }
 
+    }else if(result==CHARSY){       // CHARSY
+        int tmp_count = 0;
+                        while(true){
+                            getsym();
+                            if(result==IDSY){
+                                getsym();
+                                if(result==EQUSY){
+                                    getsym();
+                                    if(result==ACHARSY){
+                                        getsym();
+                                        if(result==COMMASY){
+                                            tmp_count += 1;
+                                            continue;
+                                        }
+                                        else    break;
+                                    }else {
+                                        error();
+                                        return -1;
+                                    }
+                                }else{
+                                    error();
+                                    return -1;
+                                }
+                            }else{
+                                error();
+                                return -1;
+                            }
+                        }
+    }else{
+        error();
+        return -1;
+    }
+    printf("a const definition.\n");
+    return 0;
+}
+
+int constState(){
+    int constStateCount = 0;
+    while(true){
+    //    printf("in constState result = %d\n", result);
+        if(result!=CONSTSY) break;
+        else{
+            getsym();
+            constDefine();          // 变量定义中内置了getsym，不用再读入一个
+            if(result==SEMISY){
+                constStateCount += 1;
+                getsym();
+                continue;
             }else{
                 error();
+                return -1;
             }
-        }else{
-            error();
         }
-    }else if(result==CHARSY){       // CHARSY
-
-    }else{
-        error();
     }
+    printf("constStateCount = %d\n", constStateCount);
+    printf("a const statement.\n");
+    return 0;
 }
-
-int conststate(){
-    if(result!=CONSTSY){            // 不是CONSTSY
-        error();
-    }else{
-
-    }
-}
-
+/*
 int factor(){
     if(result==LPARSY){             // result = "("
         getsym();
@@ -121,3 +201,4 @@ int factor(){
         }
     }
 }
+*/

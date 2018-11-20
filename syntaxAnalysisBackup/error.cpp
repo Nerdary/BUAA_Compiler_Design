@@ -4,4 +4,5 @@
 
 void error(){
     // none
+    printf("an error occured.\n");
 }

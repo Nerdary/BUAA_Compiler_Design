@@ -2,6 +2,10 @@
 #include <ctype.h>
 #include <string.h>
 
+#ifndef __getsym__
+#define __getsym__
+int getsym();
+
 
 void clearToken();
 int isSpace(char a);
@@ -22,10 +26,13 @@ int lc = 1;
 
 // 词法分析子程序
 int getsym(){
+//    printf("getsym used.\n");
     extern FILE* fp;
+    extern int result;
 	char a = fgetc(fp);									// 读入一个字符
 
 	if(a==EOF){
+        result = -2;
 		return -2;
 	}
 
@@ -49,10 +56,12 @@ int getsym(){
 		int resultValue = isReserved();
 		if(resultValue == 0){
 			strcpy(symbol, "IDSY");
+			result = 20;
 			return 20;
 		}
 		else{
 			strcpy(symbol, token);
+			result = resultValue;
 			return resultValue;
 		}
 
@@ -70,9 +79,11 @@ int getsym(){
 		int num = transNum(token);
 		if (num==-1){
 			err(1);										// transNum 出错
+			result = 0;
 			return 0;
 		} else {
 			strcpy(symbol, "USINTSY");
+			result = 18;
 			return 18;
 		}
 	}
@@ -81,11 +92,13 @@ int getsym(){
 		a = fgetc(fp);
 		if(a=='='){
 			strcpy(symbol, "LOESY");
+			result = 34;
 			return 34;
 		}
 		else{
 			ungetc(a,fp);
 			strcpy(symbol, "LESSSY");
+			result = 33;
 			return 33;
 		}
 	}
@@ -94,11 +107,13 @@ int getsym(){
 		a = fgetc(fp);
 		if(a=='='){
 			strcpy(symbol, "MOESY");
+			result = 36;
 			return 36;
 		}
 		else{
 			ungetc(a,fp);
 			strcpy(symbol, "MORESY");
+			result = 35;
 			return 35;
 		}
 	}
@@ -107,12 +122,14 @@ int getsym(){
 		a = fgetc(fp);
 		if(a=='='){
 			strcpy(symbol, "LOMSY");
+			result = 36;
 			return 36;
 		}
 		else{
 			ungetc(a,fp);
 		//	printf("illegal '!=' \n");
 		err(6);
+            result = -1;
 			return -1;
 		}
 	}
@@ -121,16 +138,18 @@ int getsym(){
 		a = fgetc(fp);
 		int index = 0;
 		while(a!=34){
-			if(a==32 | a==33 | (a>=35 && a<=126)){
+			if(a==32 || a==33 || (a>=35 && a<=126)){
 				string[index++] = a;
 				a = fgetc(fp);
 			} else{
 				err(2);
 			//	printf("illegal charactor while dealing string\n");
+                result = -1;
 				return -1;
 			}
 		}
 		strcpy(symbol, "STRINGSY");
+		result = 21;
 		return 21;
 	}
 
@@ -141,84 +160,106 @@ int getsym(){
 			if(b==39){
 				string[0] = a;
 				strcpy(symbol, "ACHARSY");
+				result = 19;
 				return 19;
 			} else {
 				ungetc(b,fp);
 				ungetc(a,fp);
 				err(3);
 			//	printf("more than one charactor\n");
+                result = -1;
 				return -1;
 			}
 		} else{
 			err(4);
 		//	printf("illegal charactor in single char\n");
+            result = -1;
 			return -1;
 		}
 	}
 
 	else if(a=='+'){
 		strcpy(symbol,"PLUSSY" );
+		result = 22;
 		return 22;
 	}
 	else if(a=='-'){
 		strcpy(symbol, "MINUSSY");
+		result = 23;
 		return 23;
 	}
 	else if(a=='*'){
 		strcpy(symbol, "STARSY");
+		result = 24;
 		return 24;
 	}
 	else if(a=='('){
 		strcpy(symbol, "LPARSY");
+		result = 26;
 		return 26;
 	}
 	else if(a==')'){
 		strcpy(symbol, "RPARSY");
+		result = 27;
 		return 27;
 	}
 	else if(a==','){
 		strcpy(symbol, "COMMASY");
+		result = 28;
 		return 28;
 	}
 	else if(a==';'){
 		strcpy(symbol, "SEMISY");
+		result = 29;
 		return 29;
 	}
 	else if(a=='='){
 		a = fgetc(fp);
 		if(a=='='){
 			strcpy(symbol, "DBEQUSY");
+			result = 38;
 			return 38;
 		}
 		else{
 			ungetc(a,fp);
 			strcpy(symbol, "EQUSY");
+			result = 32;
 			return 32;
 		}
 	}
 	else if(a=='/'){
 		strcpy(symbol, "DIVISY");
+		result = 25;
 		return 25;
 	}
 	else if(a=='{'){
 		strcpy(symbol, "LBRACESY");
+		result = 42;
 		return 42;
 	}
 	else if(a=='}'){
 		strcpy(symbol, "RBRACESY");
+		result = 43;
 		return 43;
 	}
 	else if(a=='['){
 		strcpy(symbol, "LBRACSY");
+		result = 40;
 		return 40;
 	}
 	else if(a==']'){
 		strcpy(symbol, "RBRACSY");
+		result = 41;
 		return 41;
 	}
 
-	else
-		return 0;
+	else{
+        result = 0;
+        return 0;
+	}
+
+
+    return result;
 }
 
 // 错误处理
@@ -401,3 +442,4 @@ int transNum(char* token){
 		}				43		RBRACESY
 
 */
+#endif

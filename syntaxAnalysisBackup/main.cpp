@@ -43,7 +43,7 @@ int main(){
 
 
     getsym();
-
+    constState();
 
 /*
 	while(1){

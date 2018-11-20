@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1542717582 source:c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\main.cpp
+	<iostream>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"getsym.cpp"
+	"syntaxAnalysis.cpp"
+
+1542717424 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\getsym.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+
+1542717692 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\syntaxanalysis.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.cpp"
+	"getsym.cpp"
+
+1542717623 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+
