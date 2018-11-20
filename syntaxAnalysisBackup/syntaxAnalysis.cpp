@@ -467,12 +467,163 @@ int loopSentence(){
     return 0;
 }
 
-int retValueFuncCall();
-int assignSentence();
-int scanSentence();
-int printSentence();
-int nullSentence();
-int retSentence();
+int retValueFuncCall(){
+    if(result!=IDSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result==LPARSY){
+        getsym();
+        paraList();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }
+    }
+    return 0;
+}
+
+int assignSentence(){
+    if(result!=IDSY){
+        error();
+        retrun -1;
+    }
+    getsym();
+    if(result==LBRACSY){
+        getsym();
+        expr();
+        if(result!=RBRACSY){
+            error();
+            return -1;
+        }else   getsym();
+    }
+
+    if(result!=EQUSY){
+        error();
+        return -1;
+    }
+    getsym();
+
+    expr();
+    return 0;
+}
+
+int scanSentence(){
+    if(result!=SCANFSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=LPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=IDSY){
+        error();
+        return -1;
+    }
+    getsym();
+    while(true){
+        if(result!=COMMASY) break;
+        else{
+            getsym();
+            if(result!=IDSY){
+                error();
+                return -1;
+            }else{
+                getsym();
+                continue;
+            }
+        }
+    }
+
+    if(result!=RPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+    return 0;
+}
+
+int printSentence(){
+    if(result!=PRINTSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=LPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+    // 接下来判断是一个表达式还是一个字符串
+    if(result==STRINGSY){
+        getsym();
+        if(result==COMMASY){
+            getsym();
+            expr();
+            if(result!=RPARSY){
+                error();
+                return -1;
+            }else{
+                getsym();
+                return 0;
+            }
+        }else if(result==RPARSY){
+            // end of print
+            getsym();
+            return 0;
+        }else{
+            error();
+            return -1;
+        }
+    }else{
+        expr();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }else{
+            getsym();
+            return 0;
+        }
+    }
+    //如果以上分支都不满足进行到了这里，返回未知错误
+    return -2;
+}
+
+int nullSentence(){
+    if(result==SEMISY){
+        getsym();
+        return 0;
+    }else{
+        error();
+        return -1;
+    }
+}
+
+int retSentence(){
+    if(result!=RETSY){
+        error();
+        return -1;
+    }
+    getsym();
+
+    if(result==LPARSY){
+        getsym();
+        expr();
+        if(result!=RPARST){
+            error();
+            return -1;
+        }else{
+            getsym();
+            return 0;
+        }
+    }else{
+        return 0;
+    }
+}
 
 /*
 int factor(){
