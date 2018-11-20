@@ -15,7 +15,7 @@
 #define FORSY       9
 #define SCANFSY     10
 #define PRINTSY     11
-#define RETTSY      12
+#define RETSY      12
 
 #define USINTSY     18
 #define ACHARSY     19
@@ -60,8 +60,10 @@ int varDefine();
 int varState();
 int paraList();
 int complexSentence();
+int sentenceSequence();
 int retValueFuncDefine();
 int condSentence();
+int condition();
 int loopSentence();
 int retValueFuncCall();
 int unretValueFuncCall();
@@ -70,6 +72,8 @@ int scanSentence();
 int printSentence();
 int nullSentence();
 int retSentence();
+int programAnalysis();
+int mainAnalysis();
 
 
 int unsignedInt(){                  // 文法中的无符号整数
@@ -192,7 +196,7 @@ int declareHead(){
         getsym();
         if(result!=IDSY){
             error();
-            retrun -1;
+            return -1;
         }else{
             getsym();
         }
@@ -200,7 +204,7 @@ int declareHead(){
         getsym();
         if(result!=IDSY){
             error();
-            retrun -1;
+            return -1;
         }else{
             getsym();
         }
@@ -273,7 +277,7 @@ int varState(){
                     error();
                     return -1;
                 }
-            default:
+            default:    error();return -1;
         }
 
 
@@ -332,7 +336,38 @@ int retValueFuncDefine(){
 }
 
 int unretValueFuncDefine(){
+    if(result!=VOIDSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=IDSY){
+        error();
+        return -1;
+    }
+    getsym();
+    // 处理值参数表部分（如果有）
+    if(result==LPARSY){
+        getsym();
+        paraList();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }
+        getsym();
+    }
 
+    if(result!=LBRACESY){   // "{"
+        error();
+        return -1;
+    }
+
+    complexSentence();
+    if(result!=RBRACESY){   // "}"
+        error();
+        return -1;
+    }
+    return 0;
 }
 
 int sentence(){
@@ -396,9 +431,18 @@ int sentenceSequence(){
             case(IDSY):             // 两种情况，函数调用或赋值语句
                 recordRead();
                 getsym();
-                if(result==LPARSY)      resetRead();break;
-                else if(result==EQUSY)  resetRead();break;
-                else    resetRead();return 0;
+                if(result==LPARSY){
+                    resetRead();
+                    break;
+                }
+                else if(result==EQUSY){
+                    resetRead();
+                    break;
+                }
+                else{
+                    resetRead();
+                    return 0;
+                }
             default:    return 0;
         }
         // 进行到这里说明接下来是语句成分
@@ -441,6 +485,19 @@ int condSentence(){
     }
 }
 
+int condition(){
+    expr();
+    if(result==LESSSY||result==LOESY||result==MORESY||
+       result==MOESY||result==LOMSY||result==AEQUSY){
+        expr();
+        return 0;
+    }else   return 0;
+}
+
+int stepLength(){
+    unsignedInt();
+}
+
 int loopSentence(){
     if(result==WHILESY){
         getsym();
@@ -459,6 +516,62 @@ int loopSentence(){
         sentence();
     }else if(result==FORSY){
         // ENDRIGHTGERE!!!!
+        getsym();
+        if(result!=LPARSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=IDSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=EQUSY){
+            error();
+            return -1;
+        }
+        getsym();
+        expr();
+        if(result!=SEMISY){
+            error();
+            return -1;
+        }
+        getsym();
+        condition();
+        if(result!=SEMISY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=IDSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=EQUSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=IDSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=PLUSSY&&result!=MINUSSY){
+            error();
+            return -1;
+        }
+        getsym();
+        stepLength();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }
+        getsym();
+        sentence();
+
     }else{
         error();
         return -1;
@@ -487,7 +600,7 @@ int retValueFuncCall(){
 int assignSentence(){
     if(result!=IDSY){
         error();
-        retrun -1;
+        return -1;
     }
     getsym();
     if(result==LBRACSY){
@@ -613,7 +726,7 @@ int retSentence(){
     if(result==LPARSY){
         getsym();
         expr();
-        if(result!=RPARST){
+        if(result!=RPARSY){
             error();
             return -1;
         }else{
@@ -625,14 +738,82 @@ int retSentence(){
     }
 }
 
-/*
+int programAnalysis(){
+    int mainTag = 0;
+    constState();
+    varState();
+    // 修改后的两个函数都可以直接调用，如果不符合不会破坏指针的位置
+    while(true){
+        if(result==INTSY||result==CHARSY){
+            retValueFuncDefine();
+        }else if(result==VOIDSY){
+            recordRead();
+            getsym();
+            if(result==MAINSY){
+                mainTag = 1;
+            }
+            resetRead();
+            // 恢复读之前的初始状态
+            if(mainTag==0){
+                unretValueFuncDefine();
+            }else{  // 下一个就是主函数 void main
+                break;
+            }
+
+        }else{
+            error();
+            return -1;
+        }
+    }
+
+    mainAnalysis();
+}
+
+int mainAnalysis(){
+    if(result!=VOIDSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=MAINSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=LPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=RPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+    if(result!=LBRACESY){
+        error();
+        return -1;
+    }
+    getsym();
+    complexSentence();
+
+    if(result!=RBRACESY){
+        error();
+        return -1;
+    }
+    getsym();
+}
+
 int factor(){
     if(result==LPARSY){             // result = "("
         getsym();
         expr();                     // 表达式
         if(result==RPARSY){         // result = ")"
             getsym();
-        }else error();
+        }else{
+            error();
+            return -1;
+        }
     }else if(result==IDSY){         // result = IDSY
         getsym();
         if(result==LBRACSY){        // result = "["
@@ -640,22 +821,56 @@ int factor(){
             expr();                 // 表达式
             if(result==RBRACSY){
                 getsym();
-            }else error();
+            }else {
+                error();
+                return -1;
+            }
         }else if(result==LPARSY){   // result = "("
             getsym();
-            paralist();             // 值参数表
+            paraList();             // 值参数表
             if(result==RPARSY)      // result = ")"
                 getsym();
-            else    error();
+            else {
+                error();
+                return -1;
+            }
         }else if(result==PLUSSY || result==MINUSSY){
             getsym();
-            if(result!=USINTSY)     // 有符号整数
+            if(result!=USINTSY){    // 有符号整数
                 error();
+                return -1;
+            }
+
         }else if(result==USINTSY){
             getsym();               // 无符号整数
         }else if(result==ACHARSY){
             getsym();               // 字符 ACHARSY
         }
     }
+    return 0;
 }
-*/
+
+int term(){
+    factor();
+    while(true){
+        if(result==STARSY||result==DIVISY){
+            getsym();
+            factor();
+        }else   break;
+
+    }
+    return 0;
+}
+
+int expr(){
+    if(result==PLUSSY||result==MINUSSY)
+        getsym();
+    term();
+    while(true){
+        if(result==PLUSSY||result==MINUSSY){
+            term();
+        }else   break;
+    }
+    return 0;
+}
+
