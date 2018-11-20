@@ -22,9 +22,24 @@ char token[200] = "";
 char string[200] = "";
 char symbol[10] = "";
 int lc = 1;
+FILE* backupFile;
+int backupResult;
 
 // 预读功能的实现
+void recordRead(){
+    extern FILE* fp;
+    extern int result;
+    backupFile = fp;
+    backupResult = result;
 
+}
+
+void resetRead(){
+    extern FILE* fp;
+    extern int result;
+    fp = backupFile;
+    result = backupResult;
+}
 
 // 词法分析子程序
 int getsym(){

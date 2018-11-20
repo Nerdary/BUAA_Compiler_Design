@@ -61,6 +61,16 @@ int varState();
 int paraList();
 int complexSentence();
 int retValueFuncDefine();
+int condSentence();
+int loopSentence();
+int retValueFuncCall();
+int unretValueFuncCall();
+int assignSentence();
+int scanSentence();
+int printSentence();
+int nullSentence();
+int retSentence();
+
 
 int unsignedInt(){                  // 文法中的无符号整数
     if(result==USINTSY){
@@ -155,7 +165,10 @@ int constState(){
     int constStateCount = 0;
     while(true){
     //    printf("in constState result = %d\n", result);
-        if(result!=CONSTSY) break;
+        if(result!=CONSTSY){
+            error();
+            return -1;
+        }
         else{
             getsym();
             constDefine();          // 变量定义中内置了getsym，不用再读入一个
@@ -163,9 +176,7 @@ int constState(){
                 constStateCount += 1;
                 getsym();
                 continue;
-         else{
-            getsym();
-        }   }else{
+            }else{
                 error();
                 return -1;
             }
@@ -230,7 +241,43 @@ int varDefine(){
 }
 
 int varState(){
+//    varDefine();              // 注意这样改动后是从0个开始的，可能需要一个计数变量
+    while(true){
+        int judgeTag = -1;      /*  judgeTag==1     下一项还是变量声明
+                                    judgeTag==2     下一项是有返回值函数定义
+                                    judgeTag==-1    初始状态/两者都不是
+                                */
+        recordRead();           // 保存读指针
+        if(varDefine()==0){
+            judgeTag = 1;
+            // 预读一个符号，这里不用getsym
+            if(result==LPARSY){
+                judgeTag = 2;
+                return judgeTag;
+            }
+        }
+        resetRead();            // 恢复读指针
 
+        switch(judgeTag){
+            case(-1):
+                error();
+                return -1;
+            case(0):
+                break;
+            case(1):
+                varDefine();
+                if(result==SEMISY){
+                    getsym();
+                    continue;
+                }else{
+                    error();
+                    return -1;
+                }
+            default:
+        }
+
+
+    }
 }
 
 int paraList(){
@@ -288,9 +335,144 @@ int unretValueFuncDefine(){
 
 }
 
-int complexSentence(){
-
+int sentence(){
+    switch(result){
+        case(IFSY):             // 条件语句
+            condSentence();
+            break;
+        case(WHILESY):          // 循环语句
+            loopSentence();
+            break;
+        case(FORSY):            // 循环语句
+            loopSentence();
+            break;
+        case(LBRACESY):         // 语句列
+            sentenceSequence();
+            break;
+        case(SEMISY):           // 空语句，直接分号
+            nullSentence();
+            break;
+        case(PRINTSY):          // 写语句
+            printSentence();
+            break;
+        case(SCANFSY):          // 读语句
+            scanSentence();
+            break;
+        case(RETSY):            // 返回语句
+            retSentence();
+            break;
+        case(IDSY):             // 两种情况，函数调用或赋值语句
+            recordRead();
+            getsym();
+            if(result==LPARSY){         // 函数调用
+                resetRead();
+                retValueFuncCall();
+                break;
+            }
+            else if(result==EQUSY){     // 赋值语句
+                resetRead();
+                assignSentence();
+                break;
+            }
+            else{
+                resetRead();
+                return -1;
+            }
+        default:    return -1;
+    }
 }
+
+int sentenceSequence(){
+    while(true){
+        switch(result){
+            case(IFSY):     break;  // 条件语句
+            case(WHILESY):  break;  // 循环语句
+            case(FORSY):    break;  // 循环语句
+            case(LBRACESY): break;  // 语句列
+            case(SEMISY):   break;  // 空语句，直接分号
+            case(PRINTSY):  break;  // 写语句
+            case(SCANFSY):  break;  // 读语句
+            case(RETSY):    break;  // 返回语句
+            case(IDSY):             // 两种情况，函数调用或赋值语句
+                recordRead();
+                getsym();
+                if(result==LPARSY)      resetRead();break;
+                else if(result==EQUSY)  resetRead();break;
+                else    resetRead();return 0;
+            default:    return 0;
+        }
+        // 进行到这里说明接下来是语句成分
+        sentence();
+    }
+}
+
+int complexSentence(){
+    constState();
+    varState();
+    // 修改后的两个函数都可以直接调用，如果不符合不会破坏指针的位置
+    // 语句列部分
+    sentenceSequence();
+}
+
+int condSentence(){
+    if(result!=IFSY){
+        error();
+        return -1;
+    }
+
+    getsym();
+    if(result!=LPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+    condition();
+    if(result!=RPARSY){
+        error();
+        return -1;
+    }
+    getsym();
+
+    sentence();
+    // 可选项 else分支
+    if(result==ELSESY){
+        getsym();
+        sentence();
+    }
+}
+
+int loopSentence(){
+    if(result==WHILESY){
+        getsym();
+        if(result!=LPARSY){
+            error();
+            return -1;
+        }
+        getsym();
+        condition();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }
+        getsym();
+
+        sentence();
+    }else if(result==FORSY){
+        // ENDRIGHTGERE!!!!
+    }else{
+        error();
+        return -1;
+    }
+
+    return 0;
+}
+
+int retValueFuncCall();
+int assignSentence();
+int scanSentence();
+int printSentence();
+int nullSentence();
+int retSentence();
 
 /*
 int factor(){
