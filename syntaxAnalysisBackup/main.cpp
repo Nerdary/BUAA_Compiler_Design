@@ -46,7 +46,8 @@ int main(){
 //    constState();
 //    varState();
 //    factor();
-    term();
+//    term();
+    expr();
 
 
 

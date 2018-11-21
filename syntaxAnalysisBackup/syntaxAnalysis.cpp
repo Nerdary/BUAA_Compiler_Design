@@ -832,6 +832,7 @@ int mainAnalysis(){
 }
 
 int factor(){
+//    printf("DEBUG: in factor\n");
     if(result==LPARSY){             // result = "("
     //    printf("factor-debug branch-1\n");
         getsym();
@@ -916,14 +917,21 @@ int term(){
 }
 
 int expr(){
-    if(result==PLUSSY||result==MINUSSY)
+    // 跳过加法运算符，如果有
+    if(result==PLUSSY||result==MINUSSY){
         getsym();
+    }
+
     term();
     while(true){
+    //    printf("result = %d\n", result);
         if(result==PLUSSY||result==MINUSSY){
+            getsym();
             term();
         }else   break;
     }
+
+    printf("This is an expression.\n");
     return 0;
 }
 
