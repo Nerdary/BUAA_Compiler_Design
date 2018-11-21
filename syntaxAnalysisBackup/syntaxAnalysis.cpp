@@ -452,12 +452,30 @@ int sentence(){
             break;
         case(PRINTSY):          // 写语句
             printSentence();
+            if(result!=SEMISY){
+                error();
+                return -1;
+            }else{
+                getsym();
+            }
             break;
         case(SCANFSY):          // 读语句
             scanSentence();
+            if(result!=SEMISY){
+                error();
+                return -1;
+            }else{
+                getsym();
+            }
             break;
         case(RETSY):            // 返回语句
             retSentence();
+            if(result!=SEMISY){
+                error();
+                return -1;
+            }else{
+                getsym();
+            }
             break;
         case(IDSY):             // 两种情况，函数调用或赋值语句
             recordRead();
@@ -465,11 +483,23 @@ int sentence(){
             if(result==LPARSY){         // 函数调用
                 resetRead();
                 retValueFuncCall();
+                if(result!=SEMISY){
+                    error();
+                    return -1;
+                }else{
+                    getsym();
+                }
                 break;
             }
             else if(result==EQUSY){     // 赋值语句
                 resetRead();
                 assignSentence();
+                if(result!=SEMISY){
+                    error();
+                    return -1;
+                }else{
+                    getsym();
+                }
                 break;
             }
             else{
@@ -481,38 +511,7 @@ int sentence(){
 }
 
 int sentenceSequence(){
-/*
-    while(true){
-        switch(result){
-            case(IFSY):     break;  // 条件语句
-            case(WHILESY):  break;  // 循环语句
-            case(FORSY):    break;  // 循环语句
-            case(LBRACESY): break;  // 语句列
-            case(SEMISY):   break;  // 空语句，直接分号
-            case(PRINTSY):  break;  // 写语句
-            case(SCANFSY):  break;  // 读语句
-            case(RETSY):    break;  // 返回语句
-            case(IDSY):             // 两种情况，函数调用或赋值语句
-                recordRead();
-                getsym();
-                if(result==LPARSY){
-                    resetRead();
-                    break;
-                }
-                else if(result==EQUSY){
-                    resetRead();
-                    break;
-                }
-                else{
-                    resetRead();
-                    return -1;
-                }
-            default:    return -1;
-        }
-        // 进行到这里说明接下来是语句成分
-        sentence();
-    }
-*/
+
     while(true){
         if(result==IFSY||result==WHILESY||result==FORSY||result==LBRACESY||result==SEMISY||
            result==PRINTSY||result==SCANFSY||result==RETSY||result==IDSY){
@@ -694,11 +693,14 @@ int retValueFuncCall(){
 }
 
 int assignSentence(){
+//    printf("assign tag 1\n");
+//    printf("result = %d\n", result);
     if(result!=IDSY){
         error();
         return -1;
     }
     getsym();
+//    printf("assign tag 2\n");
     if(result==LBRACSY){
         getsym();
         expr();
@@ -707,14 +709,16 @@ int assignSentence(){
             return -1;
         }else   getsym();
     }
-
+//    printf("assign tag 3\n");
     if(result!=EQUSY){
         error();
         return -1;
     }
     getsym();
-
+//    printf("assign tag 4\n");
     expr();
+//    printf("assign tag 5\n");
+    printf("This is an assignment sentence.\n");
     return 0;
 }
 

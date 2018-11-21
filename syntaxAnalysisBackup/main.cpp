@@ -66,7 +66,9 @@ int main(){
     unretValueFuncDefine();
     unretValueFuncDefine();
 */
-    complexSentence();
+//    complexSentence();
+    assignSentence();
+    assignSentence();
 
 
 
