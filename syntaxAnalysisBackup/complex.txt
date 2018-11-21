@@ -1,0 +1,7 @@
+const int a = 0;
+int b;
+
+foo(1);
+printf("sssss");
+{scanf(a);;}
+printf("sssss");

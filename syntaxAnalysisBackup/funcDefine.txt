@@ -1,0 +1,4 @@
+int foo(){;}
+char foo2(int a, char c){;}
+void foo3(){;}
+void foo4(int d, char e){;}

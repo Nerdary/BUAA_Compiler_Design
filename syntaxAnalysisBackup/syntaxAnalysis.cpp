@@ -77,7 +77,7 @@ int programAnalysis();
 int mainAnalysis();
 
 
-int unsignedInt(int p){                  // 文法中的无符号整数
+int unsignedInt(){                  // 文法中的无符号整数
     if(result==USINTSY){
         while(true){
             getsym();
@@ -89,18 +89,18 @@ int unsignedInt(int p){                  // 文法中的无符号整数
         error();
         return -1;
     }
-    if(p==0)    return 0;
+
     printf("This is an unsigned integer.\n");
     return 0;
 }
 
-int signedInt(int p){                    // 对应文法中的整数
+int signedInt(){                    // 对应文法中的整数
     if(result==PLUSSY||result==MINUSSY){
         getsym();
     }
 
-    unsignedInt(p);
-    if(p==0)    return 0;
+    unsignedInt();
+
     printf("This is a signed integer.\n");
     return 0;
 }
@@ -114,7 +114,7 @@ int constDefine(){
                             getsym();
                             if(result==EQUSY){
                                 getsym();
-                                signedInt(1);
+                                signedInt();
                                 // 这里signedInt已经预读了下一个symbol
                                 if(result==COMMASY){
                                     tmp_count += 1;
@@ -180,9 +180,27 @@ int constState(){
             getsym();
             constDefine();          // 变量定义中内置了getsym，不用再读入一个
             if(result==SEMISY){
-                constStateCount += 1;
+
+                // 这里需要预读
+                int constPre = -1;
+                recordRead();
                 getsym();
-                continue;
+                if(result==CONSTSY){
+                    constPre = 1;
+                }else{
+                    constPre = 0;
+                }
+                resetRead();
+
+                getsym();
+                if(constPre==0){
+                    break;
+                }else{
+                    constStateCount += 1;
+                    continue;
+                }
+
+
             }else{
                 error();
                 return -1;
@@ -218,7 +236,7 @@ int declareHead(){
     return 0;
 }
 
-int varDefine(int p){
+int varDefine(){
 //    printf("in varDefine 1\n");
 //    printf(">>>result=%d.\n", result);
     if(result!=INTSY&&result!=CHARSY){
@@ -238,7 +256,7 @@ int varDefine(int p){
         getsym();
         if(result==LBRACSY){
             getsym();
-            unsignedInt(p);
+            unsignedInt();
 //            printf("in varDefine 4\n");
             if(result!=RBRACSY){
 //                printf("in varDefine 5\n");
@@ -255,55 +273,45 @@ int varDefine(int p){
         }else   break;
     }
 
-    if(p==0)    return 0;
+
     printf("This is a variable definition.\n");
     return 0;
 }
 
 int varState(){
-//    varDefine();              // 注意这样改动后是从0个开始的，可能需要一个计数变量
+    int varStateCount = 0;
     while(true){
-        int judgeTag = -1;      /*  judgeTag==1     下一项还是变量声明
-                                    judgeTag==2     下一项是有返回值函数定义
-                                    judgeTag==-1    初始状态/两者都不是
-                                */
-//        printf(">>> before record, result=%d.\n", result);
-//        printf(">>> fp=%d\n", fp);
-        recordRead();           // 保存读指针
-        if(varDefine(0)==0){
-            judgeTag = 1;
-            // 预读一个符号，这里不用getsym
-            if(result==LPARSY){
-                judgeTag = 2;
-                return judgeTag;
-            }
-        }
-        resetRead();            // 恢复读指针
-//        printf(">>> after reset, result=%d.\n", result);
-//        printf(">>> fp=%d\n", fp);
-//        printf(">>> judgeTag=%d.\n", judgeTag);
-        switch(judgeTag){
-            case(-1):
-                error();
-                return -1;
-            case(2):
-                break;
-            case(1):
-//                printf("in varState 1\n");
-                varDefine(1);
-                if(result==SEMISY){
-//                    printf("in varState 2\n");
-                    getsym();
-                    continue;
-                }else{
-                    error();
-                    return -1;
-                }
-            default:
-                error();
-                return -1;
+        if(varDefine()==0){
+        //    printf("why no varDDefine output??\n");
         }
 
+        varStateCount += 1;
+//        printf("result = %d\n", result);
+        if(result==SEMISY){
+            getsym();
+        }else{
+            error();
+            return -1;
+        }
+
+        int varStateTag = 0;
+        recordRead();
+        if(result==INTSY||result==CHARSY){
+            getsym();
+            if(result==IDSY){
+                getsym();
+                if(result!=LBRACSY) varStateTag = 1;
+            }else   varStateTag = 1;
+        }else   varStateTag = 1;
+
+        resetRead();
+
+//        printf("varStateTag=%d\n", varStateTag);
+        if(varStateTag==1){
+            // 说明下一个成分不是变量定义
+
+            break;
+        }else   continue;
 
     }
 
@@ -311,7 +319,7 @@ int varState(){
     return 0;
 }
 
-int paraList(){
+int paraValueList(){
     while(true){
         expr();
         if(result==COMMASY){
@@ -321,12 +329,40 @@ int paraList(){
             break;
         }
     }
+
+    printf("This is a parameter value list.\n");
+    return 0;
+}
+
+int paraList(){
+    while(true){
+        if(result!=INTSY&&result!=CHARSY){
+            error();
+            return -1;
+        }
+        getsym();
+        if(result!=IDSY){
+            error();
+            return -1;
+        }
+        getsym();
+
+        if(result==COMMASY){
+            getsym();
+            continue;
+        }else{
+            break;
+        }
+    }
+
+    printf("This is a parameter list.\n");
     return 0;
 }
 
 int retValueFuncDefine(){
     declareHead();
     // 处理值参数表部分（如果有）
+//    printf("pass declare head\n");
     if(result==LPARSY){
         getsym();
         paraList();
@@ -335,14 +371,18 @@ int retValueFuncDefine(){
             return -1;
         }
         getsym();
+    }else{
+        error();
+        return -1;
     }
-
+//    printf("pass tag 1\n");
     if(result!=LBRACESY){   // "{"
         error();
         return -1;
     }
-
+//    printf("pass tag 2\n");
     complexSentence();
+
     if(result!=RBRACESY){   // "}"
         error();
         return -1;
@@ -386,6 +426,7 @@ int unretValueFuncDefine(){
 }
 
 int sentence(){
+//    printf("result=%d\n", result);
     switch(result){
         case(IFSY):             // 条件语句
             condSentence();
@@ -397,7 +438,14 @@ int sentence(){
             loopSentence();
             break;
         case(LBRACESY):         // 语句列
+            getsym();
             sentenceSequence();
+            if(result!=RBRACESY){
+                error();
+                return -1;
+            }else{
+                getsym();
+            }
             break;
         case(SEMISY):           // 空语句，直接分号
             nullSentence();
@@ -433,6 +481,7 @@ int sentence(){
 }
 
 int sentenceSequence(){
+/*
     while(true){
         switch(result){
             case(IFSY):     break;  // 条件语句
@@ -456,13 +505,27 @@ int sentenceSequence(){
                 }
                 else{
                     resetRead();
-                    return 0;
+                    return -1;
                 }
-            default:    return 0;
+            default:    return -1;
         }
         // 进行到这里说明接下来是语句成分
         sentence();
     }
+*/
+    while(true){
+        if(result==IFSY||result==WHILESY||result==FORSY||result==LBRACESY||result==SEMISY||
+           result==PRINTSY||result==SCANFSY||result==RETSY||result==IDSY){
+        //    printf("send to sentence.\n");
+            sentence();
+        }else{
+            break;
+        }
+
+    }
+
+    printf("This is a sequence of sentences.\n");
+    return 0;
 }
 
 int complexSentence(){
@@ -471,6 +534,9 @@ int complexSentence(){
     // 修改后的两个函数都可以直接调用，如果不符合不会破坏指针的位置
     // 语句列部分
     sentenceSequence();
+
+    printf("This is a complex sentences.\n");
+    return 0;
 }
 
 int condSentence(){
@@ -519,7 +585,7 @@ int condition(){
 }
 
 int stepLength(){
-    unsignedInt(1);
+    unsignedInt();
 }
 
 int loopSentence(){
@@ -606,7 +672,7 @@ int loopSentence(){
 }
 
 int retValueFuncCall(){
-    printf("RETVFC: result=%d\n", result);
+//    printf("RETVFC: result=%d\n", result);
     if(result!=IDSY){
         error();
         return -1;
@@ -614,7 +680,7 @@ int retValueFuncCall(){
     getsym();
     if(result==LPARSY){
         getsym();
-        paraList();
+        paraValueList();
         if(result!=RPARSY){
             error();
             return -1;
@@ -687,6 +753,8 @@ int scanSentence(){
         return -1;
     }
     getsym();
+
+    printf("This is a scan sentence.\n");
     return 0;
 }
 
@@ -712,11 +780,13 @@ int printSentence(){
                 return -1;
             }else{
                 getsym();
+                printf("This is a print sentence.\n");
                 return 0;
             }
         }else if(result==RPARSY){
             // end of print
             getsym();
+            printf("This is a print sentence.\n");
             return 0;
         }else{
             error();
@@ -729,6 +799,7 @@ int printSentence(){
             return -1;
         }else{
             getsym();
+            printf("This is a print sentence.\n");
             return 0;
         }
     }
@@ -739,6 +810,8 @@ int printSentence(){
 int nullSentence(){
     if(result==SEMISY){
         getsym();
+
+        printf("This is an empty sentence.\n");
         return 0;
     }else{
         error();
@@ -761,11 +834,11 @@ int retSentence(){
             return -1;
         }else{
             getsym();
-            return 0;
         }
-    }else{
-        return 0;
     }
+
+    printf("This is a return sentence.\n");
+    return 0;
 }
 
 int programAnalysis(){
@@ -862,7 +935,7 @@ int factor(){
         }else if(result==LPARSY){   // result = "("
         //    printf("factor-debug branch-3\n");
             getsym();
-            paraList();             // 值参数表
+            paraValueList();             // 值参数表
             if(result==RPARSY)      // result = ")"
                 getsym();
             else {

@@ -26,7 +26,7 @@ FILE* backupFile;
 int backupResult;
 
 int charCount = 0;
-int bakupCharCount = 0;
+int backupCharCount = 0;
 
 // 预读功能的实现
 void recordRead(){
@@ -36,7 +36,7 @@ void recordRead(){
     backupResult = result;
 
 
-    bakupCharCount = charCount;
+    backupCharCount = charCount;
 }
 
 void resetRead(){
@@ -46,8 +46,8 @@ void resetRead(){
 //    FILE** p = &fp;
     result = backupResult;
 //    *p = backupFile;
-    fseek(fp,(bakupCharCount - charCount),1);
-
+    fseek(fp,(backupCharCount - charCount),1);
+    charCount = backupCharCount;
 
 }
 

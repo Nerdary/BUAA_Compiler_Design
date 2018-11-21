@@ -50,9 +50,23 @@ int main(){
 //    expr();
 //    condSentence();
 //    loopSentence();
-    retValueFuncCall();
-    retValueFuncCall();
-
+//    retValueFuncCall();
+/*
+    scanSentence();
+    scanSentence();
+    printSentence();
+    printSentence();
+    printSentence();
+    retSentence();
+    retSentence();
+*/
+/*
+    retValueFuncDefine();
+    retValueFuncDefine();
+    unretValueFuncDefine();
+    unretValueFuncDefine();
+*/
+    complexSentence();
 
 
 
