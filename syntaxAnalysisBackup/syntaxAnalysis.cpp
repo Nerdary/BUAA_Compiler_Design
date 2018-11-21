@@ -833,6 +833,7 @@ int mainAnalysis(){
 
 int factor(){
     if(result==LPARSY){             // result = "("
+    //    printf("factor-debug branch-1\n");
         getsym();
         expr();                     // 表达式
         if(result==RPARSY){         // result = ")"
@@ -844,15 +845,18 @@ int factor(){
     }else if(result==IDSY){         // result = IDSY
         getsym();
         if(result==LBRACSY){        // result = "["
+        //    printf("factor-debug branch-2\n");
             getsym();
             expr();                 // 表达式
             if(result==RBRACSY){
+        //        printf("factor-debug branch-2-2\n");
                 getsym();
             }else {
                 error();
                 return -1;
             }
         }else if(result==LPARSY){   // result = "("
+        //    printf("factor-debug branch-3\n");
             getsym();
             paraList();             // 值参数表
             if(result==RPARSY)      // result = ")"
@@ -862,30 +866,52 @@ int factor(){
                 return -1;
             }
         }else if(result==PLUSSY || result==MINUSSY){
+        //    printf("factor-debug branch-4\n");
             getsym();
             if(result!=USINTSY){    // 有符号整数
                 error();
                 return -1;
             }
 
-        }else if(result==USINTSY){
-            getsym();               // 无符号整数
+//        }else if(result==USINTSY){
+//            getsym();               // 无符号整数
         }else if(result==ACHARSY){
+        //    printf("factor-debug branch-5\n");
             getsym();               // 字符 ACHARSY
+        }else{
+        //    printf("factor-debug branch-unknown\n");
         }
+    }else if(result==USINTSY){
+    //    printf("factor-debug branch-6\n");
+        getsym();
+    }else{
+        error();
+        return -1;
     }
+
+    printf("This is a factor.\n");
     return 0;
 }
 
 int term(){
-    factor();
+    if(factor()==-1){
+        error();
+        return -1;
+    }
     while(true){
+    //    printf("result=%d\n", result);
         if(result==STARSY||result==DIVISY){
             getsym();
-            factor();
+        //    printf("result=%d\n", result);
+            if(factor()==-1){
+                error();
+                return -1;
+            }
         }else   break;
 
     }
+
+    printf("This is a term.\n");
     return 0;
 }
 

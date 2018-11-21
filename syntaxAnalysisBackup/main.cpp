@@ -44,7 +44,9 @@ int main(){
 
     getsym();
 //    constState();
-    varState();
+//    varState();
+//    factor();
+    term();
 
 
 

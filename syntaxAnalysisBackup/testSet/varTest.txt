@@ -1,0 +1,2 @@
+int a, b[10], c;
+char d, e, f[6];
