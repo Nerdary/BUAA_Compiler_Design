@@ -313,24 +313,12 @@ int varState(){
 
 int paraList(){
     while(true){
-        if(result==INTSY||result==CHARSY){
+        expr();
+        if(result==COMMASY){
             getsym();
-            if(result==IDSY){
-                getsym();
-                if(result==COMMASY){
-                    // 说明值参数表还没有结束
-                    getsym();
-                    continue;
-                }else{
-                    break;
-                }
-            }else{
-                error();
-                return -1;
-            }
+            continue;
         }else{
-            error();
-            return -1;
+            break;
         }
     }
     return 0;
@@ -613,10 +601,12 @@ int loopSentence(){
         return -1;
     }
 
+    printf("This is a loop sentence.\n");
     return 0;
 }
 
 int retValueFuncCall(){
+    printf("RETVFC: result=%d\n", result);
     if(result!=IDSY){
         error();
         return -1;
@@ -628,8 +618,12 @@ int retValueFuncCall(){
         if(result!=RPARSY){
             error();
             return -1;
+        }else{
+            getsym();
         }
     }
+
+    printf("This is a function call with returned value.\n");
     return 0;
 }
 

@@ -48,7 +48,10 @@ int main(){
 //    factor();
 //    term();
 //    expr();
-    condSentence();
+//    condSentence();
+//    loopSentence();
+    retValueFuncCall();
+    retValueFuncCall();
 
 
 
