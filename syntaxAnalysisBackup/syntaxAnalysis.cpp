@@ -490,35 +490,44 @@ int condSentence(){
         error();
         return -1;
     }
-
+//    printf("in cond 1\n");
     getsym();
     if(result!=LPARSY){
         error();
         return -1;
     }
+//    printf("in cond 2\n");
     getsym();
     condition();
+//    printf("in cond 3\n");
+//    printf("result = %d\n", result);
     if(result!=RPARSY){
         error();
         return -1;
     }
     getsym();
-
+//    printf("in cond 4\n");
     sentence();
     // 可选项 else分支
     if(result==ELSESY){
+//        printf("in cond 5\n");
         getsym();
         sentence();
     }
+
+    printf("This is a conditional sentence.\n");
+    return 0;
 }
 
 int condition(){
     expr();
     if(result==LESSSY||result==LOESY||result==MORESY||
        result==MOESY||result==LOMSY||result==AEQUSY){
+        getsym();
         expr();
-        return 0;
-    }else   return 0;
+    }
+
+    return 0;
 }
 
 int stepLength(){
@@ -866,25 +875,25 @@ int factor(){
                 error();
                 return -1;
             }
-        }else if(result==PLUSSY || result==MINUSSY){
-        //    printf("factor-debug branch-4\n");
-            getsym();
-            if(result!=USINTSY){    // 有符号整数
-                error();
-                return -1;
-            }
-
-//        }else if(result==USINTSY){
-//            getsym();               // 无符号整数
-        }else if(result==ACHARSY){
-        //    printf("factor-debug branch-5\n");
-            getsym();               // 字符 ACHARSY
         }else{
-        //    printf("factor-debug branch-unknown\n");
+            // 单独的标识符
+//            printf("factor-debug branch-IDSY\n");
+
+        }
+    }else if(result==PLUSSY || result==MINUSSY){
+        getsym();
+        // 这里才是普通的“整数”分支
+        if(result!=USINTSY){    // 有符号整数
+            error();
+            return -1;
+        }else{
+            getsym();
         }
     }else if(result==USINTSY){
-    //    printf("factor-debug branch-6\n");
         getsym();
+    }else if(result==ACHARSY){
+            getsym();               // 字符 ACHARSY
+
     }else{
         error();
         return -1;
@@ -895,15 +904,16 @@ int factor(){
 }
 
 int term(){
+//    printf(">>>>> result = %d\n", result);
     if(factor()==-1){
         error();
         return -1;
     }
     while(true){
-    //    printf("result=%d\n", result);
+//        printf("term 1 result=%d\n", result);
         if(result==STARSY||result==DIVISY){
             getsym();
-        //    printf("result=%d\n", result);
+//            printf("term 2 result=%d\n", result);
             if(factor()==-1){
                 error();
                 return -1;
@@ -924,7 +934,7 @@ int expr(){
 
     term();
     while(true){
-    //    printf("result = %d\n", result);
+//        printf("expr result = %d\n", result);
         if(result==PLUSSY||result==MINUSSY){
             getsym();
             term();

@@ -47,7 +47,8 @@ int main(){
 //    varState();
 //    factor();
 //    term();
-    expr();
+//    expr();
+    condSentence();
 
 
 
