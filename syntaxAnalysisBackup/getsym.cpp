@@ -25,20 +25,30 @@ int lc = 1;
 FILE* backupFile;
 int backupResult;
 
+int charCount = 0;
+int bakupCharCount = 0;
+
 // 预读功能的实现
 void recordRead(){
-    extern FILE* fp;
+//    extern FILE* fp;
     extern int result;
-    backupFile = fp;
+//    backupFile = fp;
     backupResult = result;
 
+
+    bakupCharCount = charCount;
 }
 
 void resetRead(){
     extern FILE* fp;
     extern int result;
-    fp = backupFile;
+//    fp = backupFile;
+//    FILE** p = &fp;
     result = backupResult;
+//    *p = backupFile;
+    fseek(fp,(bakupCharCount - charCount),1);
+
+
 }
 
 // 词法分析子程序
@@ -47,6 +57,7 @@ int getsym(){
     extern FILE* fp;
     extern int result;
 	char a = fgetc(fp);									// 读入一个字符
+	charCount += 1;
 
 	if(a==EOF){
         result = -2;
@@ -58,6 +69,7 @@ int getsym(){
 		if(isNewline(a))
 			lc += 1;
 		a = fgetc(fp);
+		charCount += 1;
 	}													// 跳过空格、换行符、制表符
 														// 读到第一个有意义的字符
 
@@ -66,8 +78,10 @@ int getsym(){
 			catToken(a);
 		//	a = getchar();
 			a = fgetc(fp);
+			charCount += 1;
 		}
 		ungetc(a,fp);									// 指针后退一个字符
+		charCount -= 1;
 
 		// 判断保留字
 		int resultValue = isReserved();
@@ -91,8 +105,10 @@ int getsym(){
 			catToken(a);
 			//a = getchar();
 			a = fgetc(fp);
+			charCount += 1;
 		}
 		ungetc(a,fp);									// 指针回退
+		charCount -= 1;
 		int num = transNum(token);
 		if (num==-1){
 			err(1);										// transNum 出错
@@ -107,6 +123,7 @@ int getsym(){
 
 	else if(a=='<'){
 		a = fgetc(fp);
+		charCount += 1;
 		if(a=='='){
 			strcpy(symbol, "LOESY");
 			result = 34;
@@ -114,6 +131,7 @@ int getsym(){
 		}
 		else{
 			ungetc(a,fp);
+			charCount -= 1;
 			strcpy(symbol, "LESSSY");
 			result = 33;
 			return 33;
@@ -122,6 +140,7 @@ int getsym(){
 
 	else if(a=='>'){
 		a = fgetc(fp);
+		charCount += 1;
 		if(a=='='){
 			strcpy(symbol, "MOESY");
 			result = 36;
@@ -129,6 +148,7 @@ int getsym(){
 		}
 		else{
 			ungetc(a,fp);
+			charCount -= 1;
 			strcpy(symbol, "MORESY");
 			result = 35;
 			return 35;
@@ -137,6 +157,7 @@ int getsym(){
 
 	else if(a=='!'){
 		a = fgetc(fp);
+		charCount += 1;
 		if(a=='='){
 			strcpy(symbol, "LOMSY");
 			result = 36;
@@ -144,6 +165,7 @@ int getsym(){
 		}
 		else{
 			ungetc(a,fp);
+			charCount -= 1;
 		//	printf("illegal '!=' \n");
 		err(6);
             result = -1;
@@ -153,11 +175,13 @@ int getsym(){
 
 	else if(a==34){
 		a = fgetc(fp);
+		charCount += 1;
 		int index = 0;
 		while(a!=34){
 			if(a==32 || a==33 || (a>=35 && a<=126)){
 				string[index++] = a;
 				a = fgetc(fp);
+				charCount += 1;
 			} else{
 				err(2);
 			//	printf("illegal charactor while dealing string\n");
@@ -172,8 +196,10 @@ int getsym(){
 
 	else if(a==39){
 		a = fgetc(fp);
+		charCount += 1;
 		if(a=='+'||a=='-'||a=='*'||a=='/'||a=='_'||(a>='a'&&a<='z')||(a>='A'&&a<='Z')||(a>='0'&&a<='9')){
 			char b = fgetc(fp);
+			charCount += 1;
 			if(b==39){
 				string[0] = a;
 				strcpy(symbol, "ACHARSY");
@@ -182,6 +208,7 @@ int getsym(){
 			} else {
 				ungetc(b,fp);
 				ungetc(a,fp);
+				charCount -= 2;
 				err(3);
 			//	printf("more than one charactor\n");
                 result = -1;
@@ -232,6 +259,7 @@ int getsym(){
 	}
 	else if(a=='='){
 		a = fgetc(fp);
+		charCount += 1;
 		if(a=='='){
 			strcpy(symbol, "DBEQUSY");
 			result = 38;
@@ -239,6 +267,7 @@ int getsym(){
 		}
 		else{
 			ungetc(a,fp);
+			charCount -= 1;
 			strcpy(symbol, "EQUSY");
 			result = 32;
 			return 32;

@@ -44,54 +44,9 @@ int main(){
 
     getsym();
 //    constState();
+    varState();
 
 
-/*
-	while(1){
-		int result = getsym(fp);
-	//	printf("test info : result = %d\n", result);
-		if(result == -1)	continue;
-		else{
-			// IDSY
-			if(result == 20){
-				printf("%d\tIDSY\t%s\n",lc, token);
-			}
-			// INTSY
-			else if (result == 18){
-				printf("%d\tUSINTSY\t%s\n",lc, token);
-			}
-			// STRING
-			else if (result == 21){
-				printf("%d\tSTRINGSY\t\"%s\"\n",lc, string);
-			}
-			// a char
-			else if (result == 19){
-				printf("%d\tACHARSY\t%c\n",lc, string[0]);
-			}
-			// others
-				// reserved
-			else if (result >= 1 && result <= 12){
-				printf("%d\t%s\t%s\n",lc, list[result],token);
-			//	printf("DEBUG-MODE:	result=%d\n", result);
-			}
-				// opreator
-			else if (result >= 22 && result <= 43){
-				printf("%d\t%s\t%s\n",lc, list[result],symbols[result]);
-			}
-			else if (result == -2){
-                printf("successfully reach the end of program.\n");
-                break;
-			}
-			else{
-			//	printf("unknown error in main\n");
-			//	err(0);
-                err(7);
-			}
-
-		}
-
-	}
-*/
 
 
 	return 0;

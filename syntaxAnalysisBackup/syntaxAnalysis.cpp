@@ -47,10 +47,11 @@
 
 
 extern int result;
+extern FILE* fp;
 
 
-int unsignedInt();
-int signedInt();
+int unsignedInt(int p);
+int signedInt(int p);
 int constDefine();
 int constState();
 int factor();
@@ -76,7 +77,7 @@ int programAnalysis();
 int mainAnalysis();
 
 
-int unsignedInt(){                  // 文法中的无符号整数
+int unsignedInt(int p){                  // 文法中的无符号整数
     if(result==USINTSY){
         while(true){
             getsym();
@@ -88,17 +89,19 @@ int unsignedInt(){                  // 文法中的无符号整数
         error();
         return -1;
     }
-    printf("an unsigned integer.\n");
+    if(p==0)    return 0;
+    printf("This is an unsigned integer.\n");
     return 0;
 }
 
-int signedInt(){                    // 对应文法中的整数
+int signedInt(int p){                    // 对应文法中的整数
     if(result==PLUSSY||result==MINUSSY){
         getsym();
     }
 
-    unsignedInt();
-    printf("a signed integer.\n");
+    unsignedInt(p);
+    if(p==0)    return 0;
+    printf("This is a signed integer.\n");
     return 0;
 }
 
@@ -111,7 +114,7 @@ int constDefine(){
                             getsym();
                             if(result==EQUSY){
                                 getsym();
-                                signedInt();
+                                signedInt(1);
                                 // 这里signedInt已经预读了下一个symbol
                                 if(result==COMMASY){
                                     tmp_count += 1;
@@ -161,7 +164,7 @@ int constDefine(){
         error();
         return -1;
     }
-    printf("a const definition.\n");
+    printf("This is a const definition.\n");
     return 0;
 }
 
@@ -186,8 +189,8 @@ int constState(){
             }
         }
     }
-    printf("constStateCount = %d\n", constStateCount);
-    printf("a const statement.\n");
+//    printf("constStateCount = %d\n", constStateCount);
+    printf("This is a const statement.\n");
     return 0;
 }
 
@@ -215,23 +218,30 @@ int declareHead(){
     return 0;
 }
 
-int varDefine(){
+int varDefine(int p){
+//    printf("in varDefine 1\n");
+//    printf(">>>result=%d.\n", result);
     if(result!=INTSY&&result!=CHARSY){
         error();
         return -1;
     }
     // 开始识别标识符部分
+//    printf("in varDefine 2\n");
     getsym();
+//    printf(">>>result=%d.\n", result);
     while(true){
         if(result!=IDSY){
             error();
             return -1;
         }
+//        printf("in varDefine 3\n");
         getsym();
         if(result==LBRACSY){
             getsym();
-            unsignedInt();
+            unsignedInt(p);
+//            printf("in varDefine 4\n");
             if(result!=RBRACSY){
+//                printf("in varDefine 5\n");
                 error();
                 return -1;
             }else{
@@ -239,9 +249,15 @@ int varDefine(){
             }
         }
         if(result==COMMASY){
+//            printf("in varDefine 6\n");
+            getsym();
             continue;
         }else   break;
     }
+
+    if(p==0)    return 0;
+    printf("This is a variable definition.\n");
+    return 0;
 }
 
 int varState(){
@@ -251,8 +267,10 @@ int varState(){
                                     judgeTag==2     下一项是有返回值函数定义
                                     judgeTag==-1    初始状态/两者都不是
                                 */
+//        printf(">>> before record, result=%d.\n", result);
+//        printf(">>> fp=%d\n", fp);
         recordRead();           // 保存读指针
-        if(varDefine()==0){
+        if(varDefine(0)==0){
             judgeTag = 1;
             // 预读一个符号，这里不用getsym
             if(result==LPARSY){
@@ -261,27 +279,36 @@ int varState(){
             }
         }
         resetRead();            // 恢复读指针
-
+//        printf(">>> after reset, result=%d.\n", result);
+//        printf(">>> fp=%d\n", fp);
+//        printf(">>> judgeTag=%d.\n", judgeTag);
         switch(judgeTag){
             case(-1):
                 error();
                 return -1;
-            case(0):
+            case(2):
                 break;
             case(1):
-                varDefine();
+//                printf("in varState 1\n");
+                varDefine(1);
                 if(result==SEMISY){
+//                    printf("in varState 2\n");
                     getsym();
                     continue;
                 }else{
                     error();
                     return -1;
                 }
-            default:    error();return -1;
+            default:
+                error();
+                return -1;
         }
 
 
     }
+
+    printf("This is a variable statement.\n");
+    return 0;
 }
 
 int paraList(){
@@ -495,7 +522,7 @@ int condition(){
 }
 
 int stepLength(){
-    unsignedInt();
+    unsignedInt(1);
 }
 
 int loopSentence(){
