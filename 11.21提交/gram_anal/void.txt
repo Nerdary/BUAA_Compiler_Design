@@ -1,0 +1,5 @@
+void nonu{a =1;}
+
+void duheuhu(int a){a =1;}
+
+void main(){a = 1;}

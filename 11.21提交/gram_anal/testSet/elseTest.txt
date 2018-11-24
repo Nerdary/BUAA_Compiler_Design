@@ -1,0 +1,7 @@
+scanf(y)
+scanf(a, b, d)
+printf("adsaf", b+c)
+printf("1r3131r1r")
+printf(a+c*d)
+return
+return (a+f*i)

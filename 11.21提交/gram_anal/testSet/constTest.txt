@@ -1,0 +1,4 @@
+const int a = -1;
+const int b = +2, c = 3;
+const char d = 'd';
+const char e = 'e', f = 'f';
