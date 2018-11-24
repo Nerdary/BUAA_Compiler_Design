@@ -5,7 +5,6 @@
 #include "getsym.cpp"
 #include "syntaxAnalysis.cpp"
 
-int result;
 FILE* fp;
 
 int main(){

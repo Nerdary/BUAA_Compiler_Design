@@ -4,52 +4,185 @@
 	<ActiveTarget name="Debug" />
 	<File name="syntaxAnalysis.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5282" topLine="104" />
+			<Cursor1 position="1053" topLine="39" />
 		</Cursor>
 		<Folding>
-			<Collapse line="79" />
-			<Collapse line="96" />
+			<Collapse line="76" />
+			<Collapse line="77" />
+			<Collapse line="78" />
+			<Collapse line="80" />
+			<Collapse line="93" />
+			<Collapse line="94" />
+			<Collapse line="104" />
+			<Collapse line="105" />
 			<Collapse line="107" />
-			<Collapse line="228" />
+			<Collapse line="109" />
+			<Collapse line="111" />
+			<Collapse line="115" />
+			<Collapse line="133" />
+			<Collapse line="135" />
+			<Collapse line="137" />
+			<Collapse line="139" />
+			<Collapse line="141" />
+			<Collapse line="167" />
+			<Collapse line="198" />
+			<Collapse line="199" />
+			<Collapse line="201" />
+			<Collapse line="209" />
+			<Collapse line="224" />
+			<Collapse line="227" />
+			<Collapse line="235" />
+			<Collapse line="236" />
+			<Collapse line="242" />
+			<Collapse line="246" />
 			<Collapse line="254" />
-			<Collapse line="296" />
-			<Collapse line="337" />
+			<Collapse line="308" />
+			<Collapse line="309" />
+			<Collapse line="311" />
+			<Collapse line="323" />
+			<Collapse line="324" />
+			<Collapse line="325" />
+			<Collapse line="330" />
+			<Collapse line="336" />
+			<Collapse line="348" />
 			<Collapse line="352" />
-			<Collapse line="377" />
-			<Collapse line="412" />
+			<Collapse line="355" />
+			<Collapse line="365" />
+			<Collapse line="373" />
+			<Collapse line="383" />
+			<Collapse line="384" />
+			<Collapse line="389" />
+			<Collapse line="395" />
+			<Collapse line="398" />
+			<Collapse line="405" />
+			<Collapse line="411" />
+			<Collapse line="421" />
+			<Collapse line="425" />
+			<Collapse line="438" />
 			<Collapse line="450" />
-			<Collapse line="540" />
-			<Collapse line="557" />
-			<Collapse line="593" />
-			<Collapse line="627" />
+			<Collapse line="459" />
+			<Collapse line="469" />
+			<Collapse line="479" />
+			<Collapse line="482" />
+			<Collapse line="490" />
+			<Collapse line="493" />
+			<Collapse line="501" />
+			<Collapse line="512" />
+			<Collapse line="514" />
+			<Collapse line="516" />
+			<Collapse line="529" />
+			<Collapse line="532" />
+			<Collapse line="539" />
+			<Collapse line="543" />
+			<Collapse line="547" />
+			<Collapse line="553" />
+			<Collapse line="565" />
+			<Collapse line="566" />
+			<Collapse line="572" />
+			<Collapse line="581" />
+			<Collapse line="589" />
+			<Collapse line="599" />
+			<Collapse line="602" />
+			<Collapse line="610" />
+			<Collapse line="614" />
+			<Collapse line="615" />
+			<Collapse line="617" />
+			<Collapse line="623" />
+			<Collapse line="633" />
 			<Collapse line="638" />
-			<Collapse line="642" />
-			<Collapse line="725" />
-			<Collapse line="747" />
-			<Collapse line="777" />
-			<Collapse line="817" />
-			<Collapse line="866" />
-			<Collapse line="878" />
-			<Collapse line="900" />
+			<Collapse line="643" />
+			<Collapse line="649" />
+			<Collapse line="655" />
+			<Collapse line="660" />
+			<Collapse line="665" />
+			<Collapse line="670" />
+			<Collapse line="675" />
+			<Collapse line="681" />
+			<Collapse line="697" />
+			<Collapse line="699" />
+			<Collapse line="704" />
+			<Collapse line="707" />
+			<Collapse line="719" />
+			<Collapse line="722" />
+			<Collapse line="728" />
+			<Collapse line="731" />
+			<Collapse line="737" />
+			<Collapse line="749" />
+			<Collapse line="750" />
+			<Collapse line="755" />
+			<Collapse line="760" />
+			<Collapse line="765" />
+			<Collapse line="767" />
+			<Collapse line="769" />
+			<Collapse line="779" />
+			<Collapse line="789" />
+			<Collapse line="790" />
+			<Collapse line="795" />
+			<Collapse line="801" />
+			<Collapse line="803" />
+			<Collapse line="806" />
+			<Collapse line="825" />
+			<Collapse line="838" />
+			<Collapse line="839" />
+			<Collapse line="850" />
+			<Collapse line="851" />
+			<Collapse line="857" />
+			<Collapse line="860" />
+			<Collapse line="908" />
+			<Collapse line="914" />
+			<Collapse line="929" />
+			<Collapse line="931" />
+			<Collapse line="937" />
+			<Collapse line="943" />
+			<Collapse line="949" />
 			<Collapse line="955" />
-			<Collapse line="1000" />
-			<Collapse line="1063" />
-			<Collapse line="1086" />
+			<Collapse line="963" />
+			<Collapse line="974" />
+			<Collapse line="976" />
+			<Collapse line="980" />
+			<Collapse line="988" />
+			<Collapse line="992" />
+			<Collapse line="1005" />
+			<Collapse line="1017" />
+			<Collapse line="1037" />
+			<Collapse line="1039" />
+			<Collapse line="1043" />
+			<Collapse line="1045" />
+			<Collapse line="1048" />
+			<Collapse line="1060" />
+			<Collapse line="1062" />
+			<Collapse line="1067" />
+			<Collapse line="1069" />
 		</Folding>
+	</File>
+	<File name="getsym.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5669" topLine="369" />
+		</Cursor>
+	</File>
+	<File name="getsym.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="142" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="syntaxAnalysis.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="674" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="70" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="326" topLine="0" />
+		</Cursor>
 	</File>
 	<File name="error.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="89" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="getsym.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1292" topLine="50" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1985" topLine="21" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "error.cpp"
 #include "getsym.cpp"
+#include "syntaxAnalysis.h"
 
 #define CONSTSY     1
 #define INTSY       2
@@ -15,7 +16,7 @@
 #define FORSY       9
 #define SCANFSY     10
 #define PRINTSY     11
-#define RETSY      12
+#define RETSY       12
 
 #define USINTSY     18
 #define ACHARSY     19
@@ -46,12 +47,9 @@
 #define RBRACESY    43
 
 
-extern int result;
-extern FILE* fp;
 
-
-int unsignedInt(int p);
-int signedInt(int p);
+int unsignedInt();
+int signedInt();
 int constDefine();
 int constState();
 int factor();
@@ -186,40 +184,20 @@ int constState(){
     while(true){
     //    printf("in constState result = %d\n", result);
         if(result!=CONSTSY){
-            error();
-            return -1;
+            // should continue for next syntax part
+            break;
         }
         else{
             getsym();
             constDefine();          // 变量定义中内置了getsym，不用再读入一个
-            if(result==SEMISY){
-
-                // 这里需要预读
-                int constPre = -1;
-
-                recordRead();
-                getsym();
-                if(result==CONSTSY){
-                    constPre = 1;
-                }else{
-                    constPre = 0;
-                }
-                resetRead();
-
-                getsym();
-                if(constPre==0){
-                    break;
-                }else{
-                    constStateCount += 1;
-                    continue;
-                }
-
-
-            }else{
-                error();
-                return -1;
-            }
         }
+
+        if(result!=SEMISY){
+            error();
+            return -1;
+        }
+        getsym();
+
     }
 //    printf("constStateCount = %d\n", constStateCount);
     printf("This is a const statement.\n");
@@ -253,7 +231,7 @@ int declareHead(){
 }
 
 int varDefine(){
-//    printf("in varDefine 1\n");
+    printf("in varDefine 1\n");
 //    printf(">>>result=%d.\n", result);
     if(result!=INTSY&&result!=CHARSY){
         error();
@@ -295,20 +273,23 @@ int varDefine(){
 }
 
 int varState(){
-    int varStateCount = 0;
-    while(true){
-        if(varDefine()==0){
-        //    printf("why no varDDefine output??\n");
-        }
+    printf("in var state.\n");
 
-        varStateCount += 1;
+    if(varDefine()!=0){
+        printf("something went wrong in the first variable definition.\n");
+        error();
+        return -1;
+    }
+
+    if(result==SEMISY){
+        getsym();
+    }else{
+        error();
+        return -1;
+    }
+
+    while(true){
 //        printf("result = %d\n", result);
-        if(result==SEMISY){
-            getsym();
-        }else{
-            error();
-            return -1;
-        }
 
         int varStateTag = 0;
         recordRead();
@@ -316,7 +297,7 @@ int varState(){
             getsym();
             if(result==IDSY){
                 getsym();
-                if(result!=LBRACSY) varStateTag = 1;
+                if(result==LPARSY || result==LBRACESY) varStateTag = 1;
             }else   varStateTag = 1;
         }else   varStateTag = 1;
 
@@ -327,7 +308,15 @@ int varState(){
             // 说明下一个成分不是变量定义
 
             break;
-        }else   continue;
+        }else{
+            varDefine();
+            if(result!=SEMISY){
+                error();
+                return -1;
+            }
+            getsym();
+
+        }
 
     }
 
@@ -449,6 +438,7 @@ int unretValueFuncDefine(){
 }
 
 int sentence(){
+
 //    printf(">>>> in sentence\n");
 //    printf("result=%d\n", result);
     switch(result){
@@ -900,12 +890,14 @@ int retSentence(){
 
 int programAnalysis(){
     int mainTag = 0;
+
+    // 常量声明部分
     if(result==CONSTSY){
         constState();
     }
 
+    // 变量声明部分
     int complexTag = 0;
-
     recordRead();
     if(result!=INTSY&&result!=CHARSY){
         complexTag = 1;
@@ -920,8 +912,8 @@ int programAnalysis(){
     }
 
     resetRead();
-
-    if(complexTag==1){
+    printf("tag = %d\n", complexTag);
+    if(complexTag==0){
         varState();
     }
 

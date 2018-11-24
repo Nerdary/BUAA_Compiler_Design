@@ -1,10 +1,11 @@
 #include <stdio.h>
-#include <ctype.h>
 #include <string.h>
 
 #ifndef __getsym__
 #define __getsym__
-int getsym();
+
+#include "getsym.h"
+
 
 
 void clearToken();
@@ -16,13 +17,13 @@ int isDigit(char a);
 void catToken(char a);
 int isReserved();
 int transNum(char* token);
-void err(int index);
 
 char token[200] = "";
 char string[200] = "";
 char symbol[10] = "";
 int lc = 1;
-FILE* backupFile;
+FILE* backupFile = fopen("test.txt", "r");;
+extern FILE* fp;
 int backupResult;
 
 int charCount = 0;
@@ -30,10 +31,10 @@ int backupCharCount = 0;
 
 // 预读功能的实现
 void recordRead(){
+    printf("in recordRead.\n");
 
-    extern int result;
-    extern FILE* fp;
     *backupFile = *fp;
+
     backupResult = result;
     printf(">>> recorded.\tbk=%ld\n", *backupFile);
 
@@ -41,10 +42,9 @@ void recordRead(){
 }
 
 void resetRead(){
-    extern FILE* fp;
-    extern int result;
+    printf("in resetRead.\n");
 
-    printf(">>> reset...\tfp=%ld ", *fp);
+    printf(">>> reset...\tfp=%ld\t", *fp);
     result = backupResult;
 //    *p = backupFile;
     *fp = *backupFile;
@@ -55,17 +55,15 @@ void resetRead(){
 }
 
 // 词法分析子程序
-int getsym(){
+int _getsym(){
 //    printf("getsym used.\n");
-    extern FILE* fp;
-    extern int result;
 	char a = fgetc(fp);
-	printf("in getsym fp=%ld\n", *fp);								// 读入一个字符
+//	printf("in getsym fp=%ld\n", *fp);								// 读入一个字符
 	charCount += 1;
 
 	if(a==EOF){
         result = -2;
-		return 0;
+		return -2;
 	}
 
 	clearToken();										// 清空Token
@@ -312,6 +310,70 @@ int getsym(){
     return result;
 }
 
+int getsym(){
+    result = _getsym();
+    char list[44][10] = {"",	"CONSTSY",		"INTSY",		"CHARSY",		"VOIDSY",		"MAINSY",	// 0~5
+                                "IFSY",			"ELSESY",		"WHILESY",		"FORSY",		"SCANFSY",	// 6~10
+                                "PRINTSY",		"RETSY",		"",				"",				"",			//11~15
+                                "",				"",				"USINTSY",		"ACHARSY",		"IDSY",		//16~20
+                                "STRINGSY",		"PLUSSY",		"MINUSSY",		"STARSY",		"DIVISY",	//21~25
+                                "LPARSY",		"RPARSY",		"COMMASY",		"SEMISY",		"COLONSY",	//26~30
+                                "ASSIFNSY",		"EQUSY",		"LESSSY",		"LOESY",		"MORESY",	//31~35
+                                "MOESY",		"LOMSY",		"AEQUSY",		"DBQUOSY",		"LBRACSY",	//36~40
+                                "RBRACSY",		"LBRACESY",		"RBRACESY"	};
+
+    char symbols[44][10] = {"",     "",     "",     "",     "",     // 0~4
+                            "",     "",     "",     "",     "",     // 5~9
+                            "",     "",     "",     "",     "",     //10~14
+                            "",     "",     "",     "",     "",     //15~19
+                            "",     "",     "+",    "-",    "*",    //20~24
+                            "/",    "(",    ")",    ",",    ";",    //25~29
+                            ":",    "",     "=",    "<",    "<=",   //30~34
+                            ">",    ">=",   "!=",   "==",   "",     //35~39
+                            "[",    "]",    "{",    "}",            //40~43
+                            };
+
+    if(result == -1)	;
+    else{
+        // IDSY
+        if(result == 20){
+            printf("%d\tIDSY\t%s\n",lc, token);
+        }
+        // INTSY
+        else if (result == 18){
+            printf("%d\tUSINTSY\t%s\n",lc, token);
+        }
+        // STRING
+        else if (result == 21){
+            printf("%d\tSTRINGSY\t\"%s\"\n",lc, string);
+        }
+        // a char
+        else if (result == 19){
+            printf("%d\tACHARSY\t%c\n",lc, string[0]);
+        }
+        // others
+            // reserved
+        else if (result >= 1 && result <= 12){
+            printf("%d\t%s\t%s\n",lc, list[result],token);
+        //	printf("DEBUG-MODE:	result=%d\n", result);
+        }
+            // opreator
+        else if (result >= 22 && result <= 43){
+            printf("%d\t%s\t%s\n",lc, list[result],symbols[result]);
+        }
+        else if (result == -2){
+            printf("successfully reach the end of program.\n");
+        }
+        else{
+        //	printf("unknown error in main\n");
+        //	err(0);
+            err(7);
+        }
+    }
+
+    return result;
+
+}
 // 错误处理
 void err(int index){
 	switch(index){
