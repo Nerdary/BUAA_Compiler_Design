@@ -1,0 +1,9 @@
+const int a = -1;
+const int b = +2, c = 3;
+const char d = 'd';
+const char e = 'e', f = 'f';
+
+int a, b[10], c;
+char d, e, f[6];
+
+int de(){return 0;}

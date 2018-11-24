@@ -30,11 +30,12 @@ int backupCharCount = 0;
 
 // 预读功能的实现
 void recordRead(){
-//    extern FILE* fp;
-    extern int result;
-//    backupFile = fp;
-    backupResult = result;
 
+    extern int result;
+    extern FILE* fp;
+    *backupFile = *fp;
+    backupResult = result;
+    printf(">>> recorded.\tbk=%ld\n", *backupFile);
 
     backupCharCount = charCount;
 }
@@ -42,11 +43,13 @@ void recordRead(){
 void resetRead(){
     extern FILE* fp;
     extern int result;
-//    fp = backupFile;
-//    FILE** p = &fp;
+
+    printf(">>> reset...\tfp=%ld ", *fp);
     result = backupResult;
 //    *p = backupFile;
-    fseek(fp,(backupCharCount - charCount),1);
+    *fp = *backupFile;
+//    fseek(fp,(backupCharCount - charCount),1);
+    printf("fp=%ld\n", *fp);
     charCount = backupCharCount;
 
 }
@@ -56,12 +59,13 @@ int getsym(){
 //    printf("getsym used.\n");
     extern FILE* fp;
     extern int result;
-	char a = fgetc(fp);									// 读入一个字符
+	char a = fgetc(fp);
+	printf("in getsym fp=%ld\n", *fp);								// 读入一个字符
 	charCount += 1;
 
 	if(a==EOF){
         result = -2;
-		return -2;
+		return 0;
 	}
 
 	clearToken();										// 清空Token

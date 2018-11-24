@@ -1,11 +1,15 @@
 
 const int s_len = 10, t_len = 5, N = 100;
-const char ss = "ss", zz = "zz";
+const char ss = 's', zz = 'z';
+
 int kmp_ret, fun_ret;
 
 void get_next(char s, int nextval){
-	int len = s_len;
-	int i = 0; j = -1;
+	int len;
+	len = s_len;
+	int i, j;
+	i = 0;
+	j = -1;
 	
 	nextval[0] = -1;
 	
@@ -132,29 +136,3 @@ void main(){
 	foo();
 }
 
-const int max=+0123456789;
-const char plus='+-1
-23';
-int result,i,fac_i,n,AA[100];
-5@6
-  'a'
- 'as'
-  'as  ww
-  ssss'
-"assdddsddsd"
-"23333dsdas  dsdad
-!
-' 22'
-'2'
-'a
- ab'
-'a
- '
-';'
-'233;3'
-'='
-'abbbbb;
-
-adaadadadas"
-"23333sdsd	
-	

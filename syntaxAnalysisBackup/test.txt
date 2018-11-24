@@ -1,0 +1,23 @@
+const int a = 5, b = 1;
+const char cc = 'c', d = '+';
+
+int a, b[10];
+char de, oos[12];
+
+int foo{a =1;}
+
+int fooo(int d){a =1;}
+
+int foooo(char c, int er){a =1;}
+
+char goo{a =1;}
+
+char hoo(int a){a =1;}
+
+char jijijijiij(char df, int d){a =1;}
+
+void nonu{a =1;}
+
+void duheuhu(int a){a =1;}
+
+void main(){a = 1;}

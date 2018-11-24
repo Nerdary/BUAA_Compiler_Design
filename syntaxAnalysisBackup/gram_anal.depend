@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1542802926 source:c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\main.cpp
+1542896458 source:c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\main.cpp
 	<iostream>
 	<stdio.h>
 	<ctype.h>
@@ -7,12 +7,12 @@
 	"getsym.cpp"
 	"syntaxAnalysis.cpp"
 
-1542790984 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\getsym.cpp
+1542900044 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\getsym.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
 
-1542803309 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\syntaxanalysis.cpp
+1542898377 c:\users\retriver\desktop\编译课设\11.21提交\gram_anal\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>

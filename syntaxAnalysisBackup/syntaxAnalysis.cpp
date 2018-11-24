@@ -170,6 +170,19 @@ int constDefine(){
 
 int constState(){
     int constStateCount = 0;
+    if(result!=CONSTSY){
+        error();
+        return -1;
+    }
+    getsym();
+    constDefine();
+    if(result!=SEMISY){
+        error();
+        return -1;
+    }
+    getsym();
+    constStateCount += 1;
+
     while(true){
     //    printf("in constState result = %d\n", result);
         if(result!=CONSTSY){
@@ -183,6 +196,7 @@ int constState(){
 
                 // 这里需要预读
                 int constPre = -1;
+
                 recordRead();
                 getsym();
                 if(result==CONSTSY){
@@ -233,6 +247,8 @@ int declareHead(){
         error();
         return -1;
     }
+
+    printf("This is a head declaration.\n");
     return 0;
 }
 
@@ -381,12 +397,16 @@ int retValueFuncDefine(){
         return -1;
     }
 //    printf("pass tag 2\n");
+    getsym();
     complexSentence();
-
+//    printf(">>>>>>>>>>>result = %d\n", result);
     if(result!=RBRACESY){   // "}"
         error();
         return -1;
     }
+    getsym();
+
+    printf("This is function declaration with returned value.\n");
     return 0;
 }
 
@@ -422,10 +442,14 @@ int unretValueFuncDefine(){
         error();
         return -1;
     }
+    getsym();
+
+    printf("This is a function declaration without return value.\n");
     return 0;
 }
 
 int sentence(){
+//    printf(">>>> in sentence\n");
 //    printf("result=%d\n", result);
     switch(result){
         case(IFSY):             // 条件语句
@@ -470,6 +494,7 @@ int sentence(){
             break;
         case(RETSY):            // 返回语句
             retSentence();
+//            printf(">>>>>>>>>>>>>>>>>>>>>>>result=%d\n",result);
             if(result!=SEMISY){
                 error();
                 return -1;
@@ -508,10 +533,13 @@ int sentence(){
             }
         default:    return -1;
     }
+
+    printf("This is a sentence.\n");
+    return 0;
 }
 
 int sentenceSequence(){
-
+//    printf(">>>> in sequence sentence\n");
     while(true){
         if(result==IFSY||result==WHILESY||result==FORSY||result==LBRACESY||result==SEMISY||
            result==PRINTSY||result==SCANFSY||result==RETSY||result==IDSY){
@@ -528,8 +556,33 @@ int sentenceSequence(){
 }
 
 int complexSentence(){
-    constState();
-    varState();
+    // to be modified 需要预读处理
+//    printf("complex sentence 1\n");
+    if(result==CONSTSY){
+        constState();
+    }
+//    printf("complex sentence 2\n");
+
+    int complexTag = 0;
+    recordRead();
+    if(result!=INTSY&&result!=CHARSY){
+        complexTag = 1;
+    }
+    getsym();
+    if(result!=IDSY){
+        complexTag = 1;
+    }
+    getsym();
+    if(result==LBRACSY){
+        complexTag = 1;
+    }
+
+    resetRead();
+
+    if(complexTag==1){
+        varState();
+    }
+//    printf("complex sentence 3\n");
     // 修改后的两个函数都可以直接调用，如果不符合不会破坏指针的位置
     // 语句列部分
     sentenceSequence();
@@ -837,30 +890,54 @@ int retSentence(){
             error();
             return -1;
         }else{
-            getsym();
+
         }
     }
-
+    getsym();
     printf("This is a return sentence.\n");
     return 0;
 }
 
 int programAnalysis(){
     int mainTag = 0;
-    constState();
-    varState();
-    // 修改后的两个函数都可以直接调用，如果不符合不会破坏指针的位置
+    if(result==CONSTSY){
+        constState();
+    }
+
+    int complexTag = 0;
+
+    recordRead();
+    if(result!=INTSY&&result!=CHARSY){
+        complexTag = 1;
+    }
+    getsym();
+    if(result!=IDSY){
+        complexTag = 1;
+    }
+    getsym();
+    if(result==LBRACSY){
+        complexTag = 1;
+    }
+
+    resetRead();
+
+    if(complexTag==1){
+        varState();
+    }
+
     while(true){
         if(result==INTSY||result==CHARSY){
             retValueFuncDefine();
         }else if(result==VOIDSY){
+
             recordRead();
             getsym();
             if(result==MAINSY){
                 mainTag = 1;
             }
             resetRead();
-            // 恢复读之前的初始状态
+
+
             if(mainTag==0){
                 unretValueFuncDefine();
             }else{  // 下一个就是主函数 void main
@@ -877,38 +954,48 @@ int programAnalysis(){
 }
 
 int mainAnalysis(){
+//    printf("in main anal\n");
     if(result!=VOIDSY){
         error();
         return -1;
     }
+//    printf("in main anal\n");
     getsym();
     if(result!=MAINSY){
         error();
         return -1;
     }
+//    printf("in main anal\n");
     getsym();
     if(result!=LPARSY){
         error();
         return -1;
     }
+//    printf("in main anal\n");
     getsym();
     if(result!=RPARSY){
         error();
         return -1;
     }
+//    printf("in main anal\n");
     getsym();
     if(result!=LBRACESY){
         error();
         return -1;
     }
+//    printf("in main anal\n");
     getsym();
     complexSentence();
-
+//    printf("in main anal\n");
     if(result!=RBRACESY){
         error();
         return -1;
     }
+//    printf("in main anal\n");
     getsym();
+
+    printf("This is a main function.\n");
+    return 0;
 }
 
 int factor(){
