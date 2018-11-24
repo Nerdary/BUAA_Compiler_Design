@@ -495,34 +495,41 @@ int sentence(){
             }
             break;
         case(IDSY):             // 两种情况，函数调用或赋值语句
-            recordRead();
-            getsym();
-            if(result==LPARSY){         // 函数调用
+            {
+                int senTag = 0;
+                recordRead();
+                getsym();
+                if(result==LPARSY || result==SEMISY)  senTag = 1;
+                else if(result==EQUSY)    senTag = 2;
                 resetRead();
-                retValueFuncCall();
-                if(result!=SEMISY){
+
+
+
+                if(senTag==1){              // 函数调用
+                    retValueFuncCall();
+                    if(result!=SEMISY){
+                        error();
+                        return -1;
+                    }else{
+                        getsym();
+                    }
+                    break;
+                }else if(senTag==2){        // 赋值语句
+                    assignSentence();
+                    if(result!=SEMISY){
+                        error();
+                        return -1;
+                    }else{
+                        getsym();
+                    }
+                    break;
+                }else{
                     error();
                     return -1;
-                }else{
-                    getsym();
                 }
-                break;
             }
-            else if(result==EQUSY){     // 赋值语句
-                resetRead();
-                assignSentence();
-                if(result!=SEMISY){
-                    error();
-                    return -1;
-                }else{
-                    getsym();
-                }
-                break;
-            }
-            else{
-                resetRead();
-                return -1;
-            }
+            break;
+
         default:    return -1;
     }
 
