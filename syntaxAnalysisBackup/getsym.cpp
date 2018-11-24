@@ -31,25 +31,25 @@ int backupCharCount = 0;
 
 // 预读功能的实现
 void recordRead(){
-    printf("in recordRead.\n");
+//    printf("in recordRead.\n");
 
     *backupFile = *fp;
 
     backupResult = result;
-    printf(">>> recorded.\tbk=%ld\n", *backupFile);
+//    printf(">>> recorded.\tbk=%ld\n", *backupFile);
 
     backupCharCount = charCount;
 }
 
 void resetRead(){
-    printf("in resetRead.\n");
+//    printf("in resetRead.\n");
 
-    printf(">>> reset...\tfp=%ld\t", *fp);
+//    printf(">>> reset...\tfp=%ld\t", *fp);
     result = backupResult;
 //    *p = backupFile;
     *fp = *backupFile;
 //    fseek(fp,(backupCharCount - charCount),1);
-    printf("fp=%ld\n", *fp);
+//    printf("fp=%ld\n", *fp);
     charCount = backupCharCount;
 
 }

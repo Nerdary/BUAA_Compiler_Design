@@ -231,7 +231,7 @@ int declareHead(){
 }
 
 int varDefine(){
-    printf("in varDefine 1\n");
+//    printf("in varDefine 1\n");
 //    printf(">>>result=%d.\n", result);
     if(result!=INTSY&&result!=CHARSY){
         error();
@@ -273,7 +273,7 @@ int varDefine(){
 }
 
 int varState(){
-    printf("in var state.\n");
+//    printf("in var state.\n");
 
     if(varDefine()!=0){
         printf("something went wrong in the first variable definition.\n");
@@ -366,7 +366,7 @@ int paraList(){
 
 int retValueFuncDefine(){
     declareHead();
-    // 处理值参数表部分（如果有）
+    // 处理参数表部分（如果有）
 //    printf("pass declare head\n");
     if(result==LPARSY){
         getsym();
@@ -376,9 +376,6 @@ int retValueFuncDefine(){
             return -1;
         }
         getsym();
-    }else{
-        error();
-        return -1;
     }
 //    printf("pass tag 1\n");
     if(result!=LBRACESY){   // "{"
@@ -400,6 +397,7 @@ int retValueFuncDefine(){
 }
 
 int unretValueFuncDefine(){
+    printf("in unretValueFuncDefine.\n");
     if(result!=VOIDSY){
         error();
         return -1;
@@ -425,8 +423,11 @@ int unretValueFuncDefine(){
         error();
         return -1;
     }
-
+    getsym();
+ //   printf("check void complex 1.\n");
     complexSentence();
+//    printf("check void complex 2.\n");
+//    printf("________________result = %d\n", result);
     if(result!=RBRACESY){   // "}"
         error();
         return -1;
@@ -452,6 +453,7 @@ int sentence(){
             loopSentence();
             break;
         case(LBRACESY):         // 语句列
+//            printf("this is where the bug might be for a while.\n");
             getsym();
             sentenceSequence();
             if(result!=RBRACESY){
@@ -553,6 +555,26 @@ int complexSentence(){
     }
 //    printf("complex sentence 2\n");
 
+//    int complexTag = 0;
+//    recordRead();
+//    if(result!=INTSY&&result!=CHARSY){
+//        complexTag = 1;
+//    }
+//    getsym();
+//    if(result!=IDSY){
+//        complexTag = 1;
+//    }
+//    getsym();
+//    if(result==LBRACSY){
+//        complexTag = 1;
+//    }
+//
+//    resetRead();
+//
+//    if(complexTag==1){
+//        varState();
+//    }
+    // 变量声明部分
     int complexTag = 0;
     recordRead();
     if(result!=INTSY&&result!=CHARSY){
@@ -568,8 +590,8 @@ int complexSentence(){
     }
 
     resetRead();
-
-    if(complexTag==1){
+//    printf("complex-tag = %d\n", complexTag);
+    if(complexTag==0){
         varState();
     }
 //    printf("complex sentence 3\n");
@@ -889,7 +911,7 @@ int retSentence(){
 }
 
 int programAnalysis(){
-    int mainTag = 0;
+
 
     // 常量声明部分
     if(result==CONSTSY){
@@ -912,7 +934,7 @@ int programAnalysis(){
     }
 
     resetRead();
-    printf("tag = %d\n", complexTag);
+//    printf("tag = %d\n", complexTag);
     if(complexTag==0){
         varState();
     }
@@ -922,6 +944,7 @@ int programAnalysis(){
             retValueFuncDefine();
         }else if(result==VOIDSY){
 
+            int mainTag = 0;
             recordRead();
             getsym();
             if(result==MAINSY){
@@ -931,6 +954,7 @@ int programAnalysis(){
 
 
             if(mainTag==0){
+
                 unretValueFuncDefine();
             }else{  // 下一个就是主函数 void main
                 break;
@@ -943,6 +967,8 @@ int programAnalysis(){
     }
 
     mainAnalysis();
+
+    printf("This is a program analysis.\n");
 }
 
 int mainAnalysis(){
@@ -977,8 +1003,10 @@ int mainAnalysis(){
     }
 //    printf("in main anal\n");
     getsym();
+//    printf("check main complex 1.\n");
     complexSentence();
 //    printf("in main anal\n");
+//    printf("check main complex 2.\n");
     if(result!=RBRACESY){
         error();
         return -1;
