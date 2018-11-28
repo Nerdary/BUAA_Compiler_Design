@@ -1,0 +1,67 @@
+# depslib dependency file v1.0
+1543235760 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543235741 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.h
+	<iostream>
+	<string>
+
+1543233684 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\main.cpp
+	<iostream>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"getsym.h"
+	"syntaxAnalysis.h"
+	"error.h"
+
+1543390134 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.h
+
+1543386482 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.h
+	<vector>
+	"symbolTable.h"
+
+1543390200 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+
+1543224339 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543224297 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+
+1543391819 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+
+1543390059 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
+	<stdio.h>
+	<string.h>
+	<iostream>
+
+1543387695 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
+	<stdio.h>
+	<string.h>
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+

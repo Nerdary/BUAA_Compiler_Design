@@ -1,0 +1,23 @@
+const int a = 5, b = 1;
+const char cc = 'c', d = '+';
+
+int a, b[10];
+char de, oos[12];
+
+int foo{a =1;if(a<5){b = 1;}else{c =7;}return 1;}
+
+int fooo(int d){a =1;while(d>=77){d= v+1;}}
+
+int foooo(char c, int er){a =1;for(i=0;i<10;i=i+1){changchang = 1;}}
+
+char goo{a =1;{foo;}fooo(7);return 'a';}
+
+char hoo(int a){a =1;scanf(a, v, fe);}
+
+char jijijijiij(char df, int d){a =1;printf("iam a string", s+22);}
+
+void nonu{a =1;return;}
+
+void duheuhu(int a){a =1;nonu;}
+
+void main(){a = 1;}
