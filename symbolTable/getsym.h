@@ -7,6 +7,7 @@ extern int IntValue;
 extern char strings[200];
 extern char symbol[10];
 extern char token[200];
+extern char IDname[200];
 
 void recordRead();
 void resetRead();

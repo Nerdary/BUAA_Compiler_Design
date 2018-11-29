@@ -82,6 +82,8 @@ extern vector<symbolTableItem> symbolTable;
 //extern vector<arrayTableItem> arrayTable;
 //extern vector<funcTableItem> funcTable;
 
+extern int globalOffset;
+
 int programAnalysis();
 
 

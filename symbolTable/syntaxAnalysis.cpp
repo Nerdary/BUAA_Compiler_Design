@@ -14,10 +14,12 @@ vector<symbolTableItem> symbolTable;
 //vector<funcTableItem> funcTable;
 
 // 局部变量区
-    //
+    // 无符号整数值
+int unsignValue = 0;
+    // 常量
 int constValue = 0;
-char* constName;
-    //
+    // 偏移量
+int globalOffset = 0;
 
 
 // 函数声明区
@@ -51,7 +53,7 @@ int mainAnalysis();
 int unsignedInt(){                  // 文法中的无符号整数
     if(result==USINTSY){
         // 将值取出来
-        constValue = IntValue;
+        unsignValue = IntValue;
 
         while(true){
             getsym();
@@ -80,7 +82,7 @@ int signedInt(){                    // 对应文法中的整数
 
     unsignedInt();
 
-    constValue *= symTag;
+    constValue = unsignValue * symTag;
 
     printf("This is a signed integer.\n");
     return 0;
@@ -95,7 +97,7 @@ int constDefine(){
                         if(result==IDSY){
                             //
                             //printf("1\n");
-                            constName = token;
+                        //    constName = token;
 
                             getsym();
                             if(result==EQUSY){
@@ -109,12 +111,14 @@ int constDefine(){
                                     tmp_count += 1;
 
                                     // 这里可以填符号表了
-                                    pushConstantTable(constName, 1, constValue);
+                                //    pushConstantTable(constName, 1, constValue);
+                                    pushConstantTable(IDname, 1, constValue);
 
                                     continue;
                                 }else if(result==SEMISY){
                                     // 这种情况下也要填符号表
-                                    pushConstantTable(constName, 1, constValue);
+                                //    pushConstantTable(constName, 1, constValue);
+                                    pushConstantTable(IDname, 1, constValue);
 
                                     break;
                                 }else{
@@ -135,7 +139,7 @@ int constDefine(){
                         while(true){
                             getsym();
                             if(result==IDSY){
-                                constName = token;
+                            //    constName = token;
 
                                 getsym();
                                 if(result==EQUSY){
@@ -147,11 +151,11 @@ int constDefine(){
                                         if(result==COMMASY){
                                             tmp_count += 1;
 
-                                            pushConstantTable(constName, 2, constValue);
+                                            pushConstantTable(IDname, 2, constValue);
                                             continue;
                                         }
                                         else if(result==SEMISY){
-                                            pushConstantTable(constName, 2, constValue);
+                                            pushConstantTable(IDname, 2, constValue);
                                             break;
                                         }else    break;
                                     }else {
@@ -216,7 +220,11 @@ int constState(){
 }
 
 int declareHead(){
+    int retType = 0;    //
+                        // 0: default | 1:int | 2:char
+
     if(result==INTSY){
+        retType = 1;
         getsym();
         if(result!=IDSY){
             error();
@@ -225,6 +233,7 @@ int declareHead(){
             getsym();
         }
     }else if(result==CHARSY){
+        retType = 2;
         getsym();
         if(result!=IDSY){
             error();
@@ -237,6 +246,13 @@ int declareHead(){
         return -1;
     }
 
+    // 在这里将有返回值函数定义的函数写入符号栈
+    globalOffset = 0;
+    globalFuncField = IDname;
+    globalFuncLevel = 1;
+    //
+    pushFuncTable(IDname, retType);
+
     printf("This is a head declaration.\n");
     return 0;
 }
@@ -244,10 +260,14 @@ int declareHead(){
 int varDefine(){
 //    printf("in varDefine 1\n");
 //    printf(">>>result=%d.\n", result);
+    int typeTag = 0;    // 0:default | 1:int | 2:char
     if(result!=INTSY&&result!=CHARSY){
         error();
         return -1;
     }
+
+    if(result==INTSY)   typeTag = 1;
+    else                typeTag = 2;
     // 开始识别标识符部分
 //    printf("in varDefine 2\n");
     getsym();
@@ -258,8 +278,10 @@ int varDefine(){
             return -1;
         }
 //        printf("in varDefine 3\n");
+
         getsym();
         if(result==LBRACSY){
+            // 数组变量声明
             getsym();
             unsignedInt();
 //            printf("in varDefine 4\n");
@@ -268,8 +290,14 @@ int varDefine(){
                 error();
                 return -1;
             }else{
+                //
+                pushArrayTable(IDname, typeTag, unsignValue, globalOffset);
+
                 getsym();
             }
+        }else{
+            // 普通变量声明
+             pushVarTable(IDname, typeTag, globalOffset, 0);
         }
         if(result==COMMASY){
 //            printf("in varDefine 6\n");
@@ -337,7 +365,10 @@ int varState(){
 
 int paraValueList(){
     while(true){
+        //
         expr();
+        //
+
         if(result==COMMASY){
             getsym();
             continue;
@@ -352,16 +383,24 @@ int paraValueList(){
 
 int paraList(){
     while(true){
+        int paraType = 0;   // 0:default | 1:int | 2;char
         if(result!=INTSY&&result!=CHARSY){
             error();
             return -1;
         }
+
+        if(result==INTSY)   paraType = 1;
+        else                paraType = 2;
+
         getsym();
         if(result!=IDSY){
             error();
             return -1;
         }
         getsym();
+
+        //
+        pushVarTable(IDname, paraType, globalOffset, 1);
 
         if(result==COMMASY){
             getsym();
@@ -403,12 +442,17 @@ int retValueFuncDefine(){
     }
     getsym();
 
+    //
+    globalFuncField = "Global";
+    globalFuncLevel = 0;
+//    globalOffset = 0;
+
     printf("This is function declaration with returned value.\n");
     return 0;
 }
 
 int unretValueFuncDefine(){
-    printf("in unretValueFuncDefine.\n");
+//    printf("in unretValueFuncDefine.\n");
     if(result!=VOIDSY){
         error();
         return -1;
@@ -418,6 +462,15 @@ int unretValueFuncDefine(){
         error();
         return -1;
     }
+
+    // 设置全局变量
+    globalOffset = 0;
+    globalFuncField = IDname;
+    globalFuncLevel = 1;
+
+    // 填入符号表
+    pushFuncTable(IDname, 3);
+
     getsym();
     // 处理值参数表部分（如果有）
     if(result==LPARSY){
@@ -444,6 +497,10 @@ int unretValueFuncDefine(){
         return -1;
     }
     getsym();
+
+    // 恢复全局变量
+    globalFuncField = "Global";
+    globalFuncLevel = 0;
 
     printf("This is a function declaration without return value.\n");
     return 0;
@@ -1006,6 +1063,13 @@ int mainAnalysis(){
         return -1;
     }
 //    printf("in main anal\n");
+    // 填入符号表
+    globalFuncField = "Main";
+    globalFuncLevel = 1;
+    globalOffset = 0;
+
+    pushFuncTable("Main", 4);   // 4: main
+
     getsym();
     if(result!=LPARSY){
         error();

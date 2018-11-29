@@ -22,6 +22,7 @@ int IntValue = 0;
 char strings[200] = "";
 char symbol[10] = "";
 char token[200] = "";
+char IDname[200] = "";
 
 
 FILE* backupFile = fopen("test.txt", "r");;
@@ -90,6 +91,8 @@ int myGetsym(){
 		int resultValue = isReserved();
 		if(resultValue == 0){
 			strcpy(symbol, "IDSY");
+			// use global name to save ID-name
+            strcpy(IDname, token);
 			result = 20;
 			return 20;
 		}

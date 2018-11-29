@@ -6,10 +6,13 @@
 #include "getsym.h"
 #include "syntaxAnalysis.h"
 #include "error.h"
+#include "symbolTable.h"
 
 FILE* fp;
 
 int main(){
+//    globalFuncField = "Global";
+
 	char path[1024] = "";
 //	printf("please input a file path:\n");
 //	scanf("%s",path);
@@ -25,7 +28,7 @@ int main(){
     getsym();
     programAnalysis();
 
-
+    printSymbolTable();
 
 	return 0;
 }

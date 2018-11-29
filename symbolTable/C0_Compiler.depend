@@ -9,7 +9,7 @@
 	<iostream>
 	<string>
 
-1543233684 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\main.cpp
+1543469015 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\main.cpp
 	<iostream>
 	<stdio.h>
 	<ctype.h>
@@ -17,14 +17,15 @@
 	"getsym.h"
 	"syntaxAnalysis.h"
 	"error.h"
+	"symbolTable.h"
 
-1543390134 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.h
+1543410350 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.h
 
-1543386482 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.h
+1543459699 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.h
 	<vector>
 	"symbolTable.h"
 
-1543390200 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
+1543474858 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -47,18 +48,18 @@
 	"getsym.h"
 	"error.h"
 
-1543391819 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
+1543410387 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
 	<stdio.h>
 	<string.h>
 	"getsym.h"
 	"error.h"
 
-1543390059 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
+1543468213 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
 	<stdio.h>
 	<string.h>
 	<iostream>
 
-1543387695 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
+1543469554 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
 	<stdio.h>
 	<string.h>
 	"symbolTable.h"
