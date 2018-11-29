@@ -19,7 +19,11 @@ int unsignValue = 0;
     // 常量
 int constValue = 0;
     // 偏移量
-int globalOffset = 0;
+int globalOffset = 1;
+
+// 语义分析
+    //
+int retExist = 0;
 
 
 // 函数声明区
@@ -434,6 +438,7 @@ int retValueFuncDefine(){
     }
 //    printf("pass tag 2\n");
     getsym();
+    retExist = 0;
     complexSentence();
 //    printf(">>>>>>>>>>>result = %d\n", result);
     if(result!=RBRACESY){   // "}"
@@ -446,6 +451,13 @@ int retValueFuncDefine(){
     globalFuncField = "Global";
     globalFuncLevel = 0;
 //    globalOffset = 0;
+
+    // 语义分析，一定要有返回语句
+    if(retExist==0){
+        error();
+        printf("No return sentence in retFuncDefinition.\n");
+        return -1;
+    }
 
     printf("This is function declaration with returned value.\n");
     return 0;
@@ -489,6 +501,7 @@ int unretValueFuncDefine(){
     }
     getsym();
  //   printf("check void complex 1.\n");
+    retExist = 0;
     complexSentence();
 //    printf("check void complex 2.\n");
 //    printf("________________result = %d\n", result);
@@ -501,6 +514,12 @@ int unretValueFuncDefine(){
     // 恢复全局变量
     globalFuncField = "Global";
     globalFuncLevel = 0;
+
+    if(retExist!=0){
+        error();
+        printf("No return sentence in retFuncDefinition.\n");
+        return -1;
+    }
 
     printf("This is a function declaration without return value.\n");
     return 0;
@@ -554,7 +573,7 @@ int sentence(){
             break;
         case(RETSY):            // 返回语句
             retSentence();
-//            printf(">>>>>>>>>>>>>>>>>>>>>>>result=%d\n",result);
+
             if(result!=SEMISY){
                 error();
                 return -1;
@@ -980,10 +999,12 @@ int retSentence(){
             error();
             return -1;
         }else{
-
+            retExist += 1;
         }
     }
     getsym();
+
+
     printf("This is a return sentence.\n");
     return 0;
 }
