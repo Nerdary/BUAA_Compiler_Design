@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <string.h>
+#include <string>
 
 #include "symbolTable.h"
 #include "syntaxAnalysis.h"
@@ -8,6 +8,7 @@
 int globalFuncLevel = 0;            // 全局为0 main 为1
 string globalFuncField = "Global";  // 初始设置为全局
 
+using namespace std;
 
 // 常量 int char
 void pushConstantTable(string ID, int type, int value){
@@ -26,6 +27,12 @@ void pushConstantTable(string ID, int type, int value){
     };
 
     globalOffset += 1;
+
+    // check
+    if(checkDuplicate(ID)!=0){
+        symbolTableError(errDuplicate);
+        return ;
+    }
 
     symbolTable.push_back(tmp);
     printf("Push constant:%s value:%d in symbolTable.\n", ID.c_str(), value);
@@ -55,6 +62,12 @@ void pushArrayTable(string ID, int type, int length, int offset){
 
     globalOffset += 1;
 
+    // check
+    if(checkDuplicate(ID)!=0){
+        symbolTableError(errDuplicate);
+        return ;
+    }
+
     symbolTable.push_back(tmp);
     printf("Push array:%s length:%d in symbolTable.\n", ID.c_str(), length);
 }
@@ -77,6 +90,12 @@ void pushFuncTable(string ID, int retType){
 
     globalOffset += 1;
 
+    // check
+    if(checkDuplicate(ID)!=0){
+        symbolTableError(errDuplicate);
+        return ;
+    }
+
     symbolTable.push_back(tmp);
     printf("Push function:%s type:%d in symbolTable.\n", ID.c_str(), retType);
 }
@@ -97,8 +116,29 @@ void pushVarTable(string ID, int type, int offset, int isPara){
 
     globalOffset += 1;
 
+    // check
+    if(checkDuplicate(ID)!=0){
+        symbolTableError(errDuplicate);
+        return ;
+    }
+
     symbolTable.push_back(tmp);
     printf("Push variable:%s type:%d isPara:%d in symbolTable.\n", ID.c_str(), type, isPara);
+}
+
+int checkDuplicate(string ID){
+    int i, cntTable = symbolTable.size();
+    for(i=0;i<cntTable;i++){
+//        if(strcmp(symbolTable.at(i).ID.c_str(), ID)==0
+        if(symbolTable.at(i).ID==ID
+        //    && symbolTable.at(i).IDobject==object
+//            && strcmp(symbolTable.at(i).field, globalFuncField)){
+            && symbolTable.at(i).field==globalFuncField){
+            // 标识符相同，作用域相同，直接报错
+            return -1;
+        }
+    }
+    return 0;
 }
 
 void printSymbolTable(){
@@ -118,4 +158,39 @@ void printSymbolTable(){
         printf("%d\t", symbolTable.at(i).funcType);
         printf("%d\n", symbolTable.at(i).isPara);
     }
+}
+
+int searchName2Type(string Name, int mode){
+    // 输入标识符ID(name)返回标识符类型
+    // update: 修改后也可以查函数的返回值类型了 mode: 0:others | 1:functions
+    // 0:default | 1:int | 2:char | 3:else/unknown
+    int i, cntTable = symbolTable.size();
+    switch(mode){
+    case(0):
+        for(i=0;i<cntTable;i++){
+            if(symbolTable.at(i).ID==Name){
+                // 名字相同
+                if(symbolTable.at(i).field==globalFuncField){
+                    // 作用域相同
+                    return symbolTable.at(i).IDType;
+                }else if(symbolTable.at(i).level<globalFuncLevel){
+                    // 作用域不同，但有全局定义
+                    return symbolTable.at(i).IDType;
+                }else   continue;
+            }
+        }
+        printf("No such var in symbol table, fail to trans name to type.\n");
+        break;
+    case(1):
+        for(i=0;i<cntTable;i++){
+            if(symbolTable.at(i).ID==Name==0
+               && symbolTable.at(i).IDobject==3)
+               return symbolTable.at(i).funcType;
+        }
+        printf("No such func in symbol table, fail to trans name to type.\n");
+        break;
+    default:    break;
+    }
+
+    return 0;
 }

@@ -25,6 +25,15 @@ int globalOffset = 1;
     //
 int retExist = 0;
 
+// 值计算
+//int factorValue = 0;
+//int termValue = 0;
+//int exprValue = 0;
+// 其实只需要类型就可以进行语义分析了
+int factorType = 0;
+int termType = 0;
+int exprType = 0;   // 0:default | 1:int | 2:char | 3:else
+
 
 // 函数声明区
 int unsignedInt();
@@ -1131,6 +1140,10 @@ int factor(){
     //    printf("factor-debug branch-1\n");
         getsym();
         expr();                     // 表达式
+
+        //语义分析
+        factorType = exprType;
+
         if(result==RPARSY){         // result = ")"
             getsym();
         }else{
@@ -1146,17 +1159,21 @@ int factor(){
             if(result==RBRACSY){
         //        printf("factor-debug branch-2-2\n");
                 getsym();
+
+                factorType = searchName2Type(IDname, 0);
             }else {
                 error();
                 return -1;
             }
-        }else if(result==LPARSY){   // result = "("
+        }else if(result==LPARSY){   // result = "(" 有返回值函数调用
         //    printf("factor-debug branch-3\n");
             getsym();
             paraValueList();             // 值参数表
-            if(result==RPARSY)      // result = ")"
+            if(result==RPARSY){      // result = ")"
                 getsym();
-            else {
+
+                factorType = searchName2Type(IDname, 0);
+            }else {
                 error();
                 return -1;
             }
@@ -1173,12 +1190,15 @@ int factor(){
             return -1;
         }else{
             getsym();
+
+            factorType = 1;
         }
     }else if(result==USINTSY){
         getsym();
+        factorType = 1;
     }else if(result==ACHARSY){
-            getsym();               // 字符 ACHARSY
-
+        getsym();               // 字符 ACHARSY
+        factorType = 2;
     }else{
         error();
         return -1;
@@ -1189,20 +1209,22 @@ int factor(){
 }
 
 int term(){
-//    printf(">>>>> result = %d\n", result);
     if(factor()==-1){
         error();
         return -1;
     }
+    termType = factorType;
+
     while(true){
-//        printf("term 1 result=%d\n", result);
         if(result==STARSY||result==DIVISY){
             getsym();
-//            printf("term 2 result=%d\n", result);
             if(factor()==-1){
                 error();
                 return -1;
             }
+
+            termType = 1;   // 只要参与运算了就自动转化为int型
+
         }else   break;
 
     }
@@ -1213,16 +1235,29 @@ int term(){
 
 int expr(){
     // 跳过加法运算符，如果有
+    int opTag = 0;
     if(result==PLUSSY||result==MINUSSY){
+        opTag = 1;
         getsym();
     }
 
     term();
+    // 如果有正负号，则第一个项不能是字符型
+    if(termType==2 && opTag==1){
+        printf("TMP: +|- char not valid in expr.\n");
+        error();
+        return -1;
+    }
+
+    exprType = termType;
+
     while(true){
 //        printf("expr result = %d\n", result);
         if(result==PLUSSY||result==MINUSSY){
             getsym();
             term();
+            // 参与运算，则为int
+            exprType = 1;
         }else   break;
     }
 

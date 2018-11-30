@@ -36,3 +36,15 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
 void error(){
     printf("an temporary error output.\n");
 }
+
+void symbolTableError(TableError errorCode){
+    switch(errorCode){
+        case(errDuplicate):
+            printf("Theres already an ele with same ID and field in the table.\n");
+            break;
+        default:
+            printf("An unknown error might have occurred.\n");
+            break;
+
+    }
+}

@@ -63,6 +63,10 @@ void pushFuncTable(string ID, int retType);
 // 变量、形参
 void pushVarTable(string ID, int type, int offset, int isPara);
 
+int checkDuplicate(string ID);
+
 void printSymbolTable();
+
+int searchName2Type(string Name, int mode);
 
 #endif // SYMBOLTABLE_H_INCLUDED

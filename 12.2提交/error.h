@@ -26,8 +26,13 @@ enum SyntaxError{
     errLackSemiSymbol,      // 没有出现预期的分号
 };
 
+enum TableError{
+    errDuplicate,           // 重复定义
+};
+
 extern void LexicalAnalysisError(LexicalError errorCode, int line);
 extern void SyntaxAnalysisError(SyntaxError errorCode, int line);
+extern void symbolTableError(TableError errorCode);
 
 extern void error();
 
