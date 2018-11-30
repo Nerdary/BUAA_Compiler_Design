@@ -42,6 +42,12 @@ void symbolTableError(TableError errorCode){
         case(errDuplicate):
             printf("Theres already an ele with same ID and field in the table.\n");
             break;
+        case(errArrayLength):
+            printf("Find an ele but it is not an array, cannot get length.\n");
+            break;
+        case(errArrayOutOfRange):
+            printf("The index is out of the range of array.\n");
+            break;
         default:
             printf("An unknown error might have occurred.\n");
             break;

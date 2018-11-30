@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1543235760 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.cpp
+1543560965 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
 	"error.h"
 
-1543235741 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.h
+1543561021 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.h
 	<iostream>
 	<string>
 
@@ -25,7 +25,7 @@
 	<vector>
 	"symbolTable.h"
 
-1543474858 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
+1543562367 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -48,20 +48,20 @@
 	"getsym.h"
 	"error.h"
 
-1543410387 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
+1543561638 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
 	<stdio.h>
 	<string.h>
 	"getsym.h"
 	"error.h"
 
-1543468213 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
+1543561050 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
 	<stdio.h>
 	<string.h>
 	<iostream>
 
-1543475255 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
+1543562589 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
 	<stdio.h>
-	<string.h>
+	<string>
 	"symbolTable.h"
 	"syntaxAnalysis.h"
 	"error.h"

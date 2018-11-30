@@ -69,4 +69,6 @@ void printSymbolTable();
 
 int searchName2Type(string Name, int mode);
 
+int getArrayLength(string ID);
+
 #endif // SYMBOLTABLE_H_INCLUDED

@@ -183,7 +183,7 @@ int searchName2Type(string Name, int mode){
         break;
     case(1):
         for(i=0;i<cntTable;i++){
-            if(symbolTable.at(i).ID==Name==0
+            if(symbolTable.at(i).ID==Name
                && symbolTable.at(i).IDobject==3)
                return symbolTable.at(i).funcType;
         }
@@ -193,4 +193,25 @@ int searchName2Type(string Name, int mode){
     }
 
     return 0;
+}
+
+int getArrayLength(string ID){
+    int i, cntTable = symbolTable.size();
+    for(i=0;i<cntTable;i++){
+        if(symbolTable.at(i).ID==ID){
+            if(symbolTable.at(i).field==globalFuncField
+               | symbolTable.at(i).level < globalFuncLevel){
+                if(symbolTable.at(i).IDobject!=4){
+                    // ²»ÊÇarray
+                    symbolTableError(errArrayLength);
+                    return -1;
+                }
+                return symbolTable.at(i).length;
+            }
+        }
+
+
+    }
+
+    return -1;
 }

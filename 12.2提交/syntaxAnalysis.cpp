@@ -34,6 +34,13 @@ int factorType = 0;
 int termType = 0;
 int exprType = 0;   // 0:default | 1:int | 2:char | 3:else
 
+// 数组越界检查，用两个变量来记一下值和tag
+int checkArrayValue = 0;
+//int checkArrayTag = 0;
+//
+int exprCountTerm = 0;
+int termCountFactor = 0;
+
 
 // 函数声明区
 int unsignedInt();
@@ -304,6 +311,7 @@ int varDefine(){
                 return -1;
             }else{
                 //
+            //    printf("CHECK: unsignedValue:%d\n", unsignValue);
                 pushArrayTable(IDname, typeTag, unsignValue, globalOffset);
 
                 getsym();
@@ -526,7 +534,7 @@ int unretValueFuncDefine(){
 
     if(retExist!=0){
         error();
-        printf("No return sentence in retFuncDefinition.\n");
+        printf("Return sentence in unretFunc Definition.\n");
         return -1;
     }
 
@@ -593,13 +601,13 @@ int sentence(){
         case(IDSY):             // 两种情况，函数调用或赋值语句
             {
                 int senTag = 0;
+
                 recordRead();
                 getsym();
                 if(result==LPARSY || result==SEMISY)  senTag = 1;
                 else if(result==EQUSY)    senTag = 2;
+                else if(result==LBRACSY)    senTag = 3;
                 resetRead();
-
-
 
                 if(senTag==1){              // 函数调用
                     retValueFuncCall();
@@ -619,6 +627,16 @@ int sentence(){
                         getsym();
                     }
                     break;
+                }else if(senTag==3){        // 数组元素赋值语句
+                    assignSentence();
+                    if(result!=SEMISY){
+                        error();
+                        return -1;
+                    }else{
+                        getsym();
+                    }
+                    break;
+
                 }else{
                     error();
                     return -1;
@@ -875,8 +893,20 @@ int assignSentence(){
     if(result==LBRACSY){
         getsym();
         expr();
+
+        // 检查数组越界
+        if(termCountFactor==1 && exprCountTerm==1){
+//            printf(">>> check number1:%d\n", checkArrayValue);
+            int tableLength = getArrayLength(IDname);
+//            printf(">>> check number2:%d\n", tableLength);
+            if(checkArrayValue<0 | checkArrayValue>=tableLength){
+                symbolTableError(errArrayOutOfRange);
+                return -1;
+            }
+        }
+
         if(result!=RBRACSY){
-            error();
+            error();retExist += 1;
             return -1;
         }else   getsym();
     }
@@ -1008,12 +1038,12 @@ int retSentence(){
             error();
             return -1;
         }else{
-            retExist += 1;
+
         }
     }
     getsym();
 
-
+    retExist += 1;
     printf("This is a return sentence.\n");
     return 0;
 }
@@ -1156,6 +1186,9 @@ int factor(){
         //    printf("factor-debug branch-2\n");
             getsym();
             expr();                 // 表达式
+
+
+
             if(result==RBRACSY){
         //        printf("factor-debug branch-2-2\n");
                 getsym();
@@ -1183,18 +1216,25 @@ int factor(){
 
         }
     }else if(result==PLUSSY || result==MINUSSY){
+        // 判断一下符号
+        int resultTag = 1;
+        if(result==MINUSSY) resultTag = -1;
+
         getsym();
         // 这里才是普通的“整数”分支
         if(result!=USINTSY){    // 有符号整数
             error();
             return -1;
         }else{
+            checkArrayValue = IntValue;
+            checkArrayValue *= resultTag;
             getsym();
 
             factorType = 1;
         }
     }else if(result==USINTSY){
         getsym();
+        checkArrayValue = IntValue;
         factorType = 1;
     }else if(result==ACHARSY){
         getsym();               // 字符 ACHARSY
@@ -1204,11 +1244,15 @@ int factor(){
         return -1;
     }
 
+    // termCountFactor只是用来判断数组越界的，所以expr嵌套定义没有关系
+    termCountFactor += 1;
     printf("This is a factor.\n");
     return 0;
 }
 
 int term(){
+    termCountFactor = 0;
+
     if(factor()==-1){
         error();
         return -1;
@@ -1229,11 +1273,16 @@ int term(){
 
     }
 
+    exprCountTerm += 1;
     printf("This is a term.\n");
     return 0;
 }
 
 int expr(){
+    exprCountTerm = 0;
+
+//    checkArrayTag = 0;  // 用来检查数组越界，
+                        // 只有表达式递归下去是一个整数才需要检查
     // 跳过加法运算符，如果有
     int opTag = 0;
     if(result==PLUSSY||result==MINUSSY){

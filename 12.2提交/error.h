@@ -28,6 +28,8 @@ enum SyntaxError{
 
 enum TableError{
     errDuplicate,           // 重复定义
+    errArrayLength,         // 查找array长度出错
+    errArrayOutOfRange,     // 数组索引越界
 };
 
 extern void LexicalAnalysisError(LexicalError errorCode, int line);
