@@ -3,6 +3,8 @@
 
 #include "getsym.h"
 #include "error.h"
+#include "syntaxAnalysis.h"
+#include "midCode.h"
 
 //
 //void clearToken();
@@ -288,11 +290,22 @@ int myGetsym(){
 	else if(a=='{'){
 		strcpy(symbol, "LBRACESY");
 		result = 42;
-		return 42;
+		// 大括号入栈
+//		stackBrace.push_back('{');
+//		return 42;
 	}
 	else if(a=='}'){
 		strcpy(symbol, "RBRACESY");
 		result = 43;
+		// 对符号栈进行操作
+//		char last = stackBrace.back();
+//		if(last=='{')   stackBrace.pop_back();
+//		else    printf("STACK BRACE ERROR: not match.\n");
+//		// 然后判断是否已经全部出栈
+//		if(stackBrace.size()==0){
+//            globalMidCodeInFunc = 0;
+//		}
+
 		return 43;
 	}
 	else if(a=='['){

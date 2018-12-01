@@ -11,7 +11,7 @@ string globalFuncField = "Global";  // 初始设置为全局
 using namespace std;
 
 // 常量 int char
-void pushConstantTable(string ID, int type, int value){
+int pushConstantTable(string ID, int type, int value){
 
     symbolTableItem tmp = {
         ID,                 // ID name
@@ -31,14 +31,15 @@ void pushConstantTable(string ID, int type, int value){
     // check
     if(checkDuplicate(ID)!=0){
         symbolTableError(errDuplicate);
-        return ;
+        return -1;
     }
 
     symbolTable.push_back(tmp);
     printf("Push constant:%s value:%d in symbolTable.\n", ID.c_str(), value);
+    return 0;
 }
 // 数组
-void pushArrayTable(string ID, int type, int length, int offset){
+int pushArrayTable(string ID, int type, int length, int offset){
 /*
     arrayTableItem atmp = {
         type,
@@ -65,14 +66,15 @@ void pushArrayTable(string ID, int type, int length, int offset){
     // check
     if(checkDuplicate(ID)!=0){
         symbolTableError(errDuplicate);
-        return ;
+        return -1;
     }
 
     symbolTable.push_back(tmp);
     printf("Push array:%s length:%d in symbolTable.\n", ID.c_str(), length);
+    return 0;
 }
 // 函数声明
-void pushFuncTable(string ID, int retType){
+int pushFuncTable(string ID, int retType){
     // level & field 不在这里设置
 
     symbolTableItem tmp = {
@@ -93,14 +95,15 @@ void pushFuncTable(string ID, int retType){
     // check
     if(checkDuplicate(ID)!=0){
         symbolTableError(errDuplicate);
-        return ;
+        return -1;
     }
 
     symbolTable.push_back(tmp);
     printf("Push function:%s type:%d in symbolTable.\n", ID.c_str(), retType);
+    return 0;
 }
 // 变量、形参
-void pushVarTable(string ID, int type, int offset, int isPara){
+int pushVarTable(string ID, int type, int offset, int isPara){
     symbolTableItem tmp = {
         ID,                 // ID name
         0,                  // value
@@ -119,11 +122,12 @@ void pushVarTable(string ID, int type, int offset, int isPara){
     // check
     if(checkDuplicate(ID)!=0){
         symbolTableError(errDuplicate);
-        return ;
+        return -1;
     }
 
     symbolTable.push_back(tmp);
     printf("Push variable:%s type:%d isPara:%d in symbolTable.\n", ID.c_str(), type, isPara);
+    return 0;
 }
 
 int checkDuplicate(string ID){
@@ -200,7 +204,7 @@ int getArrayLength(string ID){
     for(i=0;i<cntTable;i++){
         if(symbolTable.at(i).ID==ID){
             if(symbolTable.at(i).field==globalFuncField
-               | symbolTable.at(i).level < globalFuncLevel){
+               || symbolTable.at(i).level < globalFuncLevel){
                 if(symbolTable.at(i).IDobject!=4){
                     // 不是array
                     symbolTableError(errArrayLength);

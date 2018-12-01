@@ -55,13 +55,13 @@ struct funcTableItem{
 
 
 // 常量 int char
-void pushConstantTable(string ID, int type, int value);
+int pushConstantTable(string ID, int type, int value);
 // 数组
-void pushArrayTable(string ID, int type, int length, int offset);
+int pushArrayTable(string ID, int type, int length, int offset);
 // 函数声明
-void pushFuncTable(string ID, int retType);
+int pushFuncTable(string ID, int retType);
 // 变量、形参
-void pushVarTable(string ID, int type, int offset, int isPara);
+int pushVarTable(string ID, int type, int offset, int isPara);
 
 int checkDuplicate(string ID);
 

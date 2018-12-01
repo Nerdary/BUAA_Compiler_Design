@@ -7,6 +7,7 @@
 #include "syntaxAnalysis.h"
 #include "error.h"
 #include "symbolTable.h"
+#include "midCode.h"
 
 FILE* fp;
 
@@ -29,6 +30,8 @@ int main(){
     programAnalysis();
 
     printSymbolTable();
+
+    printMidCode();
 
 	return 0;
 }

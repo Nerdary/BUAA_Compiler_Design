@@ -9,7 +9,7 @@
 	<iostream>
 	<string>
 
-1543469015 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\main.cpp
+1543588042 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\main.cpp
 	<iostream>
 	<stdio.h>
 	<ctype.h>
@@ -18,14 +18,15 @@
 	"syntaxAnalysis.h"
 	"error.h"
 	"symbolTable.h"
+	"midCode.h"
 
 1543410350 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.h
 
-1543459699 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.h
+1543628341 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.h
 	<vector>
 	"symbolTable.h"
 
-1543562367 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
+1543628708 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -35,6 +36,7 @@
 	"symbolTable.h"
 	"syntaxAnalysis.h"
 	"error.h"
+	"midCode.h"
 
 1543224339 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\error.cpp
 	<stdio.h>
@@ -48,21 +50,41 @@
 	"getsym.h"
 	"error.h"
 
-1543561638 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
+1543628921 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\getsym.cpp
 	<stdio.h>
 	<string.h>
 	"getsym.h"
 	"error.h"
+	"syntaxAnalysis.h"
+	"midCode.h"
 
-1543561050 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
+1543574406 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.h
 	<stdio.h>
 	<string.h>
 	<iostream>
 
-1543562589 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
+1543574387 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\symboltable.cpp
 	<stdio.h>
 	<string>
 	"symbolTable.h"
 	"syntaxAnalysis.h"
 	"error.h"
+
+1543627309 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\midcode.h
+	<stdio.h>
+	<string>
+	<iostream>
+
+1543628802 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\midcode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	<stdlib.h>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
 

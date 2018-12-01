@@ -8,10 +8,14 @@
 #include "symbolTable.h"
 #include "syntaxAnalysis.h"
 #include "error.h"
+#include "midCode.h"
 
 vector<symbolTableItem> symbolTable;
 //vector<arrayTableItem> arrayTable;
 //vector<funcTableItem> funcTable;
+
+// 栈区
+vector<char> stackBrace;    // 大括号栈，用于函数定义判断
 
 // 局部变量区
     // 无符号整数值
@@ -115,9 +119,6 @@ int constDefine(){
                     while(true){
                         getsym();
                         if(result==IDSY){
-                            //
-                            //printf("1\n");
-                        //    constName = token;
 
                             getsym();
                             if(result==EQUSY){
@@ -126,22 +127,37 @@ int constDefine(){
                                 signedInt();
                                 //printf("check: result=%d\n", result);
                                 // 这里signedInt已经预读了下一个symbol
+
+                                int pushResult = 0;
+                                pushResult = pushConstantTable(IDname, 1, constValue);
+                                if(pushResult==-1){
+                                    // 说明语义分析没过，变量名重复了
+                                }else{
+                                    pushMidCodeConst(1, IDname, constValue);
+                                }
+
                                 if(result==COMMASY){
                                     //printf("3\n");
                                     tmp_count += 1;
 
                                     // 这里可以填符号表了
                                 //    pushConstantTable(constName, 1, constValue);
-                                    pushConstantTable(IDname, 1, constValue);
+
 
                                     continue;
                                 }else if(result==SEMISY){
                                     // 这种情况下也要填符号表
                                 //    pushConstantTable(constName, 1, constValue);
-                                    pushConstantTable(IDname, 1, constValue);
+//                                    int pushResult = 0;
+//                                    pushResult = pushConstantTable(IDname, 1, constValue);
+//                                    if(pushResult==-1){
+//                                        // 说明语义分析没过，变量名重复了
+//
+//                                    }else{
+//                                        pushMidCodeConst(1, IDname, constValue);
+//                                    }
 
-                                    break;
-                                }else{
+
                                     break;
                                 }
                             }else{
@@ -167,15 +183,23 @@ int constDefine(){
                                     if(result==ACHARSY){
                                         constValue = strings[0];
 
+                                        int pushResult = 0;
+                                        pushResult = pushConstantTable(IDname, 2, constValue);
+                                        if(pushResult==-1){
+                                            // 说明语义分析没过，变量名重复了
+                                        }else{
+                                            pushMidCodeConst(2, IDname, constValue);
+                                        }
+
                                         getsym();
                                         if(result==COMMASY){
                                             tmp_count += 1;
 
-                                            pushConstantTable(IDname, 2, constValue);
+                                        //    pushConstantTable(IDname, 2, constValue);
                                             continue;
                                         }
                                         else if(result==SEMISY){
-                                            pushConstantTable(IDname, 2, constValue);
+                                        //    pushConstantTable(IDname, 2, constValue);
                                             break;
                                         }else    break;
                                     }else {
@@ -312,13 +336,20 @@ int varDefine(){
             }else{
                 //
             //    printf("CHECK: unsignedValue:%d\n", unsignValue);
-                pushArrayTable(IDname, typeTag, unsignValue, globalOffset);
+                if(pushArrayTable(IDname, typeTag, unsignValue, globalOffset)!=-1){
+                    // 成功登记入符号表
+                    pushMidCodeArray(typeTag, IDname, unsignValue);
+                }
 
                 getsym();
             }
         }else{
             // 普通变量声明
-             pushVarTable(IDname, typeTag, globalOffset, 0);
+            int pushResult = 0;
+            pushResult = pushVarTable(IDname, typeTag, globalOffset, 0);
+            if(pushResult!=-1){
+                pushMidCodeVar(typeTag, IDname);
+            }
         }
         if(result==COMMASY){
 //            printf("in varDefine 6\n");
@@ -453,7 +484,10 @@ int retValueFuncDefine(){
         error();
         return -1;
     }
-//    printf("pass tag 2\n");
+    globalMidCodeInFunc = 1;
+    // 符号栈的操作 stack brace
+    stackBrace.push_back('{');
+
     getsym();
     retExist = 0;
     complexSentence();
@@ -516,6 +550,10 @@ int unretValueFuncDefine(){
         error();
         return -1;
     }
+    globalMidCodeInFunc = 1;
+    //
+    stackBrace.push_back('{');
+
     getsym();
  //   printf("check void complex 1.\n");
     retExist = 0;
@@ -526,6 +564,19 @@ int unretValueFuncDefine(){
         error();
         return -1;
     }
+
+    if(stackBrace.back()=='{'){
+        stackBrace.pop_back();
+    }else{
+        printf("STACK BRACE ERROR: not match.\n");
+    }
+
+    if(stackBrace.back()=='{'){
+        stackBrace.pop_back();
+    }else{
+        printf("STACK BRACE ERROR: not match.\n");
+    }
+
     getsym();
 
     // 恢复全局变量
@@ -557,6 +608,9 @@ int sentence(){
             loopSentence();
             break;
         case(LBRACESY):         // 语句列
+            // 对符号栈操作
+            stackBrace.push_back('{');
+
 //            printf("this is where the bug might be for a while.\n");
             getsym();
             sentenceSequence();
@@ -564,6 +618,12 @@ int sentence(){
                 error();
                 return -1;
             }else{
+                if(stackBrace.back()=='{'){
+                    stackBrace.pop_back();
+                }else{
+                    printf("STACK BRACE ERROR: not match.\n");
+                }
+
                 getsym();
             }
             break;
@@ -899,7 +959,7 @@ int assignSentence(){
 //            printf(">>> check number1:%d\n", checkArrayValue);
             int tableLength = getArrayLength(IDname);
 //            printf(">>> check number2:%d\n", tableLength);
-            if(checkArrayValue<0 | checkArrayValue>=tableLength){
+            if(checkArrayValue<0 || checkArrayValue>=tableLength){
                 symbolTableError(errArrayOutOfRange);
                 return -1;
             }
@@ -1148,6 +1208,8 @@ int mainAnalysis(){
         return -1;
     }
 //    printf("in main anal\n");
+    stackBrace.push_back('{');
+
     getsym();
 //    printf("check main complex 1.\n");
     complexSentence();
@@ -1158,6 +1220,12 @@ int mainAnalysis(){
         return -1;
     }
 //    printf("in main anal\n");
+    if(stackBrace.back()=='{'){
+        stackBrace.pop_back();
+    }else{
+        printf("STACK BRACE ERROR: not match.\n");
+    }
+
     getsym();
 
     printf("This is a main function.\n");
@@ -1187,6 +1255,16 @@ int factor(){
             getsym();
             expr();                 // 表达式
 
+            // 检查数组越界
+            if(termCountFactor==1 && exprCountTerm==1){
+//               printf(">>> check number1:%d\n", checkArrayValue);
+                int tableLength = getArrayLength(IDname);
+//                printf(">>> check number2:%d\n", tableLength);
+                if(checkArrayValue<0 || checkArrayValue>=tableLength){
+                    symbolTableError(errArrayOutOfRange);
+                    return -1;
+                }
+            }
 
 
             if(result==RBRACSY){
