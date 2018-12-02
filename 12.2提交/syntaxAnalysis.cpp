@@ -15,7 +15,8 @@ vector<symbolTableItem> symbolTable;
 //vector<funcTableItem> funcTable;
 
 // 栈区
-vector<char> stackBrace;    // 大括号栈，用于函数定义判断
+vector<char> stackBrace;        // 大括号栈，用于函数定义判断
+vector<int> stackCalc;          // 计算表达式用的运算栈，用来存储将要进行运算的$t的值
 
 // 局部变量区
     // 无符号整数值
@@ -30,6 +31,7 @@ int globalOffset = 1;
 int retExist = 0;
 
 // 值计算
+int tCount = 0;
 //int factorValue = 0;
 //int termValue = 0;
 //int exprValue = 0;
@@ -44,6 +46,9 @@ int checkArrayValue = 0;
 //
 int exprCountTerm = 0;
 int termCountFactor = 0;
+
+string currentFuncID;
+string callFuncID;
 
 
 // 函数声明区
@@ -297,6 +302,9 @@ int declareHead(){
     //
     pushFuncTable(IDname, retType);
 
+    pushMidCodeFuncHead(retType, IDname);
+    currentFuncID = IDname;
+
     printf("This is a head declaration.\n");
     return 0;
 }
@@ -385,9 +393,9 @@ int varState(){
         int varStateTag = 0;
         recordRead();
         if(result==INTSY||result==CHARSY){
-            getsym();
+            getsym(1);
             if(result==IDSY){
-                getsym();
+                getsym(1);
                 if(result==LPARSY || result==LBRACESY) varStateTag = 1;
             }else   varStateTag = 1;
         }else   varStateTag = 1;
@@ -420,6 +428,7 @@ int paraValueList(){
         //
         expr();
         //
+        pushMidCodePara(tCount - 1);
 
         if(result==COMMASY){
             getsym();
@@ -453,6 +462,7 @@ int paraList(){
 
         //
         pushVarTable(IDname, paraType, globalOffset, 1);
+        pushMidCodePara(paraType, IDname);
 
         if(result==COMMASY){
             getsym();
@@ -468,6 +478,7 @@ int paraList(){
 
 int retValueFuncDefine(){
     declareHead();
+
     // 处理参数表部分（如果有）
 //    printf("pass declare head\n");
     if(result==LPARSY){
@@ -510,6 +521,7 @@ int retValueFuncDefine(){
         return -1;
     }
 
+    pushMidCodeFuncTail(currentFuncID);
     printf("This is function declaration with returned value.\n");
     return 0;
 }
@@ -533,6 +545,8 @@ int unretValueFuncDefine(){
 
     // 填入符号表
     pushFuncTable(IDname, 3);
+    pushMidCodeFuncHead(3, IDname);
+    currentFuncID = IDname;
 
     getsym();
     // 处理值参数表部分（如果有）
@@ -589,6 +603,7 @@ int unretValueFuncDefine(){
         return -1;
     }
 
+    pushMidCodeFuncTail(currentFuncID);
     printf("This is a function declaration without return value.\n");
     return 0;
 }
@@ -660,16 +675,20 @@ int sentence(){
             break;
         case(IDSY):             // 两种情况，函数调用或赋值语句
             {
+                string tmpFuncName = IDname; // 可能不是函数ID
+            //    printf(">>>>>tmpFuncName:%s\n", tmpFuncName.c_str());
+
                 int senTag = 0;
 
                 recordRead();
-                getsym();
+                getsym(1);
                 if(result==LPARSY || result==SEMISY)  senTag = 1;
                 else if(result==EQUSY)    senTag = 2;
                 else if(result==LBRACSY)    senTag = 3;
                 resetRead();
 
                 if(senTag==1){              // 函数调用
+                    callFuncID = tmpFuncName;
                     retValueFuncCall();
                     if(result!=SEMISY){
                         error();
@@ -761,11 +780,11 @@ int complexSentence(){
     if(result!=INTSY&&result!=CHARSY){
         complexTag = 1;
     }
-    getsym();
+    getsym(1);
     if(result!=IDSY){
         complexTag = 1;
     }
-    getsym();
+    getsym(1);
     if(result==LBRACSY){
         complexTag = 1;
     }
@@ -820,10 +839,17 @@ int condSentence(){
 
 int condition(){
     expr();
+    int expr1Count = tCount;
     if(result==LESSSY||result==LOESY||result==MORESY||
        result==MOESY||result==LOMSY||result==AEQUSY){
+        int op = result;
         getsym();
         expr();
+        // 生成四元式
+        pushMidCodeCondition(expr1Count, op, tCount);
+    }else{
+        error();
+        return -1;
     }
 
     return 0;
@@ -920,11 +946,13 @@ int loopSentence(){
 }
 
 int retValueFuncCall(){
-//    printf("RETVFC: result=%d\n", result);
+    printf("RETVFC: result=%d\n", result);
     if(result!=IDSY){
         error();
         return -1;
     }
+//    string FuncID = IDname;
+
     getsym();
     if(result==LPARSY){
         getsym();
@@ -937,7 +965,32 @@ int retValueFuncCall(){
         }
     }
 
+    pushMidCodeFuncCall(callFuncID);
     printf("This is a function call with returned value.\n");
+    return 0;
+}
+
+int unretValueFuncCall(){
+    if(result!=IDSY){
+        error();
+        return -1;
+    }
+//    string FuncID = IDname;
+
+    getsym();
+    if(result==LPARSY){
+        getsym();
+        paraValueList();
+        if(result!=RPARSY){
+            error();
+            return -1;
+        }else{
+            getsym();
+        }
+    }
+
+    pushMidCodeFuncCall(callFuncID);
+    printf("This is a function call without returned value.\n");
     return 0;
 }
 
@@ -948,12 +1001,17 @@ int assignSentence(){
         error();
         return -1;
     }
+    string assignID = IDname;
+
     getsym();
+    int isArray = 0;
+    int recTCount = 0;
 //    printf("assign tag 2\n");
     if(result==LBRACSY){
+        isArray = 1;
         getsym();
         expr();
-
+        recTCount = tCount;
         // 检查数组越界
         if(termCountFactor==1 && exprCountTerm==1){
 //            printf(">>> check number1:%d\n", checkArrayValue);
@@ -964,6 +1022,7 @@ int assignSentence(){
                 return -1;
             }
         }
+
 
         if(result!=RBRACSY){
             error();retExist += 1;
@@ -979,6 +1038,10 @@ int assignSentence(){
 //    printf("assign tag 4\n");
     expr();
 //    printf("assign tag 5\n");
+    // 生成四元式
+    pushMidCodeAssign(assignID, isArray, recTCount, tCount);
+    tCount++;
+
     printf("This is an assignment sentence.\n");
     return 0;
 }
@@ -1097,9 +1160,11 @@ int retSentence(){
         if(result!=RPARSY){
             error();
             return -1;
-        }else{
-
         }
+        pushMidCodeRet(tCount);
+
+    }else{
+        pushMidCodeRet();
     }
     getsym();
 
@@ -1122,11 +1187,11 @@ int programAnalysis(){
     if(result!=INTSY&&result!=CHARSY){
         complexTag = 1;
     }
-    getsym();
+    getsym(1);
     if(result!=IDSY){
         complexTag = 1;
     }
-    getsym();
+    getsym(1);
     if(result==LBRACSY){
         complexTag = 1;
     }
@@ -1249,6 +1314,10 @@ int factor(){
             return -1;
         }
     }else if(result==IDSY){         // result = IDSY
+        pushMidCodeGetValue(tCount, IDname);
+        stackCalc.push_back(tCount);
+        tCount++;
+
         getsym();
         if(result==LBRACSY){        // result = "["
         //    printf("factor-debug branch-2\n");
@@ -1304,8 +1373,14 @@ int factor(){
             error();
             return -1;
         }else{
+
+
             checkArrayValue = IntValue;
             checkArrayValue *= resultTag;
+
+            pushMidCodeFactorValue(tCount, 1, checkArrayValue);
+            tCount++;
+
             getsym();
 
             factorType = 1;
@@ -1313,8 +1388,15 @@ int factor(){
     }else if(result==USINTSY){
         getsym();
         checkArrayValue = IntValue;
+
+        pushMidCodeFactorValue(tCount, 1, checkArrayValue);
+        tCount++;
+
         factorType = 1;
     }else if(result==ACHARSY){
+        pushMidCodeFactorValue(tCount, 2, globalChar);
+        tCount++;
+
         getsym();               // 字符 ACHARSY
         factorType = 2;
     }else{
@@ -1339,11 +1421,22 @@ int term(){
 
     while(true){
         if(result==STARSY||result==DIVISY){
+            int opTag = 3;
+            if(result==DIVISY)  opTag = 4;
+
             getsym();
             if(factor()==-1){
                 error();
                 return -1;
             }
+            // 此处可以进行值计算、栈操作、生成四元式
+            int n2 = stackCalc.back();
+            stackCalc.pop_back();
+            int n1 = stackCalc.back();
+            stackCalc.pop_back();
+            pushMidCodeCalc(tCount, n1, opTag, n2);
+            stackCalc.push_back(tCount);
+            tCount++;
 
             termType = 1;   // 只要参与运算了就自动转化为int型
 
@@ -1363,12 +1456,17 @@ int expr(){
                         // 只有表达式递归下去是一个整数才需要检查
     // 跳过加法运算符，如果有
     int opTag = 0;
+
     if(result==PLUSSY||result==MINUSSY){
         opTag = 1;
         getsym();
     }
 
+
+
     term();
+
+
     // 如果有正负号，则第一个项不能是字符型
     if(termType==2 && opTag==1){
         printf("TMP: +|- char not valid in expr.\n");
@@ -1381,14 +1479,31 @@ int expr(){
     while(true){
 //        printf("expr result = %d\n", result);
         if(result==PLUSSY||result==MINUSSY){
+            int opFlag = 1;
+            if(result==MINUSSY) opFlag = 2;
+
             getsym();
             term();
             // 参与运算，则为int
+            // 此处可以进行值计算、栈操作、生成四元式
+//            printf(">>>> size:%d\n", stackCalc.size());
+            int n2 = stackCalc.back();
+            stackCalc.pop_back();
+//            printf(">>>> size:%d\n", stackCalc.size());
+            int n1 = stackCalc.back();
+            stackCalc.pop_back();
+//            printf(">>>> size:%d\n", stackCalc.size());
+            pushMidCodeCalc(tCount, n1, opFlag, n2);
+            stackCalc.push_back(tCount);
+//            printf(">>>> size:%d\n", stackCalc.size());
+            tCount++;
+
             exprType = 1;
         }else   break;
     }
 
     printf("This is an expression.\n");
+//    printf("tCount:%d\n", tCount);
     return 0;
 }
 

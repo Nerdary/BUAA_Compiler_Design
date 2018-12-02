@@ -8,9 +8,11 @@ extern char strings[200];
 extern char symbol[10];
 extern char token[200];
 extern char IDname[200];
+extern char globalChar;
 
 void recordRead();
 void resetRead();
+int getsym(int mode);
 int getsym();
 void err(int index);
 

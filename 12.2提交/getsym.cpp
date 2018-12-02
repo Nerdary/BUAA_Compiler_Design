@@ -32,6 +32,7 @@ extern FILE* fp;
 int backupResult;
 int charCount = 0;
 int backupCharCount = 0;
+char globalChar;
 
 // 预读功能的实现
 void recordRead(){
@@ -40,7 +41,7 @@ void recordRead(){
     *backupFile = *fp;
 
     backupResult = result;
-//    printf(">>> recorded.\tbk=%ld\n", *backupFile);
+    printf(">>> recorded.\tbk=%d\n", *backupFile);
 
     backupCharCount = charCount;
 }
@@ -48,18 +49,18 @@ void recordRead(){
 void resetRead(){
 //    printf("in resetRead.\n");
 
-//    printf(">>> reset...\tfp=%ld\t", *fp);
+    printf(">>> reset...\tfp=%d\t", *fp);
     result = backupResult;
 //    *p = backupFile;
     *fp = *backupFile;
 //    fseek(fp,(backupCharCount - charCount),1);
-//    printf("fp=%ld\n", *fp);
+    printf("fp=%d\n", *fp);
     charCount = backupCharCount;
 
 }
 
 // 词法分析子程序
-int myGetsym(){
+int myGetsym(int mode){
 //    printf("getsym used.\n");
 	char a = fgetc(fp);
 //	printf("in getsym fp=%ld\n", *fp);								// 读入一个字符
@@ -94,7 +95,12 @@ int myGetsym(){
 		if(resultValue == 0){
 			strcpy(symbol, "IDSY");
 			// use global name to save ID-name
-            strcpy(IDname, token);
+			if(mode==1){
+                // 预读模式
+			}else{
+                strcpy(IDname, token);
+			}
+
 			result = 20;
 			return 20;
 		}
@@ -207,6 +213,9 @@ int myGetsym(){
 		a = fgetc(fp);
 		charCount += 1;
 		if(a=='+'||a=='-'||a=='*'||a=='/'||a=='_'||(a>='a'&&a<='z')||(a>='A'&&a<='Z')||(a>='0'&&a<='9')){
+			// 记录下内容
+			globalChar = a;
+
 			char b = fgetc(fp);
 			charCount += 1;
 			if(b==39){
@@ -328,8 +337,8 @@ int myGetsym(){
     return result;
 }
 
-int getsym(){
-    result = myGetsym();
+int getsym(int mode){
+    result = myGetsym(mode);
     char list[44][10] = {"",	"CONSTSY",		"INTSY",		"CHARSY",		"VOIDSY",		"MAINSY",	// 0~5
                                 "IFSY",			"ELSESY",		"WHILESY",		"FORSY",		"SCANFSY",	// 6~10
                                 "PRINTSY",		"RETSY",		"",				"",				"",			//11~15
@@ -392,6 +401,73 @@ int getsym(){
     return result;
 
 }
+
+
+int getsym(){
+    result = myGetsym(0);
+    char list[44][10] = {"",	"CONSTSY",		"INTSY",		"CHARSY",		"VOIDSY",		"MAINSY",	// 0~5
+                                "IFSY",			"ELSESY",		"WHILESY",		"FORSY",		"SCANFSY",	// 6~10
+                                "PRINTSY",		"RETSY",		"",				"",				"",			//11~15
+                                "",				"",				"USINTSY",		"ACHARSY",		"IDSY",		//16~20
+                                "STRINGSY",		"PLUSSY",		"MINUSSY",		"STARSY",		"DIVISY",	//21~25
+                                "LPARSY",		"RPARSY",		"COMMASY",		"SEMISY",		"COLONSY",	//26~30
+                                "ASSIFNSY",		"EQUSY",		"LESSSY",		"LOESY",		"MORESY",	//31~35
+                                "MOESY",		"LOMSY",		"AEQUSY",		"DBQUOSY",		"LBRACSY",	//36~40
+                                "RBRACSY",		"LBRACESY",		"RBRACESY"	};
+
+    char symbols[44][10] = {"",     "",     "",     "",     "",     // 0~4
+                            "",     "",     "",     "",     "",     // 5~9
+                            "",     "",     "",     "",     "",     //10~14
+                            "",     "",     "",     "",     "",     //15~19
+                            "",     "",     "+",    "-",    "*",    //20~24
+                            "/",    "(",    ")",    ",",    ";",    //25~29
+                            ":",    "",     "=",    "<",    "<=",   //30~34
+                            ">",    ">=",   "!=",   "==",   "",     //35~39
+                            "[",    "]",    "{",    "}",            //40~43
+                            };
+
+    if(result == -1)	;
+    else{
+        // IDSY
+        if(result == 20){
+            printf("%d\tIDSY\t%s\n",lc, token);
+        }
+        // INTSY
+        else if (result == 18){
+            printf("%d\tUSINTSY\t%s\n",lc, token);
+        }
+        // STRING
+        else if (result == 21){
+            printf("%d\tSTRINGSY\t\"%s\"\n",lc, strings);
+        }
+        // a char
+        else if (result == 19){
+            printf("%d\tACHARSY\t%c\n",lc, strings[0]);
+        }
+        // others
+            // reserved
+        else if (result >= 1 && result <= 12){
+            printf("%d\t%s\t%s\n",lc, list[result],token);
+        //	printf("DEBUG-MODE:	result=%d\n", result);
+        }
+            // opreator
+        else if (result >= 22 && result <= 43){
+            printf("%d\t%s\t%s\n",lc, list[result],symbols[result]);
+        }
+        else if (result == -2){
+            printf("successfully reach the end of program.\n");
+        }
+        else{
+        //	printf("unknown error in main\n");
+        //	err(0);
+            err(7);
+        }
+    }
+
+    return result;
+
+}
+
 // 错误处理
 void err(int index){
 	switch(index){
