@@ -1299,6 +1299,8 @@ int mainAnalysis(){
         return -1;
     }
 //    printf("in main anal\n");
+    pushMidCodeMain();
+
     // ÌîÈë·ûºÅ±í
     globalFuncField = "Main";
     globalFuncLevel = 1;

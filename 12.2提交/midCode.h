@@ -41,7 +41,7 @@ void pushMidCodeGOTO(int labelCount, int index);
 void pushMIdCodeCalStep(int tCount, string var, int op, int length);
 void pushMidCodeScan(int type, string ID);
 void pushMidCodePrint(int mode, string content, int tCount);
-
+void pushMidCodeMain();
 
 void MidCode2File();
 void printMidCode();

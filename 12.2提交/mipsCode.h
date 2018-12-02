@@ -38,7 +38,10 @@
 
 using namespace std;
 
-
+struct globalRecordItem{
+    string ID;
+    int offset;
+};
 
 struct mipsItem{
     string one;
@@ -66,7 +69,11 @@ void genMips();
 void printMipsCode();
 
 void addi(string res, string in, int value);
+void add(string res, string n1, string n2);
+void sub(string res, string n1, string n2);
 void sw(string value, int offset, string base);
 void li(string res, string value);
+void mul(string res, string m1, string m2);
+void printGlobalRecord();
 
 #endif // MIPSCODE_H_INCLUDED

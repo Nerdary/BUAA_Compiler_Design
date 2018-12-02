@@ -415,6 +415,16 @@ void pushMidCodePrint(int mode, string content, int tCount){
     }
 }
 
+void pushMidCodeMain(){
+    midCodeItem tmp = {
+        "main",
+        "void",
+        "main",
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
 void printMidCode(){
     printf("\nContents of mid codes\n1\t2\t3\t4\n");
     int i, cntMidCode = midCodeVec.size();

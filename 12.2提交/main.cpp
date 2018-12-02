@@ -37,6 +37,7 @@ int main(){
     // 根据中间代码生成目标mips指令
     genMips();
     printMipsCode();
+    printGlobalRecord();
 
 
 	return 0;

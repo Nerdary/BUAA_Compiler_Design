@@ -31,6 +31,6 @@ char jiij(char df, int d){a =1;printf("iam a string", s+22);return ('a');}
 
 void nonu{a =1;return;}
 
-void duheuhu(int a){a =1;nonu;}
+void duheuhu(int a){y =1;nonu;}
 
-void main(){a = 1;}
+void main(){z = 1;}

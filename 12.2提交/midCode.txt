@@ -149,8 +149,9 @@ Contents of mid codes
         func        void     duheuhu            
         para         int           a            
         $t55           1                        
-           a        $t55                        
+           y        $t55                        
         call        nonu                        
        label   duheuhu_2                        
+        main        void        main            
         $t56           1                        
-           a        $t56                        
+           z        $t56                        
