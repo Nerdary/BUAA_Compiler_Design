@@ -3,6 +3,8 @@
 #include <string.h>
 #include <vector>
 #include <stdlib.h>
+#include <fstream>
+#include <iomanip>
 
 #include "error.h"
 #include "getsym.h"
@@ -423,4 +425,18 @@ void printMidCode(){
         printf("%s\t", tmp.three.c_str());
         printf("%s\n", tmp.four.c_str());
     }
+}
+
+void MidCode2File(){
+    int i, cntMidCode = midCodeVec.size();
+    ofstream ofile;
+    ofile.open("midCode.txt");
+    // setw(6)<<i  1\t2\t3\t4\n
+    ofile<<"Contents of mid codes"<<endl;
+    ofile<<setw(12)<<"1"<<setw(12)<<"2"<<setw(12)<<"3"<<setw(12)<<"4"<<endl;
+    for(i=0;i<cntMidCode;i++){
+        midCodeItem tmp = midCodeVec.at(i);
+        ofile<<setw(12)<<tmp.one.c_str()<<setw(12)<<tmp.two.c_str()<<setw(12)<<tmp.three.c_str()<<setw(12)<<tmp.four.c_str()<<endl;
+    }
+    ofile.close();
 }

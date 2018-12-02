@@ -8,6 +8,7 @@
 #include "error.h"
 #include "symbolTable.h"
 #include "midCode.h"
+#include "mipsCode.h"
 
 FILE* fp;
 
@@ -28,10 +29,15 @@ int main(){
 
     getsym();
     programAnalysis();
-
+    // 生成符号表
     printSymbolTable();
-
+    // 生成中间代码
     printMidCode();
+    MidCode2File();
+    // 根据中间代码生成目标mips指令
+    genMips();
+    printMipsCode();
+
 
 	return 0;
 }

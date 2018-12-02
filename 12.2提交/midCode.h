@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <iomanip>
 
 using namespace std;
 //
@@ -41,6 +43,7 @@ void pushMidCodeScan(int type, string ID);
 void pushMidCodePrint(int mode, string content, int tCount);
 
 
+void MidCode2File();
 void printMidCode();
 
 #endif // MIDCODE_H_INCLUDED
