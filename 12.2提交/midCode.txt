@@ -8,7 +8,7 @@ Contents of mid codes
        array         int           b          10
          var        char          de            
        array        char         oos          12
-       label       foo_1                        
+       label       foo_1        func            
         func         int         foo            
          var         int           x            
          var         int           a            
@@ -16,6 +16,7 @@ Contents of mid codes
          var         int           c            
          var         int           d            
          var         int           e            
+       array         int         des          20
          $t1           a                        
          $t2           b                        
          $t3           c                        
@@ -45,14 +46,14 @@ Contents of mid codes
         $t22           1                        
            b        $t22                        
         GOTO       label         1_2            
-       label         1_1                        
+       label         1_1        norm            
         $t23           7                        
            c        $t23                        
-       label         1_2                        
+       label         1_2        norm            
         $t24           1                        
          ret        $t24                        
-       label       foo_2                        
-       label      fooo_1                        
+       label       foo_2        func            
+       label      fooo_1        func            
         func         int        fooo            
         para         int           d            
        const         int           a           1
@@ -61,7 +62,7 @@ Contents of mid codes
            b          []          25        $t26
         $t27           1                        
            a        $t27                        
-       label         2_1                        
+       label         2_1        norm            
         $t28           d                        
         $t29          77                        
         $t28          >=        $t29            
@@ -71,11 +72,11 @@ Contents of mid codes
         $t32        $t28           +        $t30
            d        $t32                        
         GOTO       label         2_1            
-       label         2_2                        
+       label         2_2        norm            
         $t33           0                        
          ret        $t33                        
-       label      fooo_2                        
-       label     foooo_1                        
+       label      fooo_2        func            
+       label     foooo_1        func            
         func         int       foooo            
         para        char           c            
         para         int          er            
@@ -89,22 +90,22 @@ Contents of mid codes
         $t38           0                        
            i        $t38                        
         GOTO       label         2_1            
-       label         2_2                        
+       label         2_2        norm            
         $t39           i                        
         $t40          10                        
         $t39           <        $t40            
           BZ       label         2_3            
-       label         2_1                        
+       label         2_1        norm            
         $t41           1                        
   changchang        $t41                        
         $t42           i           +           1
            i        $t42                        
         GOTO       label         2_2            
-       label         2_3                        
+       label         2_3        norm            
         $t43           0                        
          ret        $t43                        
-       label     foooo_2                        
-       label       goo_1                        
+       label     foooo_2        func            
+       label       goo_1        func            
         func        char         goo            
         $t44           1                        
            a        $t44                        
@@ -114,8 +115,8 @@ Contents of mid codes
         call        fooo                        
         $t46           a                        
          ret        $t46                        
-       label       goo_2                        
-       label       hoo_1                        
+       label       goo_2        func            
+       label       hoo_1        func            
         func        char         hoo            
         para         int           a            
         $t47           1                        
@@ -125,8 +126,8 @@ Contents of mid codes
         scan                      fe            
         $t48           a                        
          ret        $t48                        
-       label       hoo_2                        
-       label      jiij_1                        
+       label       hoo_2        func            
+       label      jiij_1        func            
         func        char        jiij            
         para        char          df            
         para         int           d            
@@ -139,19 +140,31 @@ Contents of mid codes
        print        $t52                        
         $t53           a                        
          ret        $t53                        
-       label      jiij_2                        
-       label      nonu_1                        
+       label      jiij_2        func            
+       label      nonu_1        func            
         func        void        nonu            
         $t54           1                        
            a        $t54                        
          ret                                    
-       label   duheuhu_1                        
+       label      nonu_2        func            
+       label   duheuhu_1        func            
         func        void     duheuhu            
         para         int           a            
         $t55           1                        
            y        $t55                        
         call        nonu                        
-       label   duheuhu_2                        
+       label   duheuhu_2        func            
         main        void        main            
         $t56           1                        
            z        $t56                        
+       label         2_1        norm            
+        $t57           d                        
+        $t58          77                        
+        $t57          >=        $t58            
+          BZ       label         2_2            
+        $t59           v                        
+        $t60           1                        
+        $t61        $t57           +        $t59
+           d        $t61                        
+        GOTO       label         2_1            
+       label         2_2        norm            

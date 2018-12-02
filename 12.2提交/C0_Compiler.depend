@@ -30,7 +30,7 @@
 	<vector>
 	"symbolTable.h"
 
-1543748113 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
+1543762712 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -81,7 +81,7 @@
 	<fstream>
 	<iomanip>
 
-1543748053 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\midcode.cpp
+1543761878 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\midcode.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -96,14 +96,15 @@
 	"error.h"
 	"midCode.h"
 
-1543751145 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\mipscode.h
+1543760420 c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\mipscode.h
 	"midCode.h"
 
-1543747980 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\mipscode.cpp
+1543762291 source:c:\users\retriver\desktop\编译课设\12.2 提交\c0_compiler\mipscode.cpp
 	<stdio.h>
 	<ctype.h>
 	<string>
 	<vector>
 	<stdlib.h>
 	"mipsCode.h"
+	"error.h"
 

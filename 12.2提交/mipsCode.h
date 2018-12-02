@@ -43,6 +43,13 @@ struct globalRecordItem{
     int offset;
 };
 
+struct funcRecordItem{
+    string ID;
+    int offset;
+    int isPara;
+    string value;
+};
+
 struct mipsItem{
     string one;
     string two;
@@ -53,17 +60,22 @@ struct mipsItem{
 extern vector<mipsItem> mipsCodeVector;
 
 struct functionInfo{
-    // 形参声明
-    vector<midCodeItem> paraStatement;
-    // 常量定义
-    vector<midCodeItem> constDefinition;
-    // 变量定义
-    vector<midCodeItem> variableDefinition;
-
-    //
-
-
+//    string funcID;
+//    // 形参声明
+//    vector<midCodeItem> paraStateVec;
+//    // 常量定义
+//    vector<midCodeItem> constDefVec;
+//    // 变量定义
+//    vector<midCodeItem> variableDefVec;
+//
+//    // 其他语句
+//    vector<mipsItem> funcMipsVector;
+    vector<funcRecordItem> funcSymbolTable;
+    vector<midCodeItem> otherMidCodeVec;
 };
+
+void handleMain();
+void handleMidCode();
 
 void genMips();
 void printMipsCode();
@@ -74,6 +86,11 @@ void sub(string res, string n1, string n2);
 void sw(string value, int offset, string base);
 void li(string res, string value);
 void mul(string res, string m1, string m2);
+void label(string label);
+void j(string label);
+
+
+
 void printGlobalRecord();
 
 #endif // MIPSCODE_H_INCLUDED

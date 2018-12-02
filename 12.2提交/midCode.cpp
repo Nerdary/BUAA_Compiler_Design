@@ -102,7 +102,7 @@ void pushMidCodeFuncHead(int funcType, string ID){
     midCodeItem tmp1 = {
         "label",
         labelName,
-        "",
+        "func",
         "",
     };
     midCodeVec.push_back(tmp1);
@@ -133,7 +133,7 @@ void pushMidCodeFuncTail(string ID){
     midCodeItem tmp = {
         "label",
         labelName,
-        "",
+        "func",
         "",
     };
     midCodeVec.push_back(tmp);
@@ -313,7 +313,7 @@ void pushMidCodeLabel(int labelCount, int index){
     midCodeItem tmp = {
         "label",
         content,
-        "",
+        "norm",
         "",
     };
     midCodeVec.push_back(tmp);

@@ -600,10 +600,10 @@ int unretValueFuncDefine(){
     globalFuncField = "Global";
     globalFuncLevel = 0;
 
-    if(retExist!=0){
+    if(retExist!=0){        // 这里可能有问题，重新查返回值限制条件
         error();
         printf("Return sentence in unretFunc Definition.\n");
-        return -1;
+    //    return -1;
     }
 
     pushMidCodeFuncTail(currentFuncID);

@@ -5,16 +5,27 @@
 #include <stdlib.h>
 
 #include "mipsCode.h"
+#include "error.h"
 
 
 int midCodeIndex = 0;
 midCodeItem tmp;
 vector<mipsItem> mipsCodeVector;
 vector<globalRecordItem> globalRecordVector;
+vector<functionInfo> allFuncInfoVector;
 int globalRecordCount = 0;
+
+void printMidCodeTmp(midCodeItem tmp){
+    printf("%s\t", tmp.one.c_str());
+    printf("%s\t", tmp.two.c_str());
+    printf("%s\t", tmp.three.c_str());
+    printf("%s\n", tmp.four.c_str());
+}
 
 void getMid(){
     tmp = midCodeVec.at(midCodeIndex++);
+//    printf("> %d\t", midCodeIndex);
+//    printMidCodeTmp(tmp);
 }
 
 void pushGlobalRecord(string ID, int offset){
@@ -40,7 +51,7 @@ int transNum(string token){
 	return num;
 }
 
-void genMips(){
+void genMips(){     // 有点类似于 programAnalysis
     getMid();
 
     // 处理全局 常量定义
@@ -66,7 +77,7 @@ void genMips(){
         }
     }
 
-    while(tmp.one!="func" && tmp.one!="main"){
+    while(tmp.one!="func" && tmp.one!="main" && tmp.one!="label"){
         // 变量声明
         if(tmp.one=="var"){
             // 记录变量信息
@@ -83,6 +94,120 @@ void genMips(){
             li("$t2", tmp.four);
             mul("$t3", "$t1", "$t2");
             sub("$gp", "$gp", "$t3");
+        }
+        getMid();
+    }
+
+    while(tmp.one=="label" && tmp.three=="func"){
+        // 处理所有子函数定义
+        // 生成mips，记录所有信息用于生成运行栈
+        vector<midCodeItem> otherMidCodeVec;
+        otherMidCodeVec.push_back(tmp);
+        getMid();
+        // 读到 func 四元式
+        if(tmp.one=="func"){
+            otherMidCodeVec.push_back(tmp);
+            getMid();
+        }else{
+            error();
+            return ;
+        }
+        // 参数部分
+        vector<funcRecordItem> funcSymbolTable;
+        int funcSymbolCount = 0;
+        while(tmp.one=="para"){
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 1, ""};
+            funcSymbolTable.push_back(tmp2);
+            getMid();
+        }
+        // 常量定义部分
+        while(tmp.one=="const"){
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, tmp.four};
+            funcSymbolTable.push_back(tmp2);
+            getMid();
+        }
+        // 变量、数组定义部分
+        while(tmp.one=="var" || tmp.one=="array"){
+            if(tmp.one=="var"){
+                funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
+                funcSymbolTable.push_back(tmp2);
+                getMid();
+            }else{
+                funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
+                funcSymbolCount += transNum(tmp.four);
+                funcSymbolTable.push_back(tmp2);
+                getMid();
+            }
+        }
+        // 复合语句部分
+        // 先记录进一个vector，生成mips时再展开
+        while(true){
+            // tmp.three!="func"
+            if(tmp.one=="label"){
+            //    printf(">>> \t");
+            //    printMidCodeTmp(tmp);
+                if(tmp.three=="func"){
+                    break;
+                }
+            }
+            otherMidCodeVec.push_back(tmp);
+            getMid();
+        }
+//        printf("> check 1\n");
+        // 存入label_func_2
+        otherMidCodeVec.push_back(tmp);
+        getMid();
+    //    printf("> check 2\n");
+        // 将该函数所有信息push进allFuncInfoVector
+        functionInfo tmpfunc = {funcSymbolTable, otherMidCodeVec};
+        allFuncInfoVector.push_back(tmpfunc);
+    }
+//    printf("> check 3\n");
+    // 处理完所有函数定义
+    // 处理主函数
+    if(tmp.one=="main"){
+//        printf("> about to get in handle main.\n");
+        handleMain();
+    }
+}
+
+// 处理主函数，生成运行栈，生成MIPS
+void handleMain(){
+    getMid();
+//    printf("> about to get in handle mid code.\n");
+    handleMidCode();
+}
+
+// 即处理复杂语句，处理所有的四元式，生成大部分MIPS
+void handleMidCode(){
+
+    while(midCodeIndex <= (midCodeVec.size()-1)){
+        // 已经预读了一条MidCode
+        if(tmp.one=="BZ"){
+            // BZ的上一条一定是条件，所以对于$ti<$tj的形式，将值存起来
+            // 直接从变量中取值判断
+        }else if(tmp.one=="GOTO"){
+            j(tmp.two);
+        }else if(tmp.one=="ret"){
+
+        }else if(tmp.one=="print"){
+
+        }else if(tmp.one=="scan"){
+
+        }else if(tmp.one=="para"){
+
+        }else if(tmp.one=="push"){
+
+        }else if(tmp.one=="call"){
+
+        }else if(tmp.one=="GOTO"){
+
+        }else{
+            if(tmp.one[0]=='$' && tmp.one[1]=='t'){
+                // "$ti"
+            }else{
+                // ID
+            }
         }
         getMid();
     }
@@ -144,6 +269,26 @@ void mul(string res, string m1, string m2){
         res,
         m1,
         m2,
+    };
+    mipsCodeVector.push_back(tmp);
+}
+
+void label(string label){
+    mipsItem tmp = {
+        label + ":",
+        "",
+        "",
+        "",
+    };
+    mipsCodeVector.push_back(tmp);
+}
+
+void j(string label){
+    mipsItem tmp = {
+        "j",
+        label,
+        "",
+        "",
     };
     mipsCodeVector.push_back(tmp);
 }
