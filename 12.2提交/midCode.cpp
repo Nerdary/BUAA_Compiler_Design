@@ -215,7 +215,7 @@ void pushMidCodeFuncCall(string FuncID){
 }
 
 void pushMidCodeRet(int tCount){
-    string t1 = "$t" + to_string(tCount+1);
+    string t1 = "$t" + to_string(tCount);
     midCodeItem tmp = {
         "ret",
         t1,
@@ -239,7 +239,7 @@ void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
     midCodeItem tmp;
     if(isArray==1){
         // 数组赋值
-        string t1 = "$t" + to_string(tCount+1);
+        string t1 = "$t" + to_string(tCount);
         tmp = {
             ID,
             "[]",
@@ -247,7 +247,7 @@ void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
             t1,
         };
     }else{
-        string t1 = "$t" + to_string(tCount+1);
+        string t1 = "$t" + to_string(tCount);
         tmp = {
             ID,
             t1,
@@ -302,6 +302,114 @@ void pushMidCodeFactorValue(int tCount, int type, int value){
             "",
             "",
         };
+    }
+    midCodeVec.push_back(tmp);
+}
+
+void pushMidCodeLabel(int labelCount, int index){
+    string content = to_string(labelCount) + "_" + to_string(index);
+    midCodeItem tmp = {
+        "label",
+        content,
+        "",
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
+void pushMidCodeBZ(int labelCount, int index){
+    string content = to_string(labelCount) + "_" + to_string(index);
+    midCodeItem tmp = {
+        "BZ",
+        "label",
+        content,
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
+void pushMidCodeBNZ(int labelCount, int index){
+    string content = to_string(labelCount) + "_" + to_string(index);
+    midCodeItem tmp = {
+        "BNZ",
+        "label",
+        content,
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
+void pushMidCodeGOTO(int labelCount, int index){
+    string content = to_string(labelCount) + "_" + to_string(index);
+    midCodeItem tmp = {
+        "GOTO",
+        "label",
+        content,
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
+void pushMIdCodeCalStep(int tCount, string var, int op, int length){
+    string t1 = "$t" + to_string(tCount+1);
+    string opt = "+";
+    if(op==2)   opt = "-";
+
+    midCodeItem tmp = {
+        t1,
+        var,
+        opt,
+        to_string(length),
+    };
+    midCodeVec.push_back(tmp);
+
+    midCodeItem tmp2 = {
+        var,
+        t1,
+        "",
+        "",
+    };
+    midCodeVec.push_back(tmp2);
+}
+
+void pushMidCodeScan(int type, string ID){
+    string tmpType;
+    if(type==1){
+        tmpType="int";
+    }else if(type==2){
+        tmpType="char";
+    }else{
+        tmpType="";
+    }
+    midCodeItem tmp = {
+        "scan",
+        tmpType,
+        ID,
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
+void pushMidCodePrint(int mode, string content, int tCount){
+    if(mode==1){
+        // 打印字符串
+        midCodeItem tmp = {
+            "print",
+            content,
+            "",
+            "",
+        };
+        midCodeVec.push_back(tmp);
+    }else{
+        // 打印表达式值
+        string t1 = "$t" + to_string(tCount);
+        midCodeItem tmp = {
+            "print",
+            t1,
+            "",
+            "",
+        };
+        midCodeVec.push_back(tmp);
     }
 }
 

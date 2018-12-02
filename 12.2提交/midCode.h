@@ -32,6 +32,13 @@ void pushMidCodeRet();
 void pushMidCodeAssign(string ID, int isArray, int index, int tCount);
 void pushMidCodeCondition(int expr1, int op, int expr2);
 void pushMidCodeFactorValue(int tCount, int type, int value);
+void pushMidCodeLabel(int labelCount, int index);
+void pushMidCodeBZ(int labelCount, int index);
+void pushMidCodeBNZ(int labelCount, int index);
+void pushMidCodeGOTO(int labelCount, int index);
+void pushMIdCodeCalStep(int tCount, string var, int op, int length);
+void pushMidCodeScan(int type, string ID);
+void pushMidCodePrint(int mode, string content, int tCount);
 
 
 void printMidCode();

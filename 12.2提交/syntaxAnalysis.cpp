@@ -50,6 +50,9 @@ int termCountFactor = 0;
 string currentFuncID;
 string callFuncID;
 
+// 生成标签计数器
+int labelCount = 1;
+
 
 // 函数声明区
 int unsignedInt();
@@ -823,15 +826,24 @@ int condSentence(){
         error();
         return -1;
     }
+    // 开始生成条件语句的四元式
+    pushMidCodeBZ(labelCount, 1);
+
     getsym();
 //    printf("in cond 4\n");
     sentence();
+    // 四元式部分
+    pushMidCodeGOTO(labelCount, 2);
+    pushMidCodeLabel(labelCount, 1);
+
     // 可选项 else分支
     if(result==ELSESY){
 //        printf("in cond 5\n");
         getsym();
         sentence();
     }
+    pushMidCodeLabel(labelCount, 2);
+    labelCount++;
 
     printf("This is a conditional sentence.\n");
     return 0;
@@ -859,11 +871,13 @@ int stepLength(){
     unsignedInt();
 
     printf("This is a step length.\n");
-    return 0;
+    return unsignValue;
 }
 
 int loopSentence(){
     if(result==WHILESY){
+        pushMidCodeLabel(labelCount, 1);
+
         getsym();
         if(result!=LPARSY){
             error();
@@ -871,6 +885,8 @@ int loopSentence(){
         }
         getsym();
         condition();
+        pushMidCodeBZ(labelCount, 2);
+
         if(result!=RPARSY){
             error();
             return -1;
@@ -878,8 +894,12 @@ int loopSentence(){
         getsym();
 
         sentence();
+        pushMidCodeGOTO(labelCount, 1);
+        pushMidCodeLabel(labelCount, 2);
+
     }else if(result==FORSY){
         // ENDRIGHTGERE!!!!
+
         getsym();
         if(result!=LPARSY){
             error();
@@ -890,6 +910,8 @@ int loopSentence(){
             error();
             return -1;
         }
+        string saveID = IDname;
+
         getsym();
         if(result!=EQUSY){
             error();
@@ -897,12 +919,22 @@ int loopSentence(){
         }
         getsym();
         expr();
+        // 把表达式的值取出来
+        pushMidCodeAssign(saveID, 0, 0, tCount);
+        pushMidCodeGOTO(labelCount, 1);
+        pushMidCodeLabel(labelCount, 2);
+
+
         if(result!=SEMISY){
             error();
             return -1;
         }
         getsym();
         condition();
+
+        pushMidCodeBZ(labelCount, 3);
+        pushMidCodeLabel(labelCount, 1);
+
         if(result!=SEMISY){
             error();
             return -1;
@@ -923,18 +955,28 @@ int loopSentence(){
             return -1;
         }
         getsym();
+        int op = 1;
         if(result!=PLUSSY&&result!=MINUSSY){
             error();
             return -1;
         }
+        if(result==MINUSSY) op = 2;
+
         getsym();
-        stepLength();
+        int length = stepLength();
         if(result!=RPARSY){
             error();
             return -1;
         }
         getsym();
-        sentence();
+        sentence();     // content
+
+        // 生成四元式部分
+        // saveID
+        pushMIdCodeCalStep(tCount, saveID, op, length);
+        tCount++;
+        pushMidCodeGOTO(labelCount, 2);
+        pushMidCodeLabel(labelCount, 3);
 
     }else{
         error();
@@ -1040,7 +1082,7 @@ int assignSentence(){
 //    printf("assign tag 5\n");
     // 生成四元式
     pushMidCodeAssign(assignID, isArray, recTCount, tCount);
-    tCount++;
+//    tCount++;
 
     printf("This is an assignment sentence.\n");
     return 0;
@@ -1061,6 +1103,9 @@ int scanSentence(){
         error();
         return -1;
     }
+    //
+    pushMidCodeScan(0, IDname);
+
     getsym();
     while(true){
         if(result!=COMMASY) break;
@@ -1070,6 +1115,7 @@ int scanSentence(){
                 error();
                 return -1;
             }else{
+                pushMidCodeScan(0, IDname);
                 getsym();
                 continue;
             }
@@ -1099,6 +1145,7 @@ int printSentence(){
     getsym();
     // 接下来判断是一个表达式还是一个字符串
     if(result==STRINGSY){
+        pushMidCodePrint(1, globalString, tCount);
         getsym();
         if(result==COMMASY){
             getsym();
@@ -1108,6 +1155,9 @@ int printSentence(){
                 return -1;
             }else{
                 getsym();
+                // 四元式操作
+                pushMidCodePrint(2, "", tCount);
+
                 printf("This is a print sentence.\n");
                 return 0;
             }
@@ -1122,6 +1172,7 @@ int printSentence(){
         }
     }else{
         expr();
+        pushMidCodePrint(2, "", tCount);
         if(result!=RPARSY){
             error();
             return -1;

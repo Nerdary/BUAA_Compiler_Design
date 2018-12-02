@@ -56,6 +56,7 @@ extern vector<char> stackBrace;
 
 // 全局变量
 extern int globalOffset;
+extern int labelCount;
 
 int programAnalysis();
 

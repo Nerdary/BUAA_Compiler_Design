@@ -25,6 +25,7 @@ char strings[200] = "";
 char symbol[10] = "";
 char token[200] = "";
 char IDname[200] = "";
+string globalString;
 
 
 FILE* backupFile = fopen("test.txt", "r");;
@@ -204,6 +205,7 @@ int myGetsym(int mode){
 				return -1;
 			}
 		}
+		globalString = strings;
 		strcpy(symbol, "STRINGSY");
 		result = 21;
 		return 21;

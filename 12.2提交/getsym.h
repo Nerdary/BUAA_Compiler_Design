@@ -1,6 +1,12 @@
 #ifndef GETSYM_H_INCLUDED
 #define GETSYM_H_INCLUDED
 
+#include <stdio.h>
+#include <ctype.h>
+#include "string"
+
+using namespace std;
+
 extern int result;
 extern int lc;
 extern int IntValue;
@@ -9,6 +15,7 @@ extern char symbol[10];
 extern char token[200];
 extern char IDname[200];
 extern char globalChar;
+extern string globalString;
 
 void recordRead();
 void resetRead();
