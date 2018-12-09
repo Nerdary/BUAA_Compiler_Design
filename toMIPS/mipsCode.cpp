@@ -237,13 +237,60 @@ void handleMain(){
     //
     mipsLabel("main");
     getMid();
+    // 在这里处理所有常量变量数组定义
+    int funcSymbolCount = 0;
+    vector<funcRecordItem> mainSymbolTable;
+
+    // 常量部分
+    while(tmp.one=="const"){
+        funcRecordItem tmpm = {tmp.three, funcSymbolCount++, 0, tmp.four};
+        mainSymbolTable.push_back(tmpm);
+        // 留出空间并填入常量的值
+        addi("$sp", "$sp", -4);
+        if(tmp.two=="int"){
+            li("$t1", tmp.four);
+        }else{
+            char ctmp = tmp.four[0];
+            int itmp = ctmp;
+            li("$t1", to_string(itmp));
+        }
+        sw("$t1", 0, "$sp");
+        getMid();
+    }
+
+    // 变量数组
+    // 变量、数组定义部分
+    while(tmp.one=="var" || tmp.one=="array"){
+        if(tmp.one=="var"){
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
+            mainSymbolTable.push_back(tmp2);
+            //
+            addi("$sp", "$sp", -4);
+            getMid();
+        }else{
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
+            funcSymbolCount += transNum(tmp.four);
+            mainSymbolTable.push_back(tmp2);
+            //
+            addi("$sp", "$sp", -4*transNum(tmp.four));
+            getMid();
+        }
+    }
+
 //    printf("> about to get in handle mid code.\n");
+//    handleMidCode();
+    while(true){
+        handleMidCode();
+        if(midCodeIndex >= midCodeVec.size())
+            break;
+    }
     handleMidCode();
 }
 
 // 即处理复杂语句，处理一条的四元式，生成大部分MIPS
 void handleMidCode(){
     //printf(">>> in Handle-MidCode\n");
+    printf(">>> check tmp one:%s\n", tmp.one.c_str());
     // 已经预读了一条MidCode
     if(tmp.one=="BZ"){
         // BZ的上一条一定是条件，所以对于$ti<$tj的形式，将值存起来
@@ -425,7 +472,7 @@ void handleMidCode(){
             }
             // $t1           a
             else{
-                printf(">>> check: in this branch: '$ti  a'\n");
+            //    printf(">>> check: in this branch: '$ti  a'\n");
                 int flag = 1;
                 int res2;
                 searchResult res1 = searchStackID(tmp.two);
@@ -459,6 +506,7 @@ void handleMidCode(){
 
             }
         }else{
+            printf(">>> check in branch: 'ID $ti' \n");
             // ID
             if(tmp.two[0]=='$' && tmp.two[1]=='t'){
                 int flag = 1;
