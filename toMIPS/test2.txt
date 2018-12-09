@@ -4,6 +4,10 @@ int g_e[10];
 char g_f[20];
 
 int func1(int para1){
+	const int fc1 = 970907;
+	const char fc2 = 'z';
+	int fa1[20];
+	char fa2[20];
 	int x, a, b, c, d, e;
 	x = a+b*(c+d*e);
 	printf(x);

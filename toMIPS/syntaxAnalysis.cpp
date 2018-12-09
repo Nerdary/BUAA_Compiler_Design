@@ -788,7 +788,7 @@ int complexSentence(){
         complexTag = 1;
     }
     getsym(1);
-    if(result==LBRACSY){
+    if(result==LPARSY){     // 这里做过一次修改，如果产生连带问题可以回来看看
         complexTag = 1;
     }
 

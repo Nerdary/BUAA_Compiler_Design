@@ -23,6 +23,7 @@ int globalRecordCount = 0;
 int globalValueOfFp = 0;
 int compareResult;      // 关系运算四元式的结果，作为跳转的条件
                         // 将此结果存入寄存器$s2
+int paraCount = 0;     // 用于记录函数调用的参数个数
 
 int offsetGp = 0;      // 全局变量、常量的偏移量，因为要访问，所以$gp最好不要变
 int offsetFp = 0;
@@ -144,8 +145,18 @@ void genMips(){     // 有点类似于 programAnalysis
         int funcSymbolCount = 0;
         // 参数部分
         while(tmp.one=="para"){
+            // 在函数信息表中登记参数信息
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 1, ""};
             funcSymbolTable.push_back(tmp2);
+            // 从栈中加载参数的值
+            add("$t1", "$zero", "$ra");
+            addi("$t1", "$t1", -(4+4*paraCount));
+            paraCount -= 1; // 减为0恰好终止
+            lw("$t2", 0, "$t1");
+            addi("$sp", "$sp", -4);
+            sw("$t2", 0, "$sp");
+
+            // 预读下一条
             getMid();
         }
 
@@ -153,6 +164,16 @@ void genMips(){     // 有点类似于 programAnalysis
         while(tmp.one=="const"){
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, tmp.four};
             funcSymbolTable.push_back(tmp2);
+            // 留出空间并填入常量的值
+            addi("$sp", "$sp", -4);
+            if(tmp.two=="int"){
+                li("$t1", tmp.four);
+            }else{
+                char ctmp = tmp.four[0];
+                int itmp = ctmp;
+                li("$t1", to_string(itmp));
+            }
+            sw("$t1", 0, "$sp");
             getMid();
         }
 
@@ -161,11 +182,15 @@ void genMips(){     // 有点类似于 programAnalysis
             if(tmp.one=="var"){
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
                 funcSymbolTable.push_back(tmp2);
+                //
+                addi("$sp", "$sp", -4);
                 getMid();
             }else{
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
                 funcSymbolCount += transNum(tmp.four);
                 funcSymbolTable.push_back(tmp2);
+                //
+                addi("$sp", "$sp", -4*transNum(tmp.four));
                 getMid();
             }
         }
@@ -302,9 +327,18 @@ void handleMidCode(){
         printf("Unexpected 'parameter' branch.\n");
         getMid();
     }else if(tmp.one=="push"){
+        // paraCount 用于记录para的长度
+        addi("$sp", "$sp", -4);
+        sw(tmp.two, 0, "$sp");
+        // 参数计数器
+        paraCount += 1;
+
+        getMid();
 
     }else if(tmp.one=="call"){
-
+        // 这里只生成jal，加载参数放在读函数的时候
+        jal(tmp.two);
+        getMid();
     }else{
         if(tmp.one[0]=='$' && tmp.one[1]=='t'){
             //printf(">>> in branch tmp.one = '$ti' \n");
@@ -638,6 +672,16 @@ void jr(){
     mipsItem tmp = {
         "jr",
         "$ra",
+        "",
+        "",
+    };
+    mipsCodeVector.push_back(tmp);
+}
+
+void jal(string label){
+    mipsItem tmp = {
+        "jal",
+        label,
         "",
         "",
     };

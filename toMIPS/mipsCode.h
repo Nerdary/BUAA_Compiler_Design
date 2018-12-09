@@ -95,6 +95,7 @@ void div(string res, string d1, string d2);
 void label(string label);
 void j(string label);
 void jr();
+void jal(string label);
 void blez(string tag, string label);
 void bltz(string tag, string label);
 void bne(string s1, string s2, string label);

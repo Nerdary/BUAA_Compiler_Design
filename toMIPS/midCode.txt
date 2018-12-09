@@ -9,6 +9,10 @@ Contents of mid codes
        label     func1_1        func            
         func         int       func1            
         para         int       para1            
+       const         int         fc1      970907
+       const        char         fc2           z
+       array         int         fa1          20
+       array        char         fa2          20
          var         int           x            
          var         int           a            
          var         int           b            
