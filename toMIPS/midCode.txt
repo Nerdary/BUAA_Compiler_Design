@@ -29,15 +29,15 @@ Contents of mid codes
          $t8         $t2           *         $t7
          $t9         $t1           +         $t8
            x         $t9                        
-        $t10           x                        
-       print        $t10                        
-        $t11           x                        
-         ret        $t11                        
+         $t1           x                        
+       print         $t1                        
+         $t2           x                        
+         ret         $t2                        
        label     func1_2        func            
         main        void        main            
          var         int       para1            
-        $t12           5                        
-       para1        $t12                        
-        $t13           5                        
-        push        $t13                        
+         $t3           5                        
+       para1         $t3                        
+         $t4           5                        
+        push         $t4                        
         call       func1                        

@@ -38,6 +38,7 @@ void pushMidCodeConst(int type, string ID, int value){
         tmpValue = stmp;
     //    printf(">>>> %s\n", tmpValue.c_str());
     }
+
     midCodeItem tmp = {
         "const",
         tmpType,
@@ -157,10 +158,13 @@ void pushMidCodePara(int type, string ID){
 
 void pushMidCodeGetValue(int tCount, string ID){
     string t;
+    int newCount = tCount + 1;
+    if(newCount>9){
+        if(newCount%9==0) newCount = 9;
+        else    newCount %= 9;
+    }
 
-//    if(tCount>=9)   tCount %= 9;
-
-    t = "$t" + to_string(tCount+1);
+    t = "$t" + to_string(newCount);
     midCodeItem tmp = {
         t,
         ID,
@@ -171,13 +175,21 @@ void pushMidCodeGetValue(int tCount, string ID){
 }
 
 void pushMidCodeCalc(int tCount, int n1, int op, int n2){
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
+
     // op: 0:default | 1:+ | 2:- | 3:* | 4:/
     string t1 = "$t" + to_string(tCount+1);
     string t2 = "$t" + to_string(n1+1);
     string t3;
     string t4 = "$t" + to_string(n2+1);
 
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     switch(op){
         case(1):
@@ -201,7 +213,10 @@ void pushMidCodeCalc(int tCount, int n1, int op, int n2){
 }
 
 void pushMidCodePara(int tCount){
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     string t1 = "$t" + to_string(tCount+1);
     midCodeItem tmp = {
@@ -225,7 +240,10 @@ void pushMidCodeFuncCall(string FuncID){
 }
 
 void pushMidCodeRet(int tCount){
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     string t1 = "$t" + to_string(tCount);
     midCodeItem tmp = {
@@ -248,7 +266,10 @@ void pushMidCodeRet(){
 }
 
 void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     midCodeItem tmp;
     if(isArray==1){
@@ -296,7 +317,10 @@ void pushMidCodeCondition(int expr1, int op, int expr2){
 }
 
 void pushMidCodeFactorValue(int tCount, int type, int value){
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     midCodeItem tmp;
     if(type==1){
@@ -367,7 +391,10 @@ void pushMidCodeGOTO(int labelCount, int index){
 }
 
 void pushMIdCodeCalStep(int tCount, string var, int op, int length){
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     string t1 = "$t" + to_string(tCount+1);
     string opt = "+";
@@ -409,7 +436,10 @@ void pushMidCodeScan(int type, string ID){
 }
 
 void pushMidCodePrint(int mode, string content, int tCount){
-//    if(tCount>=9)   tCount %= 9;
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
 
     if(mode==1){
         // ´òÓ¡×Ö·û´®
