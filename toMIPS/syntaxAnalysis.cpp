@@ -1243,7 +1243,7 @@ int programAnalysis(){
         complexTag = 1;
     }
     getsym(1);
-    if(result==LBRACSY){
+    if(result==LBRACESY){
         complexTag = 1;
     }
 

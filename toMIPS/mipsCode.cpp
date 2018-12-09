@@ -7,6 +7,7 @@
 #include "mipsCode.h"
 #include "error.h"
 
+using namespace std;
 
 int midCodeIndex = 0;
 int funcLevel = 0;      // 默认main为1，global为0
@@ -35,9 +36,13 @@ void printMidCodeTmp(midCodeItem tmp){
 }
 
 void getMid(){
+    if(midCodeIndex>=midCodeVec.size()){
+        printf(">>> out of midCodeVec's length\n");
+        return ;
+    }
     tmp = midCodeVec.at(midCodeIndex++);
-//    printf("> %d\t", midCodeIndex);
-//    printMidCodeTmp(tmp);
+    printf("> %d\t", midCodeIndex);
+    printMidCodeTmp(tmp);
 }
 
 void pushGlobalRecord(string ID, int offset){
@@ -114,9 +119,13 @@ void genMips(){     // 有点类似于 programAnalysis
         getMid();
     }
 
+    // 跳转到主函数
+    j("main");
+
     // 处理所有子函数定义
     while(tmp.one=="label" && tmp.three=="func"){
         // 生成mips，记录所有信息用于生成运行栈
+        mipsLabel(tmp.two);
         getMid();
         if(tmp.one=="func"){
             // 在这里生成函数头部，操作fp sp，保存ra
@@ -161,6 +170,15 @@ void genMips(){     // 有点类似于 programAnalysis
             }
         }
 
+        functionInfo tmpfunc = {funcLevel,          // level
+                                globalValueOfFp,
+                                globalValueOfFp + 8 + 4 * funcSymbolCount,
+                                funcSymbolCount,    // length
+                                funcSymbolTable};   // symbol table
+        globalValueOfFp += (8 + 4 * funcSymbolCount);
+        //allFuncInfoVector.push_back(tmpfunc);
+        funcStack.push_back(tmpfunc);
+
         // 复合语句部分
         while(true){
             if(tmp.one=="label"){
@@ -171,7 +189,7 @@ void genMips(){     // 有点类似于 programAnalysis
             }
             // 这里调用handle一句句生成mips
             handleMidCode();
-            getMid();
+            //getMid();
         }
         // 当前为label_func_2,生成一句jr
         jr();
@@ -179,13 +197,7 @@ void genMips(){     // 有点类似于 programAnalysis
         getMid();
 
         // 将该函数所有信息push进allFuncInfoVector
-        functionInfo tmpfunc = {funcLevel,          // level
-                                globalValueOfFp,
-                                globalValueOfFp + 8 + 4 * funcSymbolCount,
-                                funcSymbolCount,    // length
-                                funcSymbolTable};   // symbol table
-        globalValueOfFp += (8 + 4 * funcSymbolCount);
-        allFuncInfoVector.push_back(tmpfunc);
+
     }
     // 处理完所有函数定义
     // 处理主函数
@@ -197,6 +209,8 @@ void genMips(){     // 有点类似于 programAnalysis
 
 // 处理主函数，生成运行栈，生成MIPS
 void handleMain(){
+    //
+    mipsLabel("main");
     getMid();
 //    printf("> about to get in handle mid code.\n");
     handleMidCode();
@@ -204,6 +218,7 @@ void handleMain(){
 
 // 即处理复杂语句，处理一条的四元式，生成大部分MIPS
 void handleMidCode(){
+    //printf(">>> in Handle-MidCode\n");
     // 已经预读了一条MidCode
     if(tmp.one=="BZ"){
         // BZ的上一条一定是条件，所以对于$ti<$tj的形式，将值存起来
@@ -246,16 +261,53 @@ void handleMidCode(){
                 syscall();
             }
         }
+        // get next
+        getMid();
     }else if(tmp.one=="scan"){
+        // v0 = 5
+        addi("$v0", "$zero", 5);
+        syscall();
+        // assignment
+        // search ID tmp.three
+        int flag = 1;
+        int res2;
+        searchResult res1 = searchStackID(tmp.three);
+        if(res1.index==-1){
+            flag = 2;
+            res2 = searchGlobalID(tmp.three);
+        }
+        if(res2==-1){
+            printf("Failed to find the ID:%s\n", tmp.three.c_str());
+            return ;
+        }
+
+        if(flag==1){
+            // find ID in function's stack
+            int fp = res1.targetFp;
+            int offset1 = 8 + 4 * res1.index;
+            addi("$s1", "$zero", fp);
+            sw("$v0", offset1, "$s1");
+            // read next
+            getMid();
+        }else{
+            // find ID in global table
+            int offset2 = 4 * res2;
+            sw("$v0", offset2, "$gp");
+            // read next
+            getMid();
+        }
 
     }else if(tmp.one=="para"){
-
+        // 应该进不来这个分支
+        printf("Unexpected 'parameter' branch.\n");
+        getMid();
     }else if(tmp.one=="push"){
 
     }else if(tmp.one=="call"){
 
     }else{
         if(tmp.one[0]=='$' && tmp.one[1]=='t'){
+            //printf(">>> in branch tmp.one = '$ti' \n");
             // "$ti" 一共有si种可能
             //  $t6         $t4           *         $t5
             if(tmp.two[0]=='$' && tmp.two[1]=='t' &&
@@ -339,17 +391,20 @@ void handleMidCode(){
             }
             // $t1           a
             else{
+                printf(">>> check: in this branch: '$ti  a'\n");
                 int flag = 1;
-                searchResult res1 = searchStackID(tmp.one);
+                int res2;
+                searchResult res1 = searchStackID(tmp.two);
                 if(res1.index==-1){
                     flag = 2;
-                    int res2 = searchGlobalID(tmp.one);
+                    res2 = searchGlobalID(tmp.one);
                 }
                 if(res2==-1){
                     printf("Failed to find the ID:%s\n", tmp.one.c_str());
                     return ;
                 }
 
+                //printf(">>> check it out! flag=%d\n", flag);
                 if(flag==1){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
@@ -363,21 +418,21 @@ void handleMidCode(){
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
                     int offset2 = 4 * res2;
-                    lw(tmp.one, offset2, "$gp");
+                    lw(tmp.one, -offset2, "$gp");
                     // read next
                     getMid();
                 }
 
-                getMid();
             }
         }else{
             // ID
             if(tmp.two[0]=='$' && tmp.two[1]=='t'){
                 int flag = 1;
+                int res2;
                 searchResult res1 = searchStackID(tmp.one);
                 if(res1.index==-1){
                     flag = 2;
-                    int res2 = searchGlobalID(tmp.one);
+                    res2 = searchGlobalID(tmp.one);
                 }
                 if(res2==-1){
                     printf("Failed to find the ID:%s\n", tmp.one.c_str());
@@ -412,19 +467,30 @@ void handleMidCode(){
 
 
 }
-searchResult searchStackID(string ID){
+
+searchResult searchStackID(string targetID){
     // 在运行栈中查找符号名
     int i, j, length = funcStack.size();
+    searchResult ures = {-1,-1,};
+    if(length==0){
+        // 还没有建函数信息表（栈）
+        printf("have not set up function stack yet.\n");
+        return ures;
+    }
     // 先查自己的域
     functionInfo info = funcStack.at(length-1);
     for(j=0;j<info.funcSymbolTable.size();j++){
         funcRecordItem tmp = info.funcSymbolTable.at(j);
-        if(tmp.ID==ID){
+        // check window
+    //    printf(">>> targetID:%s\tID:%s\toffset:%d\tvalue:%s\n", targetID.c_str(), tmp.ID.c_str(), tmp.offset, tmp.value.c_str());
+
+        if(tmp.ID==targetID){
         //    return tmp.offset;
             searchResult res = {
                 info.fp,
                 j,
             };
+            printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
             return res;
         }
     }
@@ -436,11 +502,12 @@ searchResult searchStackID(string ID){
             // 更高级的域
             for(j=0;j<info1.funcSymbolTable.size();j++){
                 funcRecordItem tmp = info1.funcSymbolTable.at(j);
-                if(tmp.ID==ID){
+                if(tmp.ID==targetID){
                     searchResult res = {
                         info1.fp,
                         j,
                     };
+                    printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
                     return res;
                 }
 
@@ -448,10 +515,8 @@ searchResult searchStackID(string ID){
         }
     }
     // 没有查到
-    searchResult ures = {
-        -1,
-        -1,
-    };
+
+    printf(">>> NOT find ID in stack\n");
     return ures;
 }
 
@@ -459,11 +524,13 @@ int searchGlobalID(string ID){
     // 查全局表
     int i, length = globalRecordVector.size();
     for(i=0;i<length;i++){
-        funcRecordItem tmp = globalRecordVector.at(i);
+        globalRecordItem tmp = globalRecordVector.at(i);
         if(tmp.ID == ID)
+            printf("find ID in global, index = %d\n", tmp.offset);
             return tmp.offset;
     }
     // 没有查到
+    printf("NOT find ID in global\n");
     return -1;
 }
 
@@ -617,6 +684,30 @@ void beq(string s1, string s2, string label){
     mipsCodeVector.push_back(tmp);
 }
 
+void mipsLabel(string label){
+    //int i, length = label.length();
+//    char * newLabel = new char[label.length() + 1] ; //不要忘了
+//    strcpy(newLabel, label.c_str());
+//    char *parts;
+//	const char *delim = "_";
+//	parts = strtok(newLabel, delim);
+//	string theLabel = parts;
+    //for(i=0;i<length-2;i++)
+    //    newLabel[i] = label[i];
+    //newLabel[i-1] = '\0';
+
+    vector<string> v;
+    SplitString(label, v,"_");
+    string newLbael = v.at(0);
+    mipsItem tmp = {
+        newLbael + ":",
+        "",
+        "",
+        "",
+    };
+    mipsCodeVector.push_back(tmp);
+}
+
 void syscall(){
     mipsItem tmp = {
         "syscall",
@@ -654,4 +745,20 @@ void printGlobalRecord(){
         globalRecordItem tmp = globalRecordVector.at(i);
         printf("%d\t%s\t%d\n", i, tmp.ID.c_str(), tmp.offset);
     }
+}
+
+void SplitString(const string& s, vector<string>& v, const string& c)
+{
+    string::size_type pos1, pos2;
+    pos2 = s.find(c);
+    pos1 = 0;
+    while(string::npos != pos2)
+    {
+        v.push_back(s.substr(pos1, pos2-pos1));
+
+        pos1 = pos2 + c.size();
+        pos2 = s.find(c, pos1);
+    }
+    if(pos1 != s.length())
+        v.push_back(s.substr(pos1));
 }

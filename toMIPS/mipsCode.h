@@ -81,7 +81,7 @@ void handleMidCode();
 void genMips();
 void printMipsCode();
 
-int searchStackID(string ID);
+searchResult searchStackID(string ID);
 int searchGlobalID(string ID);
 
 void addi(string res, string in, int value);
@@ -99,9 +99,12 @@ void blez(string tag, string label);
 void bltz(string tag, string label);
 void bne(string s1, string s2, string label);
 void beq(string s1, string s2, string label);
+void mipsLabel(string label);
 void syscall();
 
 
 void printGlobalRecord();
+
+void SplitString(const string& s, vector<string>& v, const string& c);
 
 #endif // MIPSCODE_H_INCLUDED

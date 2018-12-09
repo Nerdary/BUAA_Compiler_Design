@@ -147,7 +147,7 @@
 	<fstream>
 	<iomanip>
 
-1543751029 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\main.cpp
+1544254215 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\main.cpp
 	<iostream>
 	<stdio.h>
 	<ctype.h>
@@ -159,10 +159,10 @@
 	"midCode.h"
 	"mipsCode.h"
 
-1543760420 c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\mipscode.h
+1544253857 c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\mipscode.h
 	"midCode.h"
 
-1543761878 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\midcode.cpp
+1544196496 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\midcode.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -184,7 +184,7 @@
 	"syntaxAnalysis.h"
 	"error.h"
 
-1543762712 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\syntaxanalysis.cpp
+1544254520 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -195,4 +195,13 @@
 	"syntaxAnalysis.h"
 	"error.h"
 	"midCode.h"
+
+1544254806 source:c:\users\retriver\desktop\编译课设\12.9 提交\c0_compiler\mipscode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string>
+	<vector>
+	<stdlib.h>
+	"mipsCode.h"
+	"error.h"
 

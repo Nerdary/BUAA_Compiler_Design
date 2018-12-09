@@ -1,0 +1,17 @@
+const int g_a = 1, g_b = 2;
+const char g_c = 'c', g_d = '+';
+int g_e[10];
+char g_f[20];
+
+int func1(int para1){
+	int x, a, b, c, d, e;
+	x = a+b*(c+d*e);
+	printf(x);
+	return (x);
+}
+
+void main(){
+	int para1;
+	para1 = 5;
+	func1(5);
+}
