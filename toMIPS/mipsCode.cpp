@@ -132,7 +132,7 @@ void genMips(){     // 有点类似于 programAnalysis
             // 在这里生成函数头部，操作fp sp，保存ra
             sw("$fp", 0, "$sp");
             add("$fp", "$sp", "$zero");
-            addi("$sp", "$sp", -4);
+            addi("$sp", "$sp", 4);
             sw("$ra", 0, "$sp");
 
             getMid();
@@ -150,10 +150,10 @@ void genMips(){     // 有点类似于 programAnalysis
             funcSymbolTable.push_back(tmp2);
             // 从栈中加载参数的值
             add("$t1", "$zero", "$ra");
-            addi("$t1", "$t1", -(4+4*paraCount));
+            addi("$t1", "$t1", (4+4*paraCount));
             paraCount -= 1; // 减为0恰好终止
             lw("$t2", 0, "$t1");
-            addi("$sp", "$sp", -4);
+            addi("$sp", "$sp", 4);
             sw("$t2", 0, "$sp");
 
             // 预读下一条
@@ -165,7 +165,7 @@ void genMips(){     // 有点类似于 programAnalysis
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, tmp.four};
             funcSymbolTable.push_back(tmp2);
             // 留出空间并填入常量的值
-            addi("$sp", "$sp", -4);
+            addi("$sp", "$sp", 4);
             if(tmp.two=="int"){
                 li("$t1", tmp.four);
             }else{
@@ -183,14 +183,14 @@ void genMips(){     // 有点类似于 programAnalysis
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
                 funcSymbolTable.push_back(tmp2);
                 //
-                addi("$sp", "$sp", -4);
+                addi("$sp", "$sp", 4);
                 getMid();
             }else{
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
                 funcSymbolCount += transNum(tmp.four);
                 funcSymbolTable.push_back(tmp2);
                 //
-                addi("$sp", "$sp", -4*transNum(tmp.four));
+                addi("$sp", "$sp", 4*transNum(tmp.four));
                 getMid();
             }
         }
@@ -246,7 +246,7 @@ void handleMain(){
         funcRecordItem tmpm = {tmp.three, funcSymbolCount++, 0, tmp.four};
         mainSymbolTable.push_back(tmpm);
         // 留出空间并填入常量的值
-        addi("$sp", "$sp", -4);
+        addi("$sp", "$sp", 4);
         if(tmp.two=="int"){
             li("$t1", tmp.four);
         }else{
@@ -265,17 +265,27 @@ void handleMain(){
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
             mainSymbolTable.push_back(tmp2);
             //
-            addi("$sp", "$sp", -4);
+            addi("$sp", "$sp", 4);
             getMid();
         }else{
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
             funcSymbolCount += transNum(tmp.four);
             mainSymbolTable.push_back(tmp2);
             //
-            addi("$sp", "$sp", -4*transNum(tmp.four));
+            addi("$sp", "$sp", 4*transNum(tmp.four));
             getMid();
         }
     }
+
+    // function info func stack
+    functionInfo tmpfunc = {1,                  // level
+                            globalValueOfFp,
+                            globalValueOfFp + 8 + 4 * funcSymbolCount,
+                            funcSymbolCount,    // length
+                            mainSymbolTable};   // symbol table
+    globalValueOfFp += (8 + 4 * funcSymbolCount);
+    funcStack.push_back(tmpfunc);
+
 
 //    printf("> about to get in handle mid code.\n");
 //    handleMidCode();
@@ -290,7 +300,7 @@ void handleMain(){
 // 即处理复杂语句，处理一条的四元式，生成大部分MIPS
 void handleMidCode(){
     //printf(">>> in Handle-MidCode\n");
-    printf(">>> check tmp one:%s\n", tmp.one.c_str());
+//    printf(">>> check tmp one:%s\n", tmp.one.c_str());
     // 已经预读了一条MidCode
     if(tmp.one=="BZ"){
         // BZ的上一条一定是条件，所以对于$ti<$tj的形式，将值存起来
@@ -375,7 +385,7 @@ void handleMidCode(){
         getMid();
     }else if(tmp.one=="push"){
         // paraCount 用于记录para的长度
-        addi("$sp", "$sp", -4);
+        addi("$sp", "$sp", 4);
         sw(tmp.two, 0, "$sp");
         // 参数计数器
         paraCount += 1;
@@ -491,6 +501,7 @@ void handleMidCode(){
                     // 0 1 2 3 ...
                     int fp = res1.targetFp;
                     int offset1 = 8 + 4 * res1.index;
+                    printf(">>> check: func stack search: index=%d\n", res1.index);
                     addi("$s1", "$zero", fp);
                     lw(tmp.one, offset1, "$s1");
                     // read next
