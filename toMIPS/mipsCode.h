@@ -62,10 +62,12 @@ struct mipsItem{
 extern vector<mipsItem> mipsCodeVector;
 
 struct functionInfo{
+    string funcName;
     int level;
     int fp;
     int sp;
     int length;
+    int isMain;
     vector<funcRecordItem> funcSymbolTable;
 //    vector<midCodeItem> otherMidCodeVec;
 };
@@ -73,6 +75,7 @@ struct functionInfo{
 struct searchResult{
     int targetFp;
     int index;
+    int isMain;
 };
 
 void handleMain();

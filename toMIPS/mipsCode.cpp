@@ -23,7 +23,7 @@ int globalRecordCount = 0;
 int globalValueOfFp = 0;
 int compareResult;      // 关系运算四元式的结果，作为跳转的条件
                         // 将此结果存入寄存器$s2
-int paraCount = 0;     // 用于记录函数调用的参数个数
+int paraCount;     // 用于记录函数调用的参数个数
 
 int offsetGp = 0;      // 全局变量、常量的偏移量，因为要访问，所以$gp最好不要变
 int offsetFp = 0;
@@ -71,6 +71,9 @@ int transNum(string token){
 
 void genMips(){     // 有点类似于 programAnalysis
     getMid();
+
+    // 设置sp
+    add("$sp", "$zero", "$zero");
 
     // 处理全局 常量定义
     if(tmp.one=="const"){
@@ -123,17 +126,22 @@ void genMips(){     // 有点类似于 programAnalysis
     // 跳转到主函数
     j("main");
 
+    string currentFuncName;
     // 处理所有子函数定义
     while(tmp.one=="label" && tmp.three=="func"){
         // 生成mips，记录所有信息用于生成运行栈
         mipsLabel(tmp.two);
         getMid();
         if(tmp.one=="func"){
+            // 记录函数名
+            currentFuncName = tmp.three;
+
             // 在这里生成函数头部，操作fp sp，保存ra
             sw("$fp", 0, "$sp");
             add("$fp", "$sp", "$zero");
             addi("$sp", "$sp", 4);
             sw("$ra", 0, "$sp");
+            addi("$sp", "$sp", 4);
 
             getMid();
         }else{
@@ -143,22 +151,50 @@ void genMips(){     // 有点类似于 programAnalysis
 
         vector<funcRecordItem> funcSymbolTable;
         int funcSymbolCount = 0;
+
         // 参数部分
+
+        // 先计数有多少个para
+        paraCount = 0;
+        int tmpParaIndex = midCodeIndex - 1;
+        midCodeItem tmpParaItem;
+        // tmp = midCodeVec.at(midCodeIndex++);
+        while(true){
+            tmpParaItem = midCodeVec.at(tmpParaIndex);
+            if(tmpParaItem.one != "para")
+                break;
+
+            paraCount++;
+            tmpParaIndex++;
+        }
+
         while(tmp.one=="para"){
             // 在函数信息表中登记参数信息
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 1, ""};
             funcSymbolTable.push_back(tmp2);
-            // 从栈中加载参数的值
-            add("$t1", "$zero", "$ra");
-            addi("$t1", "$t1", (4+4*paraCount));
-            paraCount -= 1; // 减为0恰好终止
-            lw("$t2", 0, "$t1");
+
+            // 从栈中加载参数的值 paracount
+            printf(">>> check para count: %d\n", paraCount);
+            // 必须查函数表才能知道有几个参数
+            int gap = 4 * paraCount + 8;
+            addi("$s1", "$sp", -gap);
+            lw("$t1", 0, "$s1");
+            sw("$t1", 0, "$sp");
             addi("$sp", "$sp", 4);
-            sw("$t2", 0, "$sp");
+
+
+//            add("$t1", "$zero", "$ra");
+//            addi("$t1", "$t1", (4+4*paraCount));
+//            paraCount -= 1; // 减为0恰好终止
+//            lw("$t2", 0, "$t1");
+//            addi("$sp", "$sp", 4);
+//            sw("$t2", 0, "$sp");
 
             // 预读下一条
             getMid();
         }
+        // 将参数计数器清零
+        paraCount = 0;
 
         // 常量定义部分
         while(tmp.one=="const"){
@@ -195,10 +231,12 @@ void genMips(){     // 有点类似于 programAnalysis
             }
         }
 
-        functionInfo tmpfunc = {funcLevel,          // level
+        functionInfo tmpfunc = {currentFuncName,    // name / ID
+                                funcLevel,          // level
                                 globalValueOfFp,
                                 globalValueOfFp + 8 + 4 * funcSymbolCount,
                                 funcSymbolCount,    // length
+                                0,                  // not main
                                 funcSymbolTable};   // symbol table
         globalValueOfFp += (8 + 4 * funcSymbolCount);
         //allFuncInfoVector.push_back(tmpfunc);
@@ -237,6 +275,11 @@ void handleMain(){
     //
     mipsLabel("main");
     getMid();
+
+    // 需要将sp、fp设置到位
+    addi("$fp", "$zero", globalValueOfFp);
+    add("$sp", "$fp", "$zero");
+
     // 在这里处理所有常量变量数组定义
     int funcSymbolCount = 0;
     vector<funcRecordItem> mainSymbolTable;
@@ -278,12 +321,14 @@ void handleMain(){
     }
 
     // function info func stack
-    functionInfo tmpfunc = {1,                  // level
+    functionInfo tmpfunc = {"main",
+                            1,                  // level
                             globalValueOfFp,
-                            globalValueOfFp + 8 + 4 * funcSymbolCount,
+                            globalValueOfFp + 4 * funcSymbolCount,
                             funcSymbolCount,    // length
+                            1,                  // is main
                             mainSymbolTable};   // symbol table
-    globalValueOfFp += (8 + 4 * funcSymbolCount);
+    globalValueOfFp += (4 * funcSymbolCount);
     funcStack.push_back(tmpfunc);
 
 
@@ -385,16 +430,32 @@ void handleMidCode(){
         getMid();
     }else if(tmp.one=="push"){
         // paraCount 用于记录para的长度
-        addi("$sp", "$sp", 4);
+
         sw(tmp.two, 0, "$sp");
+        addi("$sp", "$sp", 4);
+
         // 参数计数器
-        paraCount += 1;
+        // paraCount += 1;
 
         getMid();
 
     }else if(tmp.one=="call"){
         // 这里只生成jal，加载参数放在读函数的时候
         jal(tmp.two);
+
+        // 暂时决定在这里生成新的 func stack
+        int i, length = funcStack.size();
+        for(i=0;i<length;i++){
+            functionInfo tmpc = funcStack.at(i);
+            if(tmpc.funcName == tmp.two)
+                break;
+        }
+        functionInfo newTmp = funcStack.at(i);
+        newTmp.fp = globalValueOfFp;
+        newTmp.sp = globalValueOfFp + 4 * newTmp.length;
+        funcStack.push_back(newTmp);
+        printf(">>> push new func in stack :%s\n", newTmp.funcName.c_str());
+
         getMid();
     }else{
         if(tmp.one[0]=='$' && tmp.one[1]=='t'){
@@ -500,9 +561,12 @@ void handleMidCode(){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
                     int fp = res1.targetFp;
-                    int offset1 = 8 + 4 * res1.index;
+                    int offset1 = 4 * res1.index;
+                    if(res1.isMain!=1){
+                        offset1 += 8;
+                    }
                     printf(">>> check: func stack search: index=%d\n", res1.index);
-                    addi("$s1", "$zero", fp);
+                    add("$s1", "$zero", "$fp");
                     lw(tmp.one, offset1, "$s1");
                     // read next
                     getMid();
@@ -537,7 +601,10 @@ void handleMidCode(){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
                     int fp = res1.targetFp;
-                    int offset1 = 8 + 4 * res1.index;
+                    int offset1 = 4 * res1.index;
+                    if(res1.isMain==0){
+                        offset1 += 8;
+                    }
                     addi("$s1", "$zero", fp);
                     sw(tmp.two, offset1, "$s1");
                     // read next
@@ -582,6 +649,7 @@ searchResult searchStackID(string targetID){
             searchResult res = {
                 info.fp,
                 j,
+                info.isMain,
             };
             printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
             return res;
@@ -599,6 +667,7 @@ searchResult searchStackID(string targetID){
                     searchResult res = {
                         info1.fp,
                         j,
+                        info1.isMain,
                     };
                     printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
                     return res;
