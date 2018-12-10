@@ -1,0 +1,80 @@
+Contents of MIPS
+
+
+         add         $sp       $zero       $zero
+          li         $t1           1            
+          sw         $t1     -4($gp)            
+          li         $t1           2            
+          sw         $t1     -8($gp)            
+          li         $t1          99            
+          sw         $t1    -12($gp)            
+          li         $t1          43            
+          sw         $t1    -16($gp)            
+          li         $t1           4            
+          li         $t2          10            
+         mul         $t3         $t1         $t2
+          li         $t1           4            
+          li         $t2          20            
+         mul         $t3         $t1         $t2
+           j        main                        
+      func1:                                    
+          sw         $fp      0($sp)            
+         add         $fp         $sp       $zero
+        addi         $sp         $sp           4
+          sw         $ra      0($sp)            
+        addi         $sp         $sp           4
+        addi         $s1         $sp         -12
+          lw         $t1      0($s1)            
+          sw         $t1      0($sp)            
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+          li         $t1      970907            
+          sw         $t1      0($sp)            
+        addi         $sp         $sp           4
+          li         $t1         122            
+          sw         $t1      0($sp)            
+        addi         $sp         $sp          80
+        addi         $sp         $sp          80
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+         add         $s1       $zero         $fp
+          lw         $t1     32($s1)            
+         add         $s1       $zero         $fp
+          lw         $t2     36($s1)            
+         add         $s1       $zero         $fp
+          lw         $t3     40($s1)            
+         add         $s1       $zero         $fp
+          lw         $t4     44($s1)            
+         add         $s1       $zero         $fp
+          lw         $t5     48($s1)            
+         mul         $t6         $t4         $t5
+         add         $t7         $t3         $t6
+         mul         $t8         $t2         $t7
+         add         $t9         $t1         $t8
+        addi         $s1       $zero           0
+          sw         $t9     28($s1)            
+         add         $s1       $zero         $fp
+          lw         $t1     28($s1)            
+        addi         $v0       $zero           1
+         add         $a0       $zero         $t1
+     syscall                                    
+         add         $s1       $zero         $fp
+          lw         $t2     28($s1)            
+         add         $v0       $zero         $t2
+          lw         $ra      4($fp)            
+          jr         $ra                        
+       main:                                    
+        addi         $fp       $zero         204
+         add         $sp         $fp       $zero
+        addi         $sp         $sp           4
+        addi         $t3       $zero           5
+        addi         $s1       $zero         204
+          sw         $t3      0($s1)            
+        addi         $t4       $zero           5
+          sw         $t4      0($sp)            
+        addi         $sp         $sp           4
+         jal       func1                        

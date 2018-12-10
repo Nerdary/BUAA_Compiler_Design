@@ -1,15 +1,43 @@
 Contents of mid codes
            1           2           3           4
+       const         int         g_a           1
+       const         int         g_b           2
+       const        char         g_c           c
+       const        char         g_d           +
+       array         int         g_e          10
+       array        char         g_f          20
        label     func1_1        func            
         func         int       func1            
         para         int       para1            
-         $t1       para1                        
-         ret         $t1                        
+       const         int         fc1      970907
+       const        char         fc2           z
+       array         int         fa1          20
+       array        char         fa2          20
+         var         int           x            
+         var         int           a            
+         var         int           b            
+         var         int           c            
+         var         int           d            
+         var         int           e            
+         $t1           a                        
+         $t2           b                        
+         $t3           c                        
+         $t4           d                        
+         $t5           e                        
+         $t6         $t4           *         $t5
+         $t7         $t3           +         $t6
+         $t8         $t2           *         $t7
+         $t9         $t1           +         $t8
+           x         $t9                        
+         $t1           x                        
+       print         $t1                        
+         $t2           x                        
+         ret         $t2                        
        label     func1_2        func            
         main        void        main            
          var         int       para1            
-         $t2           5                        
-       para1         $t2                        
-         $t3       para1                        
-        push         $t3                        
+         $t3           5                        
+       para1         $t3                        
+         $t4           5                        
+        push         $t4                        
         call       func1                        

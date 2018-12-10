@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <stdlib.h>
+#include <fstream>
+#include <iomanip>
 
 #include "mipsCode.h"
 #include "error.h"
@@ -254,12 +256,13 @@ void genMips(){     // 有点类似于 programAnalysis
             handleMidCode();
             //getMid();
         }
-        // 当前为label_func_2,生成一句jr
+
+        // 当前为label_func_2,取出ra，生成一句jr
+        lw("$ra", 4, "$fp");
         jr();
 
         getMid();
 
-        // 将该函数所有信息push进allFuncInfoVector
 
     }
     // 处理完所有函数定义
@@ -907,6 +910,20 @@ void printMipsCode(){
             printf(", %s", tmp.four.c_str());
         printf("\n");
     }
+}
+
+void Mips2File(){
+    int i, cntMips = mipsCodeVector.size();
+    ofstream ofile;
+    ofile.open("MipsCode.txt");
+
+    ofile<<"Contents of MIPS"<<endl;
+    ofile<<"\n"<<endl;
+    for(i=0;i<cntMips;i++){
+        mipsItem tmp = mipsCodeVector.at(i);
+        ofile<<setw(12)<<tmp.one.c_str()<<setw(12)<<tmp.two.c_str()<<setw(12)<<tmp.three.c_str()<<setw(12)<<tmp.four.c_str()<<endl;
+    }
+    ofile.close();
 }
 
 void printGlobalRecord(){

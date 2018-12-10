@@ -108,6 +108,7 @@ void syscall();
 
 
 void printGlobalRecord();
+void Mips2File();
 
 void SplitString(const string& s, vector<string>& v, const string& c);
 

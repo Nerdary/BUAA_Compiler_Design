@@ -19,7 +19,7 @@ int main(){
 //	printf("please input a file path:\n");
 //	scanf("%s",path);
 //	fp = fopen(path,"r");
-    fp = fopen("test3.txt", "r");
+    fp = fopen("test2.txt", "r");
 	if (fp==NULL){
 		err(5);
 		return 0;
@@ -38,6 +38,7 @@ int main(){
     // 根据中间代码生成目标mips指令
     genMips();
     printf(">>> FINISH MIPS CODE.\n");
+    Mips2File();
     printMipsCode();
 //    printGlobalRecord();
 
