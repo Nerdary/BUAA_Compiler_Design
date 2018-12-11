@@ -253,10 +253,15 @@ void genMips(){     // 有点类似于 programAnalysis
             //    printMidCodeTmp(tmp);
                 if(tmp.three=="func"){
                     break;
+                }else{
+                    // 生成普通的label
+                    label("label" + tmp.two);
+                    getMid();
                 }
             }
             // 这里调用handle一句句生成mips
-            handleMidCode();
+            if(tmp.one!="label")
+                handleMidCode();
             //getMid();
         }
 
@@ -386,7 +391,7 @@ void handleMidCode(){
         printf("Unexpected branch 'BZ' \n");
         getMid();
     }else if(tmp.one=="GOTO"){
-        j(tmp.two);
+        j("label" + tmp.three);
         getMid();
     }else if(tmp.one=="ret"){
         // ret        $t24
@@ -534,38 +539,38 @@ void handleMidCode(){
                     sub("$s1", tmp.three, tmp.one); // s1 = 3 - 1
                     getMid();  // 一定是 BZ
                     // s1<=0则跳转
-                    blez("$s1", tmp.three);
+                    blez("$s1", "label" + tmp.three);
                     getMid();
 
                 }else if(tmp.two==">"){
                     sub("$s1", tmp.one, tmp.three); // s1 = 1 - 3
                     getMid();
-                    blez("$s1", tmp.three);
+                    blez("$s1", "label" + tmp.three);
                     getMid();
 
                 }else if(tmp.two=="<="){
                     sub("$s1", tmp.three, tmp.one); // s1 = 3 - 1
                     getMid();
                     // s1<0则跳转
-                    bltz("$s1", tmp.three);
+                    bltz("$s1", "label" + tmp.three);
                     getMid();
 
                 }else if(tmp.two==">="){
                     sub("$s1", tmp.one, tmp.three); // s1 = 1 - 3
                     getMid();
-                    bltz("$s1", tmp.three);
+                    bltz("$s1", "label" + tmp.three);
                     getMid();
 
                 }else if(tmp.two=="=="){
                     sub("$s1", tmp.one, tmp.three);
                     getMid();
-                    bne("$s1", "$zero", tmp.three);
+                    bne("$s1", "$zero", "label" + tmp.three);
                     getMid();
 
                 }else if(tmp.two=="!="){
                     sub("$s1", tmp.one, tmp.three);
                     getMid();
-                    beq("$s1", "$zero", tmp.three);
+                    beq("$s1", "$zero", "label" + tmp.three);
                     getMid();
 
                 }else{
@@ -687,7 +692,7 @@ void handleMidCode(){
             }
         }else{
             printf(">>> check in branch: 'ID $ti' \n");
-            // ID
+            // ID      $ti
             if(tmp.two[0]=='$' && tmp.two[1]=='t'){
                 int flag = 1;
                 int res2;
@@ -719,7 +724,7 @@ void handleMidCode(){
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
                     int offset2 = 4 * res2;
-                    sw(tmp.two, -offset2, "$gp");
+                    sw(tmp.two, - offset2, "$gp");
                     // read next
                     getMid();
                 }
@@ -843,7 +848,7 @@ searchResult searchStackID(string targetID){
     // 再查嵌套的域
     for(i=length-1;i>=0;i--){
         functionInfo info1 = funcStack.at(i);
-        if(funcLevel > info1.level){
+    //    if(funcLevel > info1.level){
             // 更高级的域
             for(j=0;j<info1.funcSymbolTable.size();j++){
                 funcRecordItem tmp = info1.funcSymbolTable.at(j);
@@ -858,7 +863,7 @@ searchResult searchStackID(string targetID){
                 }
 
             }
-        }
+    //    }
     }
     // 没有查到
 

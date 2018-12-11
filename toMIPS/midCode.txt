@@ -1,25 +1,44 @@
 Contents of mid codes
            1           2           3           4
-       array         int         g_a          20
-       label     func1_1        func            
-        func         int       func1            
-        para         int       para1            
-         $t1           1                        
-         $t2           3                        
-         g_a          []           1         $t2
-         $t3       para1                        
+       label       fib_1        func            
+        func         int         fib            
+        para         int           n            
+         $t1           n                        
+         $t2           1                        
+         $t1          ==         $t2            
+          BZ       label         1_1            
+         $t3           1                        
          ret         $t3                        
-       label     func1_2        func            
-        main        void        main            
-         var         int       para1            
-         var         int           x            
-         $t4           5                        
-       para1         $t4                        
-         $t5       para1                        
-        push         $t5                        
-        call       func1                        
+        GOTO       label         1_2            
+       label         1_1        norm            
+       label         1_2        norm            
+         $t4           n                        
+         $t5           1                        
+         $t4          ==         $t5            
+          BZ       label         2_1            
          $t6           1                        
-         $t7         g_a          []         $t6
-           x         $t7                        
-         $t8           x                        
-       print         $t8                        
+         ret         $t6                        
+        GOTO       label         2_2            
+       label         2_1        norm            
+       label         2_2        norm            
+         $t7           n                        
+         $t8           1                        
+         $t9         $t4           -         $t7
+        push         $t9                        
+        call         fib                        
+         $t1           n                        
+         $t2           2                        
+         $t3         $t9           -         $t1
+        push         $t3                        
+        call         fib                        
+         $t4         $t1           +         $t3
+         ret         $t4                        
+       label       fib_2        func            
+        main        void        main            
+         var         int           x            
+         $t5           3                        
+        push         $t5                        
+        call         fib                        
+           x         $t5                        
+         $t6           x                        
+       print         $t6                        
