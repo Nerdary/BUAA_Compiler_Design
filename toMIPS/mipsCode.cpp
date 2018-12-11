@@ -582,17 +582,17 @@ void handleMidCode(){
                 getMid();
             }
             // $t1           a
-            else{
+            else if(tmp.three==""){
             //    printf(">>> check: in this branch: '$ti  a'\n");
                 int flag = 1;
                 int res2;
                 searchResult res1 = searchStackID(tmp.two);
                 if(res1.index==-1){
                     flag = 2;
-                    res2 = searchGlobalID(tmp.one);
+                    res2 = searchGlobalID(tmp.two);
                 }
                 if(res2==-1){
-                    printf("Failed to find the ID:%s\n", tmp.one.c_str());
+                    printf("Failed to find the ID:%s\n", tmp.two.c_str());
                     return ;
                 }
 
@@ -619,6 +619,71 @@ void handleMidCode(){
                     getMid();
                 }
 
+            }else if(tmp.three=="[]"){
+                // $ti ID [] $tj
+
+                // 首先正常地查找ID
+                int flag = 1;
+                int res2;
+                searchResult res1 = searchStackID(tmp.two);
+                if(res1.index==-1){
+                    flag = 2;
+                    res2 = searchGlobalID(tmp.two);
+                }
+                if(res2==-1){
+                    printf("Failed to find the ID:%s\n", tmp.two.c_str());
+                    return ;
+                }
+
+                // after searching
+                if(flag==1){
+                    // 在符号栈表中找到了ID
+                    // 0 1 2 3 ...
+                    int fp = res1.targetFp;
+                    printf(">>> check: func stack search: index=%d\n", res1.index);
+
+                    // offset1 = 4 * res1.index;
+                    addi("$s1", "$zero", 4);
+                    addi("$s2", "$zero", res1.index);
+                    mul("$s2", "$s1", "$s2");
+
+                    // if(res1.isMain!=1){offset1 += 8;}
+                    if(res1.isMain!=1)
+                    addi("$s2", "$s1", 8);
+
+                    // 以上只取出了ID，还有index
+                    addi("$s1", "$zero", 4);
+                    mul("$s1", "$s1", tmp.four);
+
+                    add("$s1", "$fp", "$s1");
+                    add("$s1", "$s1", "$s2");
+
+                    // 最终取出
+                    lw(tmp.one, 0, "$s1");
+
+                    // read next
+                    getMid();
+                }else{
+                    // 在全局表中查到了ID
+                    // res2*4 是相对于gp的offset
+                    int offset2 = 4 * res2;
+                    add("$s1", "$gp", "$zero");
+                    addi("$s1", "$s1", -offset2);
+
+                    addi("$s2", "$zero", 4);
+                    mul("$s2", "$s2", tmp.four);
+
+                    add("$s1", "$s1", "$s2");
+                    lw(tmp.one, 0, "$s1");
+
+                    // read next
+                    getMid();
+                }
+            }else{
+                // 尚未考虑到的情况
+                printf(">>> ERROR: what the fuck is this mid code?\n");
+                getMid();
+                error();
             }
         }else{
             printf(">>> check in branch: 'ID $ti' \n");
@@ -654,12 +719,79 @@ void handleMidCode(){
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
                     int offset2 = 4 * res2;
-                    sw(tmp.two, offset2, "$gp");
+                    sw(tmp.two, -offset2, "$gp");
                     // read next
                     getMid();
                 }
 
+            }else if(tmp.two=="[]"){
+            // ID   []  index   $ti
+
+                // 首先正常地查找ID
+                int flag = 1;
+                int res2;
+                searchResult res1 = searchStackID(tmp.one);
+                if(res1.index==-1){
+                    flag = 2;
+                    res2 = searchGlobalID(tmp.one);
+                }
+                if(res2==-1){
+                    printf("Failed to find the ID:%s\n", tmp.one.c_str());
+                    return ;
+                }
+
+                // after searching
+                if(flag==1){
+                    // 在符号栈表中找到了ID
+                    // 0 1 2 3 ...
+                    int fp = res1.targetFp;
+                    printf(">>> check: func stack search: index=%d\n", res1.index);
+
+                    // offset1 = 4 * res1.index;
+                    addi("$s1", "$zero", 4);
+                    addi("$s2", "$zero", res1.index);
+                    mul("$s2", "$s1", "$s2");
+
+                    // if(res1.isMain!=1){offset1 += 8;}
+                    if(res1.isMain!=1)
+                    addi("$s2", "$s1", 8);
+
+                    // 以上只取出了ID，还有index
+                    addi("$s1", "$zero", 4);
+                    mul("$s1", "$s1", tmp.three);
+
+                    add("$s1", "$fp", "$s1");
+                    add("$s1", "$s1", "$s2");
+
+                    // 最终取出
+                    sw(tmp.four, 0, "$s1");
+
+                    // read next
+                    getMid();
+
+                }else{
+                    // 在全局表中查到了ID
+                    // res2*4 是相对于gp的offset
+                    int offset2 = 4 * res2;
+                    add("$s1", "$gp", "$zero");
+                    addi("$s1", "$s1", -offset2);
+
+                    addi("$s2", "$zero", 4);
+                    mul("$s2", "$s2", tmp.three);
+
+                    add("$s1", "$s1", "$s2");
+
+                    // save in
+                    sw(tmp.four, 0, "$s1");
+
+                    // read next
+                    getMid();
+                }
+
+
+                getMid();
             }else{
+                getMid();
                 error();
                 return ;
             }
