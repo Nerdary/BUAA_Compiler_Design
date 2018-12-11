@@ -262,6 +262,20 @@ void genMips(){     // 有点类似于 programAnalysis
 
         // 当前为label_func_2,取出ra，生成一句jr
         lw("$ra", 4, "$fp");
+
+        // 暂时以这种方式恢复sp
+        addi("$sp", "$fp", -4);
+
+        // 还要恢复fp
+        lw("$fp", 0, "$fp");
+
+        // 将sp移动到最后一个局部变量的下一个位置
+        // funcSymbolCount  globalValueOfFp
+//        printf("setting sp as : %d\n", globalValueOfFp);
+//        addi("$sp", "$zero", globalValueOfFp);
+//        addi("$sp", "$fp", 8+4*funcSymbolCount);
+
+
         jr();
 
         // 删除运行栈中该函数的部分
@@ -458,17 +472,21 @@ void handleMidCode(){
         getMid();
 
     }else if(tmp.one=="call"){
+        printf(">>> check in branch 'call' func \n");
         // 这里只生成jal，加载参数放在读函数的时候
         jal(tmp.two);
 
         // 暂时决定在这里生成新的 func stack
         int i, length = funcStack.size();
+        functionInfo tmpc;
         for(i=0;i<length;i++){
-            functionInfo tmpc = funcStack.at(i);
+            tmpc = funcStack.at(i);
             if(tmpc.funcName == tmp.two)
                 break;
         }
-        functionInfo newTmp = funcStack.at(i);
+
+        //functionInfo newTmp = funcStack.at(i);
+        functionInfo newTmp = tmpc;
         functionInfo oldTmp = funcStack.back();
         // 将fp设置为oldTmp.sp
         globalValueOfFp = oldTmp.sp;

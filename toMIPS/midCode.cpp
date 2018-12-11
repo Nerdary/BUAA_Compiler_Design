@@ -329,14 +329,15 @@ void pushMidCodeCondition(int expr1, int op, int expr2){
 }
 
 void pushMidCodeFactorValue(int tCount, int type, int value){
-    if(tCount>9){
-        if(tCount%9==0) tCount = 9;
-        else    tCount %= 9;
+    int newCount = tCount + 1;
+    if(newCount>9){
+        if(newCount%9==0) newCount = 9;
+        else    newCount %= 9;
     }
 
     midCodeItem tmp;
     if(type==1){
-        string t1 = "$t" + to_string(tCount+1);
+        string t1 = "$t" + to_string(newCount);
         tmp = {
             t1,
             to_string(value),
@@ -344,7 +345,7 @@ void pushMidCodeFactorValue(int tCount, int type, int value){
             "",
         };
     }else{
-        string t1 = "$t" + to_string(tCount+1);
+        string t1 = "$t" + to_string(newCount);
         char ctmp = value;
         string stmp(&ctmp, 1);
         string tmpValue = stmp;

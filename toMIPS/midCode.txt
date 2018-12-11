@@ -40,14 +40,25 @@ Contents of mid codes
          $t5         $t6           +         $t4
            x         $t5                        
          $t6           x                        
-       print         $t6                        
+        push         $t6                        
+        call       func2                        
          $t7           x                        
          ret         $t7                        
        label     func1_2        func            
+       label     func2_1        func            
+        func         int       func2            
+        para         int           x            
+         $t8           x                        
+       print         $t8                        
+         $t9           0                        
+         ret         $t9                        
+       label     func2_2        func            
         main        void        main            
          var         int       para1            
-         $t8           5                        
-       para1         $t8                        
-         $t9           5                        
-        push         $t9                        
+         $t1           5                        
+       para1         $t1                        
+         $t2           5                        
+        push         $t2                        
         call       func1                        
+         $t3           0                        
+       para1         $t3                        

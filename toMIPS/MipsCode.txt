@@ -68,21 +68,46 @@ Contents of MIPS
           sw         $t5    180($fp)            
          add         $s1       $zero         $fp
           lw         $t6    180($s1)            
-        addi         $v0       $zero           1
-         add         $a0       $zero         $t6
-     syscall                                    
+          sw         $t6      0($sp)            
+        addi         $sp         $sp           4
+         jal       func2                        
          add         $s1       $zero         $fp
           lw         $t7    180($s1)            
          add         $v0       $zero         $t7
           lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
+          jr         $ra                        
+      func2:                                    
+          sw         $fp      0($sp)            
+         add         $fp         $sp       $zero
+        addi         $sp         $sp           4
+          sw         $ra      0($sp)            
+        addi         $sp         $sp           4
+        addi         $s1         $sp         -12
+          lw         $t1      0($s1)            
+          sw         $t1      0($sp)            
+        addi         $sp         $sp           4
+         add         $s1       $zero         $fp
+          lw         $t8      8($s1)            
+        addi         $v0       $zero           1
+         add         $a0       $zero         $t8
+     syscall                                    
+        addi         $t9       $zero           0
+         add         $v0       $zero         $t9
+          lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
           jr         $ra                        
        main:                                    
-        addi         $fp       $zero         204
+        addi         $fp       $zero         216
          add         $sp         $fp       $zero
         addi         $sp         $sp           4
-        addi         $t8       $zero           5
-          sw         $t8      0($fp)            
-        addi         $t9       $zero           5
-          sw         $t9      0($sp)            
+        addi         $t1       $zero           5
+          sw         $t1      0($fp)            
+        addi         $t2       $zero           5
+          sw         $t2      0($sp)            
         addi         $sp         $sp           4
          jal       func1                        
+        addi         $t3       $zero           0
+          sw         $t3      8($fp)            
