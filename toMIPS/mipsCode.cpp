@@ -244,7 +244,7 @@ void genMips(){     // 有点类似于 programAnalysis
                                 0,                  // not main
                                 funcSymbolTable};   // symbol table
         globalValueOfFp += (8 + 4 * funcSymbolCount);
-        //allFuncInfoVector.push_back(tmpfunc);
+        allFuncInfoVector.push_back(tmpfunc);
         funcStack.push_back(tmpfunc);
 
         // 复合语句部分
@@ -347,7 +347,7 @@ void handleMain(){
                             mainSymbolTable};   // symbol table
     globalValueOfFp += (4 * funcSymbolCount);
     funcStack.push_back(tmpfunc);
-    //allFuncInfoVector.push_back(tmpfunc);
+    allFuncInfoVector.push_back(tmpfunc);
 
 
 //    printf("> about to get in handle mid code.\n");
@@ -476,7 +476,7 @@ void handleMidCode(){
         newTmp.fp = globalValueOfFp;
         newTmp.sp = globalValueOfFp + 4 * newTmp.length;
         funcStack.push_back(newTmp);
-        printf(">>> push new func in stack :%s\n", newTmp.funcName.c_str());
+        printf(">>> push new func in stack :%s, len:%d\n", newTmp.funcName.c_str(), funcStack.size());
 
         getMid();
     }else{
@@ -623,13 +623,13 @@ void handleMidCode(){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
                     //int fp = res1.targetFp;
-                    int fp = globalValueOfFp;
+                    int fp = res1.targetFp;
                     int offset1 = 4 * res1.index;
                     if(res1.isMain==0){
                         offset1 += 8;
                     }
-                    addi("$s1", "$zero", fp);
-                    sw(tmp.two, offset1, "$s1");
+                    //addi("$s1", "$zero", fp);
+                    sw(tmp.two, offset1, "$fp");
                     // read next
                     getMid();
                 }else{
@@ -650,6 +650,17 @@ void handleMidCode(){
 
 
 }
+
+//int searchFuncSymbol(string TargetID){
+//    // allFuncInfoVector
+//    int i, j, length = allFuncInfoVector.size();
+//    for(i=length-1;i>=0;i--){
+//        functionInfo tmpf = allFuncInfoVector.at(i);
+//        for(j=0;j<tmpf.funcSymbolTable.size();j++){
+//            // to be continued
+//        }
+//    }
+//}
 
 searchResult searchStackID(string targetID){
     // 在运行栈中查找符号名
