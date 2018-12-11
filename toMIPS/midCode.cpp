@@ -175,16 +175,28 @@ void pushMidCodeGetValue(int tCount, string ID){
 }
 
 void pushMidCodeCalc(int tCount, int n1, int op, int n2){
-    if(tCount>9){
-        if(tCount%9==0) tCount = 9;
-        else    tCount %= 9;
+    int dul = tCount + 1;
+    if(dul>9){
+        if(dul%9==0) dul = 9;
+        else    dul %= 9;
     }
 
+    int d1 = n1 + 1, d2 = n2 + 1;
+    if(d1>9){
+        if(d1%9==0) d1 = 9;
+        else    d1 %= 9;
+    }
+    if(d2>9){
+        if(d2%9==0) d2 = 9;
+        else    d2 %= 9;
+    }
+
+
     // op: 0:default | 1:+ | 2:- | 3:* | 4:/
-    string t1 = "$t" + to_string(tCount+1);
-    string t2 = "$t" + to_string(n1+1);
+    string t1 = "$t" + to_string(dul);
+    string t2 = "$t" + to_string(d1);
     string t3;
-    string t4 = "$t" + to_string(n2+1);
+    string t4 = "$t" + to_string(d2);
 
     if(tCount>9){
         if(tCount%9==0) tCount = 9;

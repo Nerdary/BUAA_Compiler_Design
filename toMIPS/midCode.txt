@@ -19,25 +19,35 @@ Contents of mid codes
          var         int           c            
          var         int           d            
          var         int           e            
-         $t1           a                        
-         $t2           b                        
-         $t3           c                        
-         $t4           d                        
-         $t5           e                        
-         $t6         $t4           *         $t5
-         $t7         $t3           +         $t6
-         $t8         $t2           *         $t7
-         $t9         $t1           +         $t8
-           x         $t9                        
-         $t1           x                        
-       print         $t1                        
-         $t2           x                        
-         ret         $t2                        
+         $t1           1                        
+           a         $t1                        
+         $t2           1                        
+           b         $t2                        
+         $t3           1                        
+           c         $t3                        
+         $t4           2                        
+           d         $t4                        
+         $t5           3                        
+           e         $t5                        
+         $t6           a                        
+         $t7           b                        
+         $t8           c                        
+         $t9           d                        
+         $t1           e                        
+         $t2         $t9           *         $t1
+         $t3         $t8           +         $t2
+         $t4         $t7           *         $t3
+         $t5         $t6           +         $t4
+           x         $t5                        
+         $t6           x                        
+       print         $t6                        
+         $t7           x                        
+         ret         $t7                        
        label     func1_2        func            
         main        void        main            
          var         int       para1            
-         $t3           5                        
-       para1         $t3                        
-         $t4           5                        
-        push         $t4                        
+         $t8           5                        
+       para1         $t8                        
+         $t9           5                        
+        push         $t9                        
         call       func1                        

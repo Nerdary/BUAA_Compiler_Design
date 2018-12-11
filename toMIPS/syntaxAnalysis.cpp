@@ -1505,6 +1505,9 @@ int term(){
 int expr(){
     exprCountTerm = 0;
 
+    // 在这里把tCount清零
+    // tCount = 0;
+
 //    checkArrayTag = 0;  // 用来检查数组越界，
                         // 只有表达式递归下去是一个整数才需要检查
     // 跳过加法运算符，如果有

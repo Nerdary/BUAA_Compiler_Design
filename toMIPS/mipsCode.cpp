@@ -203,7 +203,7 @@ void genMips(){     // 有点类似于 programAnalysis
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, tmp.four};
             funcSymbolTable.push_back(tmp2);
             // 留出空间并填入常量的值
-            addi("$sp", "$sp", 4);
+            //addi("$sp", "$sp", 4);
             if(tmp.two=="int"){
                 li("$t1", tmp.four);
             }else{
@@ -212,18 +212,21 @@ void genMips(){     // 有点类似于 programAnalysis
                 li("$t1", to_string(itmp));
             }
             sw("$t1", 0, "$sp");
+            addi("$sp", "$sp", 4);
             getMid();
         }
 
         // 变量、数组定义部分
         while(tmp.one=="var" || tmp.one=="array"){
             if(tmp.one=="var"){
+                printf(">>> check value of VAR count:%d\n", funcSymbolCount);
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
                 funcSymbolTable.push_back(tmp2);
                 //
                 addi("$sp", "$sp", 4);
                 getMid();
             }else{
+                printf(">>> check value of ARRAY count:%d\n", funcSymbolCount);
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
                 funcSymbolCount += transNum(tmp.four);
                 funcSymbolTable.push_back(tmp2);
@@ -261,6 +264,9 @@ void genMips(){     // 有点类似于 programAnalysis
         lw("$ra", 4, "$fp");
         jr();
 
+        // 删除运行栈中该函数的部分
+        // funcStack.pop_back();
+
         getMid();
 
 
@@ -278,6 +284,14 @@ void handleMain(){
     //
     mipsLabel("main");
     getMid();
+
+    // 决定直接在这里清空 func stack
+//    printf(">>> ABOUT TO WIPE FUNCSTACK\n");
+//    while(funcStack.size() > 0){
+//        funcStack.pop_back();
+//    }
+//    globalValueOfFp = 0;
+//    printf(">>> wiped up the function stack, size:%d\n", funcStack.size());
 
     // 需要将sp、fp设置到位
     addi("$fp", "$zero", globalValueOfFp);
@@ -318,7 +332,7 @@ void handleMain(){
             funcSymbolCount += transNum(tmp.four);
             mainSymbolTable.push_back(tmp2);
             //
-            addi("$sp", "$sp", 4*transNum(tmp.four));
+            addi("$sp", "$sp", 4 * transNum(tmp.four));
             getMid();
         }
     }
@@ -333,6 +347,7 @@ void handleMain(){
                             mainSymbolTable};   // symbol table
     globalValueOfFp += (4 * funcSymbolCount);
     funcStack.push_back(tmpfunc);
+    //allFuncInfoVector.push_back(tmpfunc);
 
 
 //    printf("> about to get in handle mid code.\n");
@@ -454,6 +469,10 @@ void handleMidCode(){
                 break;
         }
         functionInfo newTmp = funcStack.at(i);
+        functionInfo oldTmp = funcStack.back();
+        // 将fp设置为oldTmp.sp
+        globalValueOfFp = oldTmp.sp;
+
         newTmp.fp = globalValueOfFp;
         newTmp.sp = globalValueOfFp + 4 * newTmp.length;
         funcStack.push_back(newTmp);
@@ -603,7 +622,8 @@ void handleMidCode(){
                 if(flag==1){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
-                    int fp = res1.targetFp;
+                    //int fp = res1.targetFp;
+                    int fp = globalValueOfFp;
                     int offset1 = 4 * res1.index;
                     if(res1.isMain==0){
                         offset1 += 8;
@@ -651,7 +671,7 @@ searchResult searchStackID(string targetID){
         //    return tmp.offset;
             searchResult res = {
                 info.fp,
-                j,
+                tmp.offset,
                 info.isMain,
             };
             printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
@@ -669,7 +689,7 @@ searchResult searchStackID(string targetID){
                 if(tmp.ID==targetID){
                     searchResult res = {
                         info1.fp,
-                        j,
+                        tmp.offset,
                         info1.isMain,
                     };
                     printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
@@ -936,8 +956,7 @@ void printGlobalRecord(){
     }
 }
 
-void SplitString(const string& s, vector<string>& v, const string& c)
-{
+void SplitString(const string& s, vector<string>& v, const string& c){
     string::size_type pos1, pos2;
     pos2 = s.find(c);
     pos1 = 0;
