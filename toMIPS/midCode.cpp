@@ -174,6 +174,57 @@ void pushMidCodeGetValue(int tCount, string ID){
     midCodeVec.push_back(tmp);
 }
 
+void pushMidCodeGetValue(int tCount){
+    // 用于有返回执函数调用
+    // 从v0 读数据
+    string t;
+    int newCount = tCount + 1;
+    if(newCount>9){
+        if(newCount%9==0) newCount = 9;
+        else    newCount %= 9;
+    }
+
+    t = "$t" + to_string(newCount);
+    midCodeItem tmp = {
+        t,
+        "$v0",
+        "",
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
+void pushMidCodeGetArrayValue(int tCount, string arrayID, int tCount2){
+    // get tCount(new) ready
+    int newCount = tCount + 1;
+    if(newCount>9){
+        if(newCount%9==0) newCount = 9;
+        else    newCount %= 9;
+    }
+
+    int newCount2 = tCount2 + 1;
+    if(newCount2>9){
+        if(newCount2%9==0) newCount2 = 9;
+        else    newCount2 %= 9;
+    }
+
+    // gen and push mid code
+    string t, t2;
+    t = "$t" + to_string(newCount);
+    t2 = "$t" + to_string(newCount2);
+
+    // 源代码：     x = arrayID[y]
+    //              y(expr) -> $t1
+    // 生成形式:    $t2, arrayID, [], $t1
+    midCodeItem tmp = {
+        t,
+        arrayID,
+        "[]",
+        t2,
+    };
+    midCodeVec.push_back(tmp);
+}
+
 void pushMidCodeCalc(int tCount, int n1, int op, int n2){
     int dul = tCount + 1;
     if(dul>9){
@@ -225,12 +276,13 @@ void pushMidCodeCalc(int tCount, int n1, int op, int n2){
 }
 
 void pushMidCodePara(int tCount){
-    if(tCount>9){
-        if(tCount%9==0) tCount = 9;
-        else    tCount %= 9;
+    int newCount = tCount + 1;
+    if(newCount>9){
+        if(newCount%9==0) newCount = 9;
+        else    newCount %= 9;
     }
 
-    string t1 = "$t" + to_string(tCount+1);
+    string t1 = "$t" + to_string(newCount);
     midCodeItem tmp = {
         "push",
         t1,

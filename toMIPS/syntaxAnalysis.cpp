@@ -988,7 +988,7 @@ int loopSentence(){
 }
 
 int retValueFuncCall(){
-    printf("RETVFC: result=%d\n", result);
+    //printf("RETVFC: result=%d\n", result);
     if(result!=IDSY){
         error();
         return -1;
@@ -1367,15 +1367,18 @@ int factor(){
             return -1;
         }
     }else if(result==IDSY){         // result = IDSY
-        pushMidCodeGetValue(tCount, IDname);
-        stackCalc.push_back(tCount);
-        tCount++;
+        string recordFactorID = token;
+
+//        pushMidCodeGetValue(tCount, IDname);
+//        stackCalc.push_back(tCount);
+//        tCount++;
 
         getsym();
         if(result==LBRACSY){        // result = "["
         //    printf("factor-debug branch-2\n");
             getsym();
             expr();                 // 表达式
+
 
             // 检查数组越界
             if(termCountFactor==1 && exprCountTerm==1){
@@ -1388,18 +1391,31 @@ int factor(){
                 }
             }
 
+            // 生成相应党的四元式
+            // $ti = a[j]
+            // $ti a [] j
+            // named as "getArrayValue"
+            pushMidCodeGetArrayValue(tCount, recordFactorID, tCount-1);
+            tCount++;
 
             if(result==RBRACSY){
         //        printf("factor-debug branch-2-2\n");
                 getsym();
-
                 factorType = searchName2Type(IDname, 0);
+
+                // 取出数组的值，生成中间代码
+
+
             }else {
                 error();
                 return -1;
             }
         }else if(result==LPARSY){   // result = "(" 有返回值函数调用
         //    printf("factor-debug branch-3\n");
+
+            // 有返回值函数调用
+//            retValueFuncCall();
+
             getsym();
             paraValueList();             // 值参数表
             if(result==RPARSY){      // result = ")"
@@ -1410,9 +1426,17 @@ int factor(){
                 error();
                 return -1;
             }
+
+            //
+            pushMidCodeFuncCall(recordFactorID);
+            printf("This is a function call with returned value.\n");
+
         }else{
             // 单独的标识符
 //            printf("factor-debug branch-IDSY\n");
+            pushMidCodeGetValue(tCount, IDname);
+            stackCalc.push_back(tCount);
+            tCount++;
 
         }
     }else if(result==PLUSSY || result==MINUSSY){

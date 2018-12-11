@@ -26,6 +26,8 @@ void pushMidCodeFuncHead(int funcType, string ID);
 void pushMidCodeFuncTail(string ID);
 void pushMidCodePara(int type, string ID);
 void pushMidCodeGetValue(int tCount, string ID);
+void pushMidCodeGetValue(int tCount); //
+void pushMidCodeGetArrayValue(int tCount, string arrayID, int tCount2);
 void pushMidCodeCalc(int tCount, int n1, int op, int n2);
 void pushMidCodePara(int tCount);    // жиди
 void pushMidCodeFuncCall(string FuncID);
