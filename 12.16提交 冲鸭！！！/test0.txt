@@ -1,0 +1,74 @@
+const int s_len = 10, t_len = 5, N = 100;
+const char ss = 's', zz = 'z';
+int kmp_ret, fun_ret;
+int nextval[200];
+char s[200];
+char t[200]
+
+void get_next{
+	int len, i, j;
+	len = s_len;
+	i = 0;
+	j = -1;
+	while(i<(len-1)){
+		if(j==-1){
+			i = i + 1;
+			j = j + 1;
+			if(s[i]!=s[j]){
+				nextval[i] = j;
+			} else{
+				nextval[i] = nextval[j];
+			}	
+		}else{
+			if (s[i] == s[j]){
+				i = i + 1;
+				j = j + 1;
+			
+				if(s[i] != s[j]){
+					nextval[i] = j;
+				} else{
+					nextval[i] = nextval[j];
+				}
+			} else{
+				j = nextval[j];
+			}
+		}
+	}
+	return ;
+}
+
+int kmp(){
+	int i, j, k;
+	i = 0;
+	j = 0;
+	k = -1;
+	get_next();
+	printf("the content of nextval: ");
+	for(k=0;k<N;k=k+1){
+		printf(" ", nextval[k]);
+	}
+	
+	int cond1, cond2, cond3;	// ?????
+	cond3 = cond1 * cond2;
+	while(cond3){
+		cond1 = j == -1;
+		cond2 = t[i] == s[j];
+		cond3 = cond1 + cond2;
+		if (cond3 >= 1){
+			i = i + 1;
+			j = j + 1;
+		} 
+			j = nextval[j];
+		}	
+		
+		cond1 = i < t_len;
+		cond2 = j < s_len;
+		cond3 = cond1 * cond2;
+	}
+	if(j >= (s+len)){
+		kmp_ret = i - s_len;
+		return (kmp_ret);
+	} else{
+		return (-1);
+	}
+}

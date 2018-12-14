@@ -1,0 +1,43 @@
+Contents of mid codes
+           1           2           3           4
+       label         f_1        func            
+        func         int           f            
+        para         int           x            
+        para         int           y            
+         $t1           x                        
+         ret         $t1                        
+       label         f_2        func            
+        main        void        main            
+         var         int           a            
+         var         int           b            
+         var         int           c            
+         $t2           1                        
+        push         $t2                        
+         $t2           0                        
+        push         $t2                        
+        call           f                        
+         $t2         RET                        
+           a         $t2                        
+         $t3           1                        
+        push         $t3                        
+         $t3           0                        
+        push         $t3                        
+        call           f                        
+         $t3         RET                        
+         $t4           2                        
+        push         $t4                        
+         $t4           0                        
+        push         $t4                        
+        call           f                        
+         $t4         RET                        
+         $t5         $t3           +         $t4
+           b         $t5                        
+         $t6           3                        
+        push         $t6                        
+         $t6           1                        
+        push         $t6                        
+        call           f                        
+         $t6         RET                        
+         $t7           1                        
+         $t8         $t6           +         $t7
+           c         $t8                        

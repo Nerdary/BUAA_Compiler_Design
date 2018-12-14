@@ -1,0 +1,14 @@
+int g_a[20]
+
+int func1(int para1){
+	g_a[1] = 3;
+	return (para1);
+}
+
+void main(){
+	int para1, x;
+	para1 = 5;
+	func1(para1);
+	x = g_a[1];
+	printf(x);
+}

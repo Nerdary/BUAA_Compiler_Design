@@ -1,0 +1,93 @@
+Contents of MIPS
+
+
+         add         $sp       $zero       $zero
+           j        main                        
+          f:                                    
+          sw         $fp      0($sp)            
+         add         $fp         $sp       $zero
+        addi         $sp         $sp           4
+          sw         $ra      0($sp)            
+        addi         $sp         $sp           4
+        addi         $sp         $sp          36
+          sw         $t1    -36($sp)            
+          sw         $t2    -32($sp)            
+          sw         $t3    -28($sp)            
+          sw         $t4    -24($sp)            
+          sw         $t5    -20($sp)            
+          sw         $t6    -16($sp)            
+          sw         $t7    -12($sp)            
+          sw         $t8     -8($sp)            
+          sw         $t9     -4($sp)            
+        addi         $s1         $sp         -52
+          lw         $t1      0($s1)            
+          sw         $t1      0($sp)            
+        addi         $sp         $sp           4
+        addi         $s1         $sp         -52
+          lw         $t1      0($s1)            
+          sw         $t1      0($sp)            
+        addi         $sp         $sp           4
+         add         $s1       $zero         $fp
+          lw         $t1     80($s1)            
+         add         $v0       $zero         $t1
+          lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
+          jr         $ra                        
+          lw         $t1      8($fp)            
+          lw         $t2     12($fp)            
+          lw         $t3     16($fp)            
+          lw         $t4     20($fp)            
+          lw         $t5     24($fp)            
+          lw         $t6     28($fp)            
+          lw         $t7     32($fp)            
+          lw         $t8     36($fp)            
+          lw         $t9     40($fp)            
+          lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
+          jr         $ra                        
+       main:                                    
+        addi         $fp       $zero          52
+         add         $sp         $fp       $zero
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+        addi         $sp         $sp           4
+        addi         $t2       $zero           1
+          sw         $t2      0($sp)            
+        addi         $sp         $sp           4
+        addi         $t2       $zero           0
+          sw         $t2      0($sp)            
+        addi         $sp         $sp           4
+         jal           f                        
+         add         $t2         $v0       $zero
+          sw         $t2      0($fp)            
+        addi         $t3       $zero           1
+          sw         $t3      0($sp)            
+        addi         $sp         $sp           4
+        addi         $t3       $zero           0
+          sw         $t3      0($sp)            
+        addi         $sp         $sp           4
+         jal           f                        
+         add         $t3         $v0       $zero
+        addi         $t4       $zero           2
+          sw         $t4      0($sp)            
+        addi         $sp         $sp           4
+        addi         $t4       $zero           0
+          sw         $t4      0($sp)            
+        addi         $sp         $sp           4
+         jal           f                        
+         add         $t4         $v0       $zero
+         add         $t5         $t3         $t4
+          sw         $t5      4($fp)            
+        addi         $t6       $zero           3
+          sw         $t6      0($sp)            
+        addi         $sp         $sp           4
+        addi         $t6       $zero           1
+          sw         $t6      0($sp)            
+        addi         $sp         $sp           4
+         jal           f                        
+         add         $t6         $v0       $zero
+        addi         $t7       $zero           1
+         add         $t8         $t6         $t7
+          sw         $t8      8($fp)            
