@@ -1429,14 +1429,33 @@ int factor(){
 
             //
             pushMidCodeFuncCall(recordFactorID);
+
+            // 将返回值压入运算栈
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // 可能这里需要大改
+            ///////////////////////////////////////////////////////////////////////////////////////
+            stackCalc.push_back(tCount);
+            printf("<<<<<< push in:%d\n", tCount);
+            tCount++;
+
             printf("This is a function call with returned value.\n");
 
         }else{
-            // 单独的标识符
-//            printf("factor-debug branch-IDSY\n");
-            pushMidCodeGetValue(tCount, IDname);
-            stackCalc.push_back(tCount);
-            tCount++;
+            // 需要查表判断是标识符还是无参数的函数调用
+            int thisTag = 0;
+            if(searchIsFunc(recordFactorID)==-1){
+                // 普通的标识符，是个变量
+                pushMidCodeGetValue(tCount, IDname);
+                stackCalc.push_back(tCount);
+                printf("<<<<<< push in:%d\n", tCount);
+                tCount++;
+            }else{
+                // 是函数调用
+                printf("THis is a function call.\n");
+                pushMidCodeFuncCall(recordFactorID);
+                // ...
+
+            }
 
         }
     }else if(result==PLUSSY || result==MINUSSY){
@@ -1456,6 +1475,8 @@ int factor(){
             checkArrayValue *= resultTag;
 
             pushMidCodeFactorValue(tCount, 1, checkArrayValue);
+            stackCalc.push_back(tCount);
+            printf("<<<<<< push in:%d\n", tCount);
             tCount++;
 
             getsym();
@@ -1467,11 +1488,15 @@ int factor(){
         checkArrayValue = IntValue;
 
         pushMidCodeFactorValue(tCount, 1, checkArrayValue);
+        stackCalc.push_back(tCount);
+        printf("<<<<<< push in:%d\n", tCount);
         tCount++;
 
         factorType = 1;
     }else if(result==ACHARSY){
         pushMidCodeFactorValue(tCount, 2, globalChar);
+        stackCalc.push_back(tCount);
+        printf("<<<<<< push in:%d\n", tCount);
         tCount++;
 
         getsym();               // 字符 ACHARSY
@@ -1509,10 +1534,13 @@ int term(){
             // 此处可以进行值计算、栈操作、生成四元式
             int n2 = stackCalc.back();
             stackCalc.pop_back();
+            printf("<<<<<< pop out :%d\n", n2);
             int n1 = stackCalc.back();
             stackCalc.pop_back();
+            printf("<<<<<< pop out :%d\n", n1);
             pushMidCodeCalc(tCount, n1, opTag, n2);
             stackCalc.push_back(tCount);
+            printf("<<<<<< push in:%d\n", tCount);
             tCount++;
 
             termType = 1;   // 只要参与运算了就自动转化为int型
@@ -1569,12 +1597,15 @@ int expr(){
 //            printf(">>>> size:%d\n", stackCalc.size());
             int n2 = stackCalc.back();
             stackCalc.pop_back();
+            printf("<<<<<< pop out :%d\n", n2);
 //            printf(">>>> size:%d\n", stackCalc.size());
             int n1 = stackCalc.back();
             stackCalc.pop_back();
+            printf("<<<<<< pop out :%d\n", n1);
 //            printf(">>>> size:%d\n", stackCalc.size());
             pushMidCodeCalc(tCount, n1, opFlag, n2);
             stackCalc.push_back(tCount);
+            printf("<<<<<< push in:%d\n", tCount);
 //            printf(">>>> size:%d\n", stackCalc.size());
             tCount++;
 

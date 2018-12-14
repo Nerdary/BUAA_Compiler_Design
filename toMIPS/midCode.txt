@@ -13,7 +13,7 @@ Contents of mid codes
        label         1_1        norm            
        label         1_2        norm            
          $t4           n                        
-         $t5           1                        
+         $t5           2                        
          $t4          ==         $t5            
           BZ       label         2_1            
          $t6           1                        
@@ -23,20 +23,20 @@ Contents of mid codes
        label         2_2        norm            
          $t7           n                        
          $t8           1                        
-         $t9         $t4           -         $t7
+         $t9         $t7           -         $t8
         push         $t9                        
         call         fib                        
          $t1           n                        
          $t2           2                        
-         $t3         $t9           -         $t1
+         $t3         $t1           -         $t2
         push         $t3                        
         call         fib                        
-         $t4         $t1           +         $t3
+         $t4         $t9           +         $t3
          ret         $t4                        
        label       fib_2        func            
         main        void        main            
          var         int           x            
-         $t5           3                        
+         $t5           4                        
         push         $t5                        
         call         fib                        
            x         $t5                        

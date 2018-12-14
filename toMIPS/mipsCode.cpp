@@ -83,7 +83,6 @@ void genMips(){     // 有点类似于 programAnalysis
             // 记录常量信息
             pushGlobalRecord(tmp.three, ++globalRecordCount);   // 第一项count为-1
             // 生成mips
-            // addi("$gp", "$gp", -4);
             offsetGp -= 4;
             // 这里需要判断一下int 和 char
             if(tmp.two=="int"){
@@ -170,6 +169,7 @@ void genMips(){     // 有点类似于 programAnalysis
             tmpParaIndex++;
         }
 
+
         while(tmp.one=="para"){
             // 在函数信息表中登记参数信息
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 1, ""};
@@ -236,17 +236,21 @@ void genMips(){     // 有点类似于 programAnalysis
             }
         }
 
+
+        //printf(">>> check funcSymbolCount = %d\n", funcSymbolCount);
         functionInfo tmpfunc = {currentFuncName,    // name / ID
                                 funcLevel,          // level
                                 globalValueOfFp,
-                                globalValueOfFp + 8 + 4 * funcSymbolCount,
+                                globalValueOfFp + 8 + 4 * funcSymbolCount + 36,
                                 funcSymbolCount,    // length
                                 0,                  // not main
                                 funcSymbolTable};   // symbol table
-        globalValueOfFp += (8 + 4 * funcSymbolCount);
+        globalValueOfFp += (8 + 4 * funcSymbolCount + 36);
+        //printf(">>> check globalValueOfFp = %d\n", globalValueOfFp);
         allFuncInfoVector.push_back(tmpfunc);
         funcStack.push_back(tmpfunc);
 
+        //printf(">>> CHECK2 globalValueOfFp = %d\n", globalValueOfFp);
         // 复合语句部分
         while(true){
             if(tmp.one=="label"){
@@ -262,8 +266,10 @@ void genMips(){     // 有点类似于 programAnalysis
             // 这里调用handle一句句生成mips
             if(tmp.one!="label")
                 handleMidCode();
+            //    printf(">>> CHECK3 globalValueOfFp = %d\n", globalValueOfFp);
             //getMid();
         }
+
 
         // 当前为label_func_2,取出ra，生成一句jr
         lw("$ra", 4, "$fp");
@@ -402,6 +408,18 @@ void handleMidCode(){
         }else{
             // 返回值存入寄存器
             add("$v0", "$zero", tmp.two);
+
+            // 还需要干很多事
+            // 取出ra
+            lw("$ra", 4, "$fp");
+
+            // 暂时以这种方式恢复sp
+            addi("$sp", "$fp", -4);
+
+            // 还要恢复fp
+            lw("$fp", 0, "$fp");
+
+            jr();
             getMid();
         }
     }else if(tmp.one=="print"){
@@ -478,6 +496,20 @@ void handleMidCode(){
 
     }else if(tmp.one=="call"){
         printf(">>> check in branch 'call' func \n");
+
+        // 记录所有临时变量
+        addi("$sp", "$sp", 36);
+        sw("$t1", -36, "$sp");
+        sw("$t2", -32, "$sp");
+        sw("$t3", -28, "$sp");
+        sw("$t4", -24, "$sp");
+        sw("$t5", -20, "$sp");
+        sw("$t6", -16, "$sp");
+        sw("$t7", -12, "$sp");
+        sw("$t8",  -8, "$sp");
+        sw("$t9",  -4, "$sp");
+
+
         // 这里只生成jal，加载参数放在读函数的时候
         jal(tmp.two);
 
@@ -496,6 +528,7 @@ void handleMidCode(){
         // 将fp设置为oldTmp.sp
         globalValueOfFp = oldTmp.sp;
 
+        // 将fp sp后修改后的函数体再压入栈，其实这里是需要它的长度
         newTmp.fp = globalValueOfFp;
         newTmp.sp = globalValueOfFp + 4 * newTmp.length;
         funcStack.push_back(newTmp);

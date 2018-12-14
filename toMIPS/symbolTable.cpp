@@ -199,6 +199,16 @@ int searchName2Type(string Name, int mode){
     return 0;
 }
 
+int searchIsFunc(string Name){
+    int i, cntTable = symbolTable.size();
+    for(i=0;i<cntTable;i++){
+        if(symbolTable.at(i).ID==Name && symbolTable.at(i).IDobject==3)
+               return symbolTable.at(i).funcType;
+    }
+    printf("No such func in symbol table, fail to trans name to type.\n");
+    return -1;
+}
+
 int getArrayLength(string ID){
     int i, cntTable = symbolTable.size();
     for(i=0;i<cntTable;i++){
