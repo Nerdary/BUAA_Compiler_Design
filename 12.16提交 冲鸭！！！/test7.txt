@@ -1,4 +1,5 @@
 int f(int x, int y){
+	printf(x);
 	return (x);
 }
 

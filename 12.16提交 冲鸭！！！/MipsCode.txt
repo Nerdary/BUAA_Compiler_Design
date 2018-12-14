@@ -3,7 +3,7 @@ Contents of MIPS
 
          add         $sp       $zero       $zero
            j        main                        
-          f:                                    
+        fib:                                    
           sw         $fp      0($sp)            
          add         $fp         $sp       $zero
         addi         $sp         $sp           4
@@ -19,17 +19,61 @@ Contents of MIPS
           sw         $t7    -12($sp)            
           sw         $t8     -8($sp)            
           sw         $t9     -4($sp)            
-        addi         $s1         $sp         -52
-          lw         $t1      0($s1)            
-          sw         $t1      0($sp)            
-        addi         $sp         $sp           4
-        addi         $s1         $sp         -52
+        addi         $s1         $sp         -48
           lw         $t1      0($s1)            
           sw         $t1      0($sp)            
         addi         $sp         $sp           4
          add         $s1       $zero         $fp
           lw         $t1     44($s1)            
-         add         $v0       $zero         $t1
+        addi         $v0       $zero           1
+         add         $a0       $zero         $t1
+     syscall                                    
+         add         $s1       $zero         $fp
+          lw         $t2     44($s1)            
+        addi         $t3       $zero           1
+         sub         $s1         $t2         $t3
+         bne         $s1       $zero    label1_1
+        addi         $t4       $zero           1
+         add         $v0       $zero         $t4
+          lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
+          jr         $ra                        
+           j    label1_2                        
+   label1_1:                                    
+   label1_2:                                    
+         add         $s1       $zero         $fp
+          lw         $t5     44($s1)            
+        addi         $t6       $zero           2
+         sub         $s1         $t5         $t6
+         bne         $s1       $zero    label2_1
+        addi         $t7       $zero           1
+         add         $v0       $zero         $t7
+          lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
+          jr         $ra                        
+           j    label2_2                        
+   label2_1:                                    
+   label2_2:                                    
+         add         $s1       $zero         $fp
+          lw         $t8     44($s1)            
+        addi         $t9       $zero           1
+         sub         $t1         $t8         $t9
+          sw         $t1      0($sp)            
+        addi         $sp         $sp           4
+         jal         fib                        
+         add         $t1         $v0       $zero
+         add         $s1       $zero         $fp
+          lw         $t2     44($s1)            
+        addi         $t3       $zero           2
+         sub         $t4         $t2         $t3
+          sw         $t4      0($sp)            
+        addi         $sp         $sp           4
+         jal         fib                        
+         add         $t4         $v0       $zero
+         add         $t5         $t1         $t4
+         add         $v0       $zero         $t5
           lw         $ra      4($fp)            
         addi         $sp         $fp          -4
           lw         $fp      0($fp)            
@@ -48,29 +92,62 @@ Contents of MIPS
           lw         $fp      0($fp)            
           jr         $ra                        
        main:                                    
-        addi         $fp       $zero          52
+        addi         $fp       $zero          96
          add         $sp         $fp       $zero
         addi         $sp         $sp           4
-        addi         $t2       $zero           1
-          sw         $t2      0($sp)            
+        addi         $t6       $zero           5
+          sw         $t6      0($sp)            
         addi         $sp         $sp           4
-        addi         $t2       $zero           0
-          sw         $t2      0($sp)            
-        addi         $sp         $sp           4
-         jal           f                        
-         add         $t2         $v0       $zero
-        addi         $t3       $zero           2
-          sw         $t3      0($sp)            
-        addi         $sp         $sp           4
-        addi         $t3       $zero           0
-          sw         $t3      0($sp)            
-        addi         $sp         $sp           4
-         jal           f                        
-         add         $t3         $v0       $zero
-         add         $t4         $t2         $t3
-          sw         $t4      0($fp)            
+         jal         fib                        
+         add         $t6         $v0       $zero
+          sw         $t6      0($fp)            
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
+        addi         $v0       $zero          11
+        addi         $a0       $zero          45
+     syscall                                    
          add         $s1       $zero         $fp
-          lw         $t5      0($s1)            
+          lw         $t7      0($s1)            
         addi         $v0       $zero           1
-         add         $a0       $zero         $t5
+         add         $a0       $zero         $t7
      syscall                                    

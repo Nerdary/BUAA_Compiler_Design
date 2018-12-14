@@ -1,4 +1,5 @@
 int fib(int n){
+	printf(n);
 	if(n==1)	return (1);
 	if(n==2)	return (1);
 	return (fib(n-1)+fib(n-2));
@@ -6,6 +7,7 @@ int fib(int n){
 
 void main(){
 	int x;
-	x = fib(4);
+	x = fib(5);
+	printf("---------------");
 	printf(x);
 }
