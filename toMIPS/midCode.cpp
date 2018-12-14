@@ -329,6 +329,24 @@ void pushMidCodeRet(){
     midCodeVec.push_back(tmp);
 }
 
+void pushMidCodeRET(int tCount){
+    int newCount = tCount + 1;
+    if(newCount>9){
+        if(newCount%9==0) newCount = 9;
+        else    newCount %= 9;
+    }
+    string t = "$t" + to_string(newCount);
+    midCodeItem tmp = {
+        t,
+        "RET",
+        "",
+        "",
+    };
+    midCodeVec.push_back(tmp);
+
+
+}
+
 void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
     if(tCount>9){
         if(tCount%9==0) tCount = 9;

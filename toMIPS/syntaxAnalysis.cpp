@@ -1434,6 +1434,7 @@ int factor(){
             ///////////////////////////////////////////////////////////////////////////////////////
             // 可能这里需要大改
             ///////////////////////////////////////////////////////////////////////////////////////
+            pushMidCodeRET(tCount);
             stackCalc.push_back(tCount);
             printf("<<<<<< push in:%d\n", tCount);
             tCount++;
@@ -1451,8 +1452,14 @@ int factor(){
                 tCount++;
             }else{
                 // 是函数调用
-                printf("THis is a function call.\n");
+                printf("This is a function call without parameter.\n");
+
                 pushMidCodeFuncCall(recordFactorID);
+
+                pushMidCodeRET(tCount);
+                stackCalc.push_back(tCount);
+                printf("<<<<<< push in:%d\n", tCount);
+                tCount++;
                 // ...
 
             }

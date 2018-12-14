@@ -150,6 +150,18 @@ void genMips(){     // 有点类似于 programAnalysis
             return ;
         }
 
+         // 记录所有临时变量
+        addi("$sp", "$sp", 36);
+        sw("$t1", -36, "$sp");
+        sw("$t2", -32, "$sp");
+        sw("$t3", -28, "$sp");
+        sw("$t4", -24, "$sp");
+        sw("$t5", -20, "$sp");
+        sw("$t6", -16, "$sp");
+        sw("$t7", -12, "$sp");
+        sw("$t8",  -8, "$sp");
+        sw("$t9",  -4, "$sp");
+
         vector<funcRecordItem> funcSymbolTable;
         int funcSymbolCount = 0;
 
@@ -178,7 +190,7 @@ void genMips(){     // 有点类似于 programAnalysis
             // 从栈中加载参数的值 paracount
             printf(">>> check para count: %d\n", paraCount);
             // 必须查函数表才能知道有几个参数
-            int gap = 4 * paraCount + 8;
+            int gap = 4 * paraCount + 8 + 36;
             addi("$s1", "$sp", -gap);
             lw("$t1", 0, "$s1");
             sw("$t1", 0, "$sp");
@@ -242,7 +254,7 @@ void genMips(){     // 有点类似于 programAnalysis
                                 funcLevel,          // level
                                 globalValueOfFp,
                                 globalValueOfFp + 8 + 4 * funcSymbolCount + 36,
-                                funcSymbolCount,    // length
+                                8 + 4 * funcSymbolCount + 36,    // length
                                 0,                  // not main
                                 funcSymbolTable};   // symbol table
         globalValueOfFp += (8 + 4 * funcSymbolCount + 36);
@@ -270,6 +282,16 @@ void genMips(){     // 有点类似于 programAnalysis
             //getMid();
         }
 
+        // 恢复所有局部变量
+        lw("$t1",  8, "$fp");
+        lw("$t2", 12, "$fp");
+        lw("$t3", 16, "$fp");
+        lw("$t4", 20, "$fp");
+        lw("$t5", 24, "$fp");
+        lw("$t6", 28, "$fp");
+        lw("$t7", 32, "$fp");
+        lw("$t8", 36, "$fp");
+        lw("$t9", 40, "$fp");
 
         // 当前为label_func_2,取出ra，生成一句jr
         lw("$ra", 4, "$fp");
@@ -285,6 +307,8 @@ void genMips(){     // 有点类似于 programAnalysis
 //        printf("setting sp as : %d\n", globalValueOfFp);
 //        addi("$sp", "$zero", globalValueOfFp);
 //        addi("$sp", "$fp", 8+4*funcSymbolCount);
+
+
 
 
         jr();
@@ -367,7 +391,7 @@ void handleMain(){
                             1,                  // level
                             globalValueOfFp,
                             globalValueOfFp + 4 * funcSymbolCount,
-                            funcSymbolCount,    // length
+                            4 * funcSymbolCount,// length
                             1,                  // is main
                             mainSymbolTable};   // symbol table
     globalValueOfFp += (4 * funcSymbolCount);
@@ -409,7 +433,7 @@ void handleMidCode(){
             // 返回值存入寄存器
             add("$v0", "$zero", tmp.two);
 
-            // 还需要干很多事
+//            // 还需要干很多事
             // 取出ra
             lw("$ra", 4, "$fp");
 
@@ -419,6 +443,7 @@ void handleMidCode(){
             // 还要恢复fp
             lw("$fp", 0, "$fp");
 
+//            lw("$ra", 4, "$fp");
             jr();
             getMid();
         }
@@ -484,30 +509,14 @@ void handleMidCode(){
         printf("Unexpected 'parameter' branch.\n");
         getMid();
     }else if(tmp.one=="push"){
-        // paraCount 用于记录para的长度
 
         sw(tmp.two, 0, "$sp");
         addi("$sp", "$sp", 4);
-
-        // 参数计数器
-        // paraCount += 1;
 
         getMid();
 
     }else if(tmp.one=="call"){
         printf(">>> check in branch 'call' func \n");
-
-        // 记录所有临时变量
-        addi("$sp", "$sp", 36);
-        sw("$t1", -36, "$sp");
-        sw("$t2", -32, "$sp");
-        sw("$t3", -28, "$sp");
-        sw("$t4", -24, "$sp");
-        sw("$t5", -20, "$sp");
-        sw("$t6", -16, "$sp");
-        sw("$t7", -12, "$sp");
-        sw("$t8",  -8, "$sp");
-        sw("$t9",  -4, "$sp");
 
 
         // 这里只生成jal，加载参数放在读函数的时候
@@ -530,11 +539,12 @@ void handleMidCode(){
 
         // 将fp sp后修改后的函数体再压入栈，其实这里是需要它的长度
         newTmp.fp = globalValueOfFp;
-        newTmp.sp = globalValueOfFp + 4 * newTmp.length;
+        newTmp.sp = globalValueOfFp + newTmp.length;
         funcStack.push_back(newTmp);
         printf(">>> push new func in stack :%s, len:%d\n", newTmp.funcName.c_str(), funcStack.size());
 
         getMid();
+
     }else{
         if(tmp.one[0]=='$' && tmp.one[1]=='t'){
             //printf(">>> in branch tmp.one = '$ti' \n");
@@ -639,9 +649,9 @@ void handleMidCode(){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
                     int fp = res1.targetFp;
-                    int offset1 = 4 * res1.index;
+                    int offset1 = 4 * res1.index + 36;
                     if(res1.isMain!=1){
-                        offset1 += 8;
+                        offset1 += (8+36);
                     }
                     printf(">>> check: func stack search: index=%d\n", res1.index);
                     add("$s1", "$zero", "$fp");
@@ -687,7 +697,7 @@ void handleMidCode(){
 
                     // if(res1.isMain!=1){offset1 += 8;}
                     if(res1.isMain!=1)
-                    addi("$s2", "$s1", 8);
+                    addi("$s2", "$s1", (8+36));
 
                     // 以上只取出了ID，还有index
                     addi("$s1", "$zero", 4);
@@ -717,6 +727,10 @@ void handleMidCode(){
                     // read next
                     getMid();
                 }
+            }else if(tmp.two=="RET"){
+                // $t1  RET
+                add(tmp.one, "$v0", "$zero");
+
             }else{
                 // 尚未考虑到的情况
                 printf(">>> ERROR: what the fuck is this mid code?\n");
@@ -747,7 +761,7 @@ void handleMidCode(){
                     int fp = res1.targetFp;
                     int offset1 = 4 * res1.index;
                     if(res1.isMain==0){
-                        offset1 += 8;
+                        offset1 += (8+36);
                     }
                     //addi("$s1", "$zero", fp);
                     sw(tmp.two, offset1, "$fp");
@@ -792,7 +806,7 @@ void handleMidCode(){
 
                     // if(res1.isMain!=1){offset1 += 8;}
                     if(res1.isMain!=1)
-                    addi("$s2", "$s1", 8);
+                    addi("$s2", "$s1", (8+36));
 
                     // 以上只取出了ID，还有index
                     addi("$s1", "$zero", 4);

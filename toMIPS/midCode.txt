@@ -1,44 +1,34 @@
 Contents of mid codes
            1           2           3           4
-       label       fib_1        func            
-        func         int         fib            
-        para         int           n            
-         $t1           n                        
-         $t2           1                        
-         $t1          ==         $t2            
-          BZ       label         1_1            
-         $t3           1                        
-         ret         $t3                        
-        GOTO       label         1_2            
-       label         1_1        norm            
-       label         1_2        norm            
-         $t4           n                        
-         $t5           2                        
-         $t4          ==         $t5            
-          BZ       label         2_1            
-         $t6           1                        
-         ret         $t6                        
-        GOTO       label         2_2            
-       label         2_1        norm            
-       label         2_2        norm            
-         $t7           n                        
-         $t8           1                        
-         $t9         $t7           -         $t8
-        push         $t9                        
-        call         fib                        
-         $t1           n                        
-         $t2           2                        
-         $t3         $t1           -         $t2
-        push         $t3                        
-        call         fib                        
-         $t4         $t9           +         $t3
-         ret         $t4                        
-       label       fib_2        func            
+       label         f_1        func            
+        func         int           f            
+        para         int           x            
+         $t1           x                        
+         ret         $t1                        
+       label         f_2        func            
         main        void        main            
-         var         int           x            
-         $t5           4                        
-        push         $t5                        
-        call         fib                        
-           x         $t5                        
-         $t6           x                        
-       print         $t6                        
+         var         int           a            
+         var         int           b            
+         var         int           c            
+         $t2           1                        
+        push         $t2                        
+        call           f                        
+         $t3         RET                        
+           a         $t3                        
+         $t4           1                        
+        push         $t4                        
+        call           f                        
+         $t5         RET                        
+         $t6           2                        
+        push         $t6                        
+        call           f                        
+         $t7         RET                        
+         $t8         $t6           +         $t7
+           b         $t8                        
+         $t9           3                        
+        push         $t9                        
+        call           f                        
+         $t1         RET                        
+         $t2           1                        
+         $t3         $t1           +         $t2
+           c         $t3                        
