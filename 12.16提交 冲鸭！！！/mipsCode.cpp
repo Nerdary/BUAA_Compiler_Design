@@ -649,7 +649,7 @@ void handleMidCode(){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
                     int fp = res1.targetFp;
-                    int offset1 = 4 * res1.index + 36;
+                    int offset1 = 4 * res1.index;
                     if(res1.isMain!=1){
                         offset1 += (8+36);
                     }
