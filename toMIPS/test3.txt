@@ -1,9 +1,0 @@
-int func1(int para1){
-	return (para1);
-}
-
-void main(){
-	int para1;
-	para1 = 5;
-	func1(para1);
-}
