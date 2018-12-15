@@ -1572,3 +1572,5 @@ Contents of MIPS
           lw         $t9     -4($gp)            
           sw         $t9     72($fp)            
            j    label2_2                        
+   label2_1:                                    
+   label2_2:                                    

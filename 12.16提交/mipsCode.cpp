@@ -423,6 +423,9 @@ void handleMidCode(){
     }else if(tmp.one=="GOTO"){
         j("label" + tmp.three);
         getMid();
+    }else if(tmp.one=="label"){
+        label("label" + tmp.two);
+        getMid();
     }else if(tmp.one=="ret"){
         // ret        $t24
         // ret
