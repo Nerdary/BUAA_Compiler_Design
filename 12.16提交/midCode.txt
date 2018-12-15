@@ -3,8 +3,12 @@ Contents of mid codes
        label       fib_1        func            
         func         int         fib            
         para         int           n            
+         var         int           a            
+         var         int           b            
+         var         int           c            
          $t1           n                        
        print         $t1                        
+       print           :                        
          $t2           n                        
          $t3           1                        
          $t2          ==         $t3            
@@ -36,15 +40,20 @@ Contents of mid codes
         call         fib                        
          $t4         RET                        
          $t5         $t1           +         $t4
-         ret         $t5                        
+           c         $t5                        
+         $t6           c                        
+       print         $t6                        
+       print           |                        
+         $t7           c                        
+         ret         $t7                        
        label       fib_2        func            
         main        void        main            
          var         int           x            
-         $t6           5                        
-        push         $t6                        
+         $t8           5                        
+        push         $t8                        
         call         fib                        
-         $t6         RET                        
-           x         $t6                        
-       print---------------                        
-         $t7           x                        
-       print         $t7                        
+         $t8         RET                        
+           x         $t8                        
+       print        ----                        
+         $t9           x                        
+       print         $t9                        

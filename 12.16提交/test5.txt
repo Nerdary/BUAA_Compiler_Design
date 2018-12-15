@@ -1,13 +1,18 @@
 int fib(int n){
+	int a, b, c;
 	printf(n);
+	printf(":");
 	if(n==1)	return (1);
 	if(n==2)	return (1);
-	return (fib(n-1)+fib(n-2));
+	c = fib(n-1)+fib(n-2);
+	printf(c);
+	printf("|");
+	return (c);
 }
 
 void main(){
 	int x;
 	x = fib(5);
-	printf("---------------");
+	printf("----");
 	printf(x);
 }

@@ -428,25 +428,36 @@ void handleMidCode(){
         // ret
         if(tmp.two==""){
             // 返回值为空，跳过就行
-            getMid();
         }else{
             // 返回值存入寄存器
             add("$v0", "$zero", tmp.two);
 
-//            // 还需要干很多事
-            // 取出ra
-            lw("$ra", 4, "$fp");
-
-            // 暂时以这种方式恢复sp
-            addi("$sp", "$fp", -4);
-
-            // 还要恢复fp
-            lw("$fp", 0, "$fp");
-
-//            lw("$ra", 4, "$fp");
-            jr();
-            getMid();
         }
+
+        // 恢复所有局部变量
+        lw("$t1",  8, "$fp");
+        lw("$t2", 12, "$fp");
+        lw("$t3", 16, "$fp");
+        lw("$t4", 20, "$fp");
+        lw("$t5", 24, "$fp");
+        lw("$t6", 28, "$fp");
+        lw("$t7", 32, "$fp");
+        lw("$t8", 36, "$fp");
+        lw("$t9", 40, "$fp");
+
+        // 还需要干很多事
+        // 取出ra
+        lw("$ra", 4, "$fp");
+
+        // 暂时以这种方式恢复sp
+        addi("$sp", "$fp", -4);
+
+        // 还要恢复fp
+        lw("$fp", 0, "$fp");
+
+        jr();
+        getMid();
+
     }else if(tmp.one=="print"){
         // print "xxxxx"
         // print $ti
