@@ -116,7 +116,7 @@ void genMips(){     // 有点类似于 programAnalysis
             li("$t1", to_string(4));
             li("$t2", tmp.four);
             mul("$t3", "$t1", "$t2");
-            //sub("$gp", "$gp", "$t3"); // 不能改变$gp
+
             offsetGp -= 4 * transNum(tmp.four);
         }else{
             printf(">>> ERROR: in dealing with global var and array.\n");

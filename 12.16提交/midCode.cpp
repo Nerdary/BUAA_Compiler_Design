@@ -377,9 +377,19 @@ void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
 }
 
 void pushMidCodeCondition(int expr1, int op, int expr2){
+    if(expr1>9){
+        if(expr1%9==0) expr1 = 9;
+        else    expr1 %= 9;
+    }
+    if(expr2>9){
+        if(expr2%9==0) expr2 = 9;
+        else    expr2 %= 9;
+    }
+
     string t1 = "$t" + to_string(expr1);//
     string t2 = "$t" + to_string(expr2);//
     string opt;
+
     switch(op){
         case(33):   opt="<";break;
         case(34):   opt="<=";break;
@@ -389,6 +399,7 @@ void pushMidCodeCondition(int expr1, int op, int expr2){
         case(38):   opt="==";break;
         default:    break;
     }
+
     midCodeItem tmp = {
         t1,
         opt,
