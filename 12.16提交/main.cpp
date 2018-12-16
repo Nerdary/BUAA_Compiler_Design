@@ -19,7 +19,7 @@ int main(){
 //	printf("please input a file path:\n");
 //	scanf("%s",path);
 //	fp = fopen(path,"r");
-    fp = fopen("test2.txt", "r");
+    fp = fopen("testarray.txt", "r");
 	if (fp==NULL){
 		err(5);
 		return 0;

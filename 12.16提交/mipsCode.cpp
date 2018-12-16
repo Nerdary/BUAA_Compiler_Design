@@ -82,7 +82,7 @@ void genMips(){     // 有点类似于 programAnalysis
     if(tmp.one=="const"){
         while(true){
             // 记录常量信息
-            pushGlobalRecord(tmp.three, ++globalRecordCount);   // 第一项count为-1
+            pushGlobalRecord(tmp.three, globalRecordCount++);   // 第一项count为0
             // 生成mips
             offsetGp -= 4;
             // 这里需要判断一下int 和 char
@@ -105,14 +105,18 @@ void genMips(){     // 有点类似于 programAnalysis
         // 变量声明
         if(tmp.one=="var"){
             // 记录变量信息
-            pushGlobalRecord(tmp.three, ++globalRecordCount);
+            pushGlobalRecord(tmp.three, globalRecordCount++);
             // 生成mips
             // addi("$gp", "$gp", -4);
             offsetGp -= 4;
         }else if(tmp.one=="array"){
             // 记录变量信息
-            globalRecordCount += transNum(tmp.four);
+
             pushGlobalRecord(tmp.three, globalRecordCount);
+            globalRecordCount += transNum(tmp.four);
+            // 数组的存储方式
+            // head + offset
+
             // 生成mips
             li("$t1", to_string(4));
             li("$t2", tmp.four);
@@ -403,6 +407,8 @@ void handleMain(){
     funcStack.push_back(tmpfunc);
     allFuncInfoVector.push_back(tmpfunc);
 
+    currentFuncName = "main";
+
 
 //    printf("> about to get in handle mid code.\n");
 //    handleMidCode();
@@ -650,6 +656,8 @@ void handleMidCode(){
             }
             // $t22           1
             else if(transNum(tmp.two)!=-1){
+                printf(">>> check! in branch ; $ti   integer; \n");
+
                 int value1 = transNum(tmp.two);
                 // 直接赋值
                 addi(tmp.one, "$zero", value1);
@@ -752,7 +760,9 @@ void handleMidCode(){
                     addi("$s2", "$zero", 4);
                     mul("$s2", "$s2", tmp.four);
 
-                    add("$s1", "$s1", "$s2");
+//                    add("$s1", "$s1", "$s2");
+                    sub("$s1", "$s1", "$s2");
+
                     lw(tmp.one, 0, "$s1");
 
                     // read next
@@ -810,6 +820,7 @@ void handleMidCode(){
 
             }else if(tmp.two=="[]"){
             // ID   []  index   $ti
+                printf(">>> checkpoint! in the branch ;ID   []  index   $ti;\n");
 
                 // 首先正常地查找ID
                 int flag = 1;
@@ -865,7 +876,8 @@ void handleMidCode(){
                     addi("$s2", "$zero", 4);
                     mul("$s2", "$s2", tmp.three);
 
-                    add("$s1", "$s1", "$s2");
+//                    add("$s1", "$s1", "$s2");
+                    sub("$s1", "$s1", "$s2");
 
                     // save in
                     sw(tmp.four, 0, "$s1");
@@ -875,7 +887,7 @@ void handleMidCode(){
                 }
 
 
-                getMid();
+//                getMid();
             }else{
                 getMid();
                 error();

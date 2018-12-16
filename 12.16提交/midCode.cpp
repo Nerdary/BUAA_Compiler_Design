@@ -353,14 +353,21 @@ void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
         else    tCount %= 9;
     }
 
+    if(index>9){
+        if(index%9==0) index = 9;
+        else    index %= 9;
+    }
+
     midCodeItem tmp;
     if(isArray==1){
         // Êý×é¸³Öµ
         string t1 = "$t" + to_string(tCount);
+        string t3 = "$t" + to_string(index);
         tmp = {
             ID,
             "[]",
-            to_string(index),
+            //to_string(index),
+            t3,
             t1,
         };
     }else{

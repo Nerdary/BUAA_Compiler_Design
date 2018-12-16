@@ -1,39 +1,25 @@
 Contents of mid codes
            1           2           3           4
-       label factorial_1        func            
-        func         int   factorial            
-        para         int           a            
-         var         int           b            
-         $t1           a                        
-         $t2           1                        
-         $t1          ==         $t2            
-          BZ       label         1_1            
-         $t3           1                        
-         ret         $t3                        
-        GOTO       label         1_2            
-       label         1_1        norm            
-         $t4           a                        
-         $t5           1                        
-         $t6         $t4           -         $t5
-        push         $t6                        
-        call   factorial                        
-         $t6         RET                        
-         $t7           a                        
-         $t8         $t6           *         $t7
-           b         $t8                        
-         $t9           b                        
-         ret         $t9                        
-       label         1_2        norm            
-       label factorial_2        func            
+       array         int         g_a          20
+       array        char         g_c          20
         main        void        main            
-         var         int           a            
-         var         int           b            
-         $t1           3                        
-           a         $t1                        
-         $t2           a                        
-        push         $t2                        
-        call   factorial                        
-         $t2         RET                        
-           b         $t2                        
-         $t3           b                        
-       print         $t3                        
+         var         int           x            
+         var         int           y            
+       array         int         m_a          20
+       array        char         m_c         100
+         $t1           0                        
+         $t2         999                        
+         m_a          []         $t1         $t2
+         $t3          19                        
+         $t4        1000                        
+         m_a          []         $t3         $t4
+         $t5           0                        
+         $t6         m_a          []         $t5
+           x         $t6                        
+         $t7          19                        
+         $t8         m_a          []         $t7
+           y         $t8                        
+         $t9           x                        
+       print         $t9                        
+         $t1           y                        
+       print         $t1                        

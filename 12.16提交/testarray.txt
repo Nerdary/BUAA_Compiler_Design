@@ -1,0 +1,17 @@
+int g_a[20];
+char g_c[20];
+
+void main(){
+	int x, y;
+	int m_a[20];
+	char m_c[100];
+	
+	m_a[0] = 999;
+	m_a[19] = 1000;
+
+	x = m_a[0];
+	y = m_a[19];
+
+	printf(x);
+	printf(y);
+}
