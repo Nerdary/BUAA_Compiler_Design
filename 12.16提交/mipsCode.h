@@ -73,7 +73,7 @@ struct functionInfo{
 };
 
 struct searchResult{
-    int targetFp;
+//    int targetFp;
     int index;
     int isMain;
 };
@@ -84,7 +84,7 @@ void handleMidCode();
 void genMips();
 void printMipsCode();
 
-searchResult searchStackID(string ID);
+searchResult searchStackID(string targetFuncName, string ID);
 int searchGlobalID(string ID);
 
 void addi(string res, string in, int value);

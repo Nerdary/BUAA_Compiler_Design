@@ -25,7 +25,8 @@ int globalRecordCount = 0;
 int globalValueOfFp = 0;
 int compareResult;      // 关系运算四元式的结果，作为跳转的条件
                         // 将此结果存入寄存器$s2
-int paraCount;     // 用于记录函数调用的参数个数
+int paraCount;          // 用于记录函数调用的参数个数
+string currentFuncName;
 
 int offsetGp = 0;      // 全局变量、常量的偏移量，因为要访问，所以$gp最好不要变
 int offsetFp = 0;
@@ -127,7 +128,7 @@ void genMips(){     // 有点类似于 programAnalysis
     // 跳转到主函数
     j("main");
 
-    string currentFuncName;
+
     // 处理所有子函数定义
     while(tmp.one=="label" && tmp.three=="func"){
         // 生成mips，记录所有信息用于生成运行栈
@@ -492,7 +493,7 @@ void handleMidCode(){
         // search ID tmp.three
         int flag = 1;
         int res2;
-        searchResult res1 = searchStackID(tmp.three);
+        searchResult res1 = searchStackID(currentFuncName, tmp.three);
         if(res1.index==-1){
             flag = 2;
             res2 = searchGlobalID(tmp.three);
@@ -504,9 +505,15 @@ void handleMidCode(){
 
         if(flag==1){
             // find ID in function's stack
-            int fp = res1.targetFp;
-            int offset1 = 8 + 4 * res1.index;
-            addi("$s1", "$zero", fp);
+            //int fp = res1.targetFp;
+            int offset1 = 4 * res1.index;
+
+            if(res1.isMain!=1){
+                offset1 += (8+36);
+            }
+
+//            addi("$s1", "$zero", fp);
+            add("$s1", "$zero", "$fp");
             sw("$v0", offset1, "$s1");
             // read next
             getMid();
@@ -554,8 +561,8 @@ void handleMidCode(){
         // 将fp sp后修改后的函数体再压入栈，其实这里是需要它的长度
         newTmp.fp = globalValueOfFp;
         newTmp.sp = globalValueOfFp + newTmp.length;
-        funcStack.push_back(newTmp);
-        printf(">>> push new func in stack :%s, len:%d\n", newTmp.funcName.c_str(), funcStack.size());
+//        funcStack.push_back(newTmp);
+//        printf(">>> push new func in stack :%s, len:%d\n", newTmp.funcName.c_str(), funcStack.size());
 
         getMid();
 
@@ -648,7 +655,7 @@ void handleMidCode(){
             //    printf(">>> check: in this branch: '$ti  a'\n");
                 int flag = 1;
                 int res2;
-                searchResult res1 = searchStackID(tmp.two);
+                searchResult res1 = searchStackID(currentFuncName, tmp.two);
                 if(res1.index==-1){
                     flag = 2;
                     res2 = searchGlobalID(tmp.two);
@@ -662,7 +669,7 @@ void handleMidCode(){
                 if(flag==1){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
-                    int fp = res1.targetFp;
+                    //int fp = res1.targetFp;
                     int offset1 = 4 * res1.index;
                     if(res1.isMain!=1){
                         offset1 += (8+36);
@@ -687,7 +694,7 @@ void handleMidCode(){
                 // 首先正常地查找ID
                 int flag = 1;
                 int res2;
-                searchResult res1 = searchStackID(tmp.two);
+                searchResult res1 = searchStackID(currentFuncName, tmp.two);
                 if(res1.index==-1){
                     flag = 2;
                     res2 = searchGlobalID(tmp.two);
@@ -701,7 +708,7 @@ void handleMidCode(){
                 if(flag==1){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
-                    int fp = res1.targetFp;
+                    //int fp = res1.targetFp;
                     printf(">>> check: func stack search: index=%d\n", res1.index);
 
                     // offset1 = 4 * res1.index;
@@ -758,7 +765,7 @@ void handleMidCode(){
             if(tmp.two[0]=='$' && tmp.two[1]=='t'){
                 int flag = 1;
                 int res2;
-                searchResult res1 = searchStackID(tmp.one);
+                searchResult res1 = searchStackID(currentFuncName, tmp.one);
                 if(res1.index==-1){
                     flag = 2;
                     res2 = searchGlobalID(tmp.one);
@@ -773,7 +780,7 @@ void handleMidCode(){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
                     //int fp = res1.targetFp;
-                    int fp = res1.targetFp;
+                    //int fp = res1.targetFp;
                     int offset1 = 4 * res1.index;
                     if(res1.isMain==0){
                         offset1 += (8+36);
@@ -797,7 +804,7 @@ void handleMidCode(){
                 // 首先正常地查找ID
                 int flag = 1;
                 int res2;
-                searchResult res1 = searchStackID(tmp.one);
+                searchResult res1 = searchStackID(currentFuncName, tmp.one);
                 if(res1.index==-1){
                     flag = 2;
                     res2 = searchGlobalID(tmp.one);
@@ -811,7 +818,7 @@ void handleMidCode(){
                 if(flag==1){
                     // 在符号栈表中找到了ID
                     // 0 1 2 3 ...
-                    int fp = res1.targetFp;
+                    //int fp = res1.targetFp;
                     printf(">>> check: func stack search: index=%d\n", res1.index);
 
                     // offset1 = 4 * res1.index;
@@ -879,7 +886,7 @@ void handleMidCode(){
 //    }
 //}
 
-searchResult searchStackID(string targetID){
+searchResult searchStackID(string targetFuncName, string targetID){
     // 在运行栈中查找符号名
     int i, j, length = funcStack.size();
     searchResult ures = {-1,-1,};
@@ -888,46 +895,55 @@ searchResult searchStackID(string targetID){
         printf("have not set up function stack yet.\n");
         return ures;
     }
-    // 先查自己的域
-    functionInfo info = funcStack.at(length-1);
-    for(j=0;j<info.funcSymbolTable.size();j++){
-        funcRecordItem tmp = info.funcSymbolTable.at(j);
+
+
+    // 找出自己的函数体的符号表
+    functionInfo tmpinfo;
+    for(i=0;i<length;i++){
+        tmpinfo = funcStack.at(i);
+        if(tmpinfo.funcName==targetFuncName)
+            break;
+    }
+//    functionInfo info = funcStack.at(length-1);
+
+    int symSize = tmpinfo.funcSymbolTable.size();
+    for(j=0;j<symSize;j++){
+        funcRecordItem tmp = tmpinfo.funcSymbolTable.at(j);
         // check window
     //    printf(">>> targetID:%s\tID:%s\toffset:%d\tvalue:%s\n", targetID.c_str(), tmp.ID.c_str(), tmp.offset, tmp.value.c_str());
 
         if(tmp.ID==targetID){
         //    return tmp.offset;
             searchResult res = {
-                info.fp,
                 tmp.offset,
-                info.isMain,
+                tmpinfo.isMain,
             };
-            printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
+
             return res;
         }
     }
 
-    // 再查嵌套的域
-    for(i=length-1;i>=0;i--){
-        functionInfo info1 = funcStack.at(i);
-    //    if(funcLevel > info1.level){
-            // 更高级的域
-            for(j=0;j<info1.funcSymbolTable.size();j++){
-                funcRecordItem tmp = info1.funcSymbolTable.at(j);
-                if(tmp.ID==targetID){
-                    searchResult res = {
-                        info1.fp,
-                        tmp.offset,
-                        info1.isMain,
-                    };
-                    printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
-                    return res;
-                }
-
-            }
-    //    }
-    }
-    // 没有查到
+//    // 再查嵌套的域
+//    for(i=length-1;i>=0;i--){
+//        functionInfo info1 = funcStack.at(i);
+//    //    if(funcLevel > info1.level){
+//            // 更高级的域
+//            for(j=0;j<info1.funcSymbolTable.size();j++){
+//                funcRecordItem tmp = info1.funcSymbolTable.at(j);
+//                if(tmp.ID==targetID){
+//                    searchResult res = {
+//                        info1.fp,
+//                        tmp.offset,
+//                        info1.isMain,
+//                    };
+//                    printf(">>> find ID in stack, fp = %d, index = %d\n", res.targetFp, res.index);
+//                    return res;
+//                }
+//
+//            }
+//    //    }
+//    }
+//    // 没有查到
 
     printf(">>> NOT find ID in stack\n");
     return ures;

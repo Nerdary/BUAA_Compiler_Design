@@ -1,0 +1,11 @@
+int myscan(){
+	int a;
+	scanf(a);
+	return(a);
+}
+
+void main(){
+	int a;
+	a = myscan();
+	printf(a);
+}

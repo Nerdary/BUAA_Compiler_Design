@@ -259,7 +259,7 @@
 	"error.h"
 	"midCode.h"
 
-1544849266 source:c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\mipscode.cpp
+1544952593 source:c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\mipscode.cpp
 	<stdio.h>
 	<ctype.h>
 	<string>
@@ -270,7 +270,7 @@
 	"mipsCode.h"
 	"error.h"
 
-1544446101 c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\mipscode.h
+1544952746 c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\mipscode.h
 	"midCode.h"
 
 1544778310 source:c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\symboltable.cpp
@@ -292,7 +292,7 @@
 	"error.h"
 	"midCode.h"
 
-1544853401 source:c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\main.cpp
+1544875292 source:c:\users\retriver\desktop\编译课设\12.16提交\c0_compiler\main.cpp
 	<iostream>
 	<stdio.h>
 	<ctype.h>
