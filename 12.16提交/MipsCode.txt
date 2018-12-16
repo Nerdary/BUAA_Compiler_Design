@@ -3,7 +3,7 @@ Contents of MIPS
 
          add         $sp       $zero       $zero
            j        main                        
-     myscan:                                    
+  factorial:                                    
           sw         $fp      0($sp)            
          add         $fp         $sp       $zero
         addi         $sp         $sp           4
@@ -19,14 +19,18 @@ Contents of MIPS
           sw         $t7    -12($sp)            
           sw         $t8     -8($sp)            
           sw         $t9     -4($sp)            
+        addi         $s1         $sp         -48
+          lw         $t1      0($s1)            
+          sw         $t1      0($sp)            
         addi         $sp         $sp           4
-        addi         $v0       $zero           5
-     syscall                                    
-         add         $s1       $zero         $fp
-          sw         $v0     44($s1)            
+        addi         $sp         $sp           4
          add         $s1       $zero         $fp
           lw         $t1     44($s1)            
-         add         $v0       $zero         $t1
+        addi         $t2       $zero           1
+         sub         $s1         $t1         $t2
+         bne         $s1       $zero    label1_1
+        addi         $t3       $zero           1
+         add         $v0       $zero         $t3
           lw         $t1      8($fp)            
           lw         $t2     12($fp)            
           lw         $t3     16($fp)            
@@ -40,6 +44,37 @@ Contents of MIPS
         addi         $sp         $fp          -4
           lw         $fp      0($fp)            
           jr         $ra                        
+           j    label1_2                        
+   label1_1:                                    
+         add         $s1       $zero         $fp
+          lw         $t4     44($s1)            
+        addi         $t5       $zero           1
+         sub         $t6         $t4         $t5
+          sw         $t6      0($sp)            
+        addi         $sp         $sp           4
+         jal   factorial                        
+         add         $t6         $v0       $zero
+         add         $s1       $zero         $fp
+          lw         $t7     44($s1)            
+         mul         $t8         $t6         $t7
+          sw         $t8     48($fp)            
+         add         $s1       $zero         $fp
+          lw         $t9     48($s1)            
+         add         $v0       $zero         $t9
+          lw         $t1      8($fp)            
+          lw         $t2     12($fp)            
+          lw         $t3     16($fp)            
+          lw         $t4     20($fp)            
+          lw         $t5     24($fp)            
+          lw         $t6     28($fp)            
+          lw         $t7     32($fp)            
+          lw         $t8     36($fp)            
+          lw         $t9     40($fp)            
+          lw         $ra      4($fp)            
+        addi         $sp         $fp          -4
+          lw         $fp      0($fp)            
+          jr         $ra                        
+   label1_2:                                    
           lw         $t1      8($fp)            
           lw         $t2     12($fp)            
           lw         $t3     16($fp)            
@@ -54,16 +89,21 @@ Contents of MIPS
           lw         $fp      0($fp)            
           jr         $ra                        
        main:                                    
-        addi         $fp       $zero          48
+        addi         $fp       $zero          52
          add         $sp         $fp       $zero
         addi         $sp         $sp           4
-          sw         $t1      0($sp)            
         addi         $sp         $sp           4
-         jal      myscan                        
-         add         $t1         $v0       $zero
+        addi         $t1       $zero           3
           sw         $t1     44($fp)            
          add         $s1       $zero         $fp
           lw         $t2     44($s1)            
+          sw         $t2      0($sp)            
+        addi         $sp         $sp           4
+         jal   factorial                        
+         add         $t2         $v0       $zero
+          sw         $t2     48($fp)            
+         add         $s1       $zero         $fp
+          lw         $t3     48($s1)            
         addi         $v0       $zero           1
-         add         $a0       $zero         $t2
+         add         $a0       $zero         $t3
      syscall                                    

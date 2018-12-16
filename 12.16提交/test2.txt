@@ -5,12 +5,14 @@ int factorial(int a){
     }
     else{
         b = (factorial(a-1)*a);
+	
         return (b);
     }
 }
 
 void main(){
-	int a;
-	a = 2;
-	factorial(a);
+	int a, b;
+	a = 3;
+	b = factorial(a);
+	printf(b);
 }

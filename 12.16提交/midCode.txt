@@ -1,17 +1,39 @@
 Contents of mid codes
            1           2           3           4
-       label    myscan_1        func            
-        func         int      myscan            
-         var         int           a            
-        scan                       a            
+       label factorial_1        func            
+        func         int   factorial            
+        para         int           a            
+         var         int           b            
          $t1           a                        
-         ret         $t1                        
-       label    myscan_2        func            
+         $t2           1                        
+         $t1          ==         $t2            
+          BZ       label         1_1            
+         $t3           1                        
+         ret         $t3                        
+        GOTO       label         1_2            
+       label         1_1        norm            
+         $t4           a                        
+         $t5           1                        
+         $t6         $t4           -         $t5
+        push         $t6                        
+        call   factorial                        
+         $t6         RET                        
+         $t7           a                        
+         $t8         $t6           *         $t7
+           b         $t8                        
+         $t9           b                        
+         ret         $t9                        
+       label         1_2        norm            
+       label factorial_2        func            
         main        void        main            
          var         int           a            
-        push         $t1                        
-        call      myscan                        
-         $t1         RET                        
+         var         int           b            
+         $t1           3                        
            a         $t1                        
          $t2           a                        
-       print         $t2                        
+        push         $t2                        
+        call   factorial                        
+         $t2         RET                        
+           b         $t2                        
+         $t3           b                        
+       print         $t3                        
