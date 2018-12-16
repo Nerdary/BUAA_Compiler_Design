@@ -76,7 +76,7 @@ void genMips(){     // 有点类似于 programAnalysis
     getMid();
 
     // 设置sp
-    add("$sp", "$zero", "$zero");
+    // add("$sp", "$zero", "$zero");
 
     // 处理全局 常量定义
     if(tmp.one=="const"){
@@ -141,9 +141,9 @@ void genMips(){     // 有点类似于 programAnalysis
             // 在这里生成函数头部，操作fp sp，保存ra
             sw("$fp", 0, "$sp");
             add("$fp", "$sp", "$zero");
-            addi("$sp", "$sp", 4);
+            addi("$sp", "$sp", -4);
             sw("$ra", 0, "$sp");
-            addi("$sp", "$sp", 4);
+            addi("$sp", "$sp", -4);
 
             getMid();
         }else{
@@ -152,16 +152,16 @@ void genMips(){     // 有点类似于 programAnalysis
         }
 
          // 记录所有临时变量
-        addi("$sp", "$sp", 36);
-        sw("$t1", -36, "$sp");
-        sw("$t2", -32, "$sp");
-        sw("$t3", -28, "$sp");
-        sw("$t4", -24, "$sp");
-        sw("$t5", -20, "$sp");
-        sw("$t6", -16, "$sp");
-        sw("$t7", -12, "$sp");
-        sw("$t8",  -8, "$sp");
-        sw("$t9",  -4, "$sp");
+        addi("$sp", "$sp", -36);
+        sw("$t1", 36, "$sp");
+        sw("$t2", 32, "$sp");
+        sw("$t3", 28, "$sp");
+        sw("$t4", 24, "$sp");
+        sw("$t5", 20, "$sp");
+        sw("$t6", 16, "$sp");
+        sw("$t7", 12, "$sp");
+        sw("$t8",  8, "$sp");
+        sw("$t9",  4, "$sp");
 
         vector<funcRecordItem> funcSymbolTable;
         int funcSymbolCount = 0;
@@ -192,10 +192,10 @@ void genMips(){     // 有点类似于 programAnalysis
             printf(">>> check para count: %d\n", paraCount);
             // 必须查函数表才能知道有几个参数
             int gap = 4 * paraCount + 8 + 36;
-            addi("$s1", "$sp", -gap);
+            addi("$s1", "$sp", gap);
             lw("$t1", 0, "$s1");
             sw("$t1", 0, "$sp");
-            addi("$sp", "$sp", 4);
+            addi("$sp", "$sp", -4);
 
 
 //            add("$t1", "$zero", "$ra");
@@ -225,7 +225,7 @@ void genMips(){     // 有点类似于 programAnalysis
                 li("$t1", to_string(itmp));
             }
             sw("$t1", 0, "$sp");
-            addi("$sp", "$sp", 4);
+            addi("$sp", "$sp", -4);
             getMid();
         }
 
@@ -236,7 +236,7 @@ void genMips(){     // 有点类似于 programAnalysis
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
                 funcSymbolTable.push_back(tmp2);
                 //
-                addi("$sp", "$sp", 4);
+                addi("$sp", "$sp", -4);
                 getMid();
             }else{
                 printf(">>> check value of ARRAY count:%d\n", funcSymbolCount);
@@ -244,7 +244,7 @@ void genMips(){     // 有点类似于 programAnalysis
                 funcSymbolCount += transNum(tmp.four);
                 funcSymbolTable.push_back(tmp2);
                 //
-                addi("$sp", "$sp", 4*transNum(tmp.four));
+                addi("$sp", "$sp", -4*transNum(tmp.four));
                 getMid();
             }
         }
@@ -253,12 +253,12 @@ void genMips(){     // 有点类似于 programAnalysis
         //printf(">>> check funcSymbolCount = %d\n", funcSymbolCount);
         functionInfo tmpfunc = {currentFuncName,    // name / ID
                                 funcLevel,          // level
-                                globalValueOfFp,
-                                globalValueOfFp + 8 + 4 * funcSymbolCount + 36,
-                                8 + 4 * funcSymbolCount + 36,    // length
+//                                globalValueOfFp,
+//                                globalValueOfFp + 8 + 4 * funcSymbolCount + 36,
+//                                8 + 4 * funcSymbolCount + 36,    // length
                                 0,                  // not main
                                 funcSymbolTable};   // symbol table
-        globalValueOfFp += (8 + 4 * funcSymbolCount + 36);
+//        globalValueOfFp += (8 + 4 * funcSymbolCount + 36);
         //printf(">>> check globalValueOfFp = %d\n", globalValueOfFp);
         allFuncInfoVector.push_back(tmpfunc);
         funcStack.push_back(tmpfunc);
@@ -284,21 +284,22 @@ void genMips(){     // 有点类似于 programAnalysis
         }
 
         // 恢复所有局部变量
-        lw("$t1",  8, "$fp");
-        lw("$t2", 12, "$fp");
-        lw("$t3", 16, "$fp");
-        lw("$t4", 20, "$fp");
-        lw("$t5", 24, "$fp");
-        lw("$t6", 28, "$fp");
-        lw("$t7", 32, "$fp");
-        lw("$t8", 36, "$fp");
-        lw("$t9", 40, "$fp");
+        lw("$t1",  -8, "$fp");
+        lw("$t2", -12, "$fp");
+        lw("$t3", -16, "$fp");
+        lw("$t4", -20, "$fp");
+        lw("$t5", -24, "$fp");
+        lw("$t6", -28, "$fp");
+        lw("$t7", -32, "$fp");
+        lw("$t8", -36, "$fp");
+        lw("$t9", -40, "$fp");
 
         // 当前为label_func_2,取出ra，生成一句jr
-        lw("$ra", 4, "$fp");
+        lw("$ra", -4, "$fp");
 
         // 暂时以这种方式恢复sp
-        addi("$sp", "$fp", -4);
+        //addi("$sp", "$fp", -4);
+        add("$sp", "$zero", "$fp");
 
         // 还要恢复fp
         lw("$fp", 0, "$fp");
@@ -344,8 +345,10 @@ void handleMain(){
 //    printf(">>> wiped up the function stack, size:%d\n", funcStack.size());
 
     // 需要将sp、fp设置到位
-    addi("$fp", "$zero", globalValueOfFp);
-    add("$sp", "$fp", "$zero");
+//    addi("$fp", "$zero", globalValueOfFp);
+//    add("$sp", "$fp", "$zero");
+    add("$fp", "$sp", "$zero"); // 不需要动sp
+
 
     // 在这里处理所有常量变量数组定义
     int funcSymbolCount = 0;
@@ -356,7 +359,7 @@ void handleMain(){
         funcRecordItem tmpm = {tmp.three, funcSymbolCount++, 0, tmp.four};
         mainSymbolTable.push_back(tmpm);
         // 留出空间并填入常量的值
-        addi("$sp", "$sp", 4);
+
         if(tmp.two=="int"){
             li("$t1", tmp.four);
         }else{
@@ -365,6 +368,7 @@ void handleMain(){
             li("$t1", to_string(itmp));
         }
         sw("$t1", 0, "$sp");
+        addi("$sp", "$sp", -4);
         getMid();
     }
 
@@ -375,14 +379,14 @@ void handleMain(){
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
             mainSymbolTable.push_back(tmp2);
             //
-            addi("$sp", "$sp", 4);
+            addi("$sp", "$sp", -4);
             getMid();
         }else{
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
             funcSymbolCount += transNum(tmp.four);
             mainSymbolTable.push_back(tmp2);
             //
-            addi("$sp", "$sp", 4 * transNum(tmp.four));
+            addi("$sp", "$sp", -4 * transNum(tmp.four));
             getMid();
         }
     }
@@ -390,12 +394,12 @@ void handleMain(){
     // function info func stack
     functionInfo tmpfunc = {"main",
                             1,                  // level
-                            globalValueOfFp,
-                            globalValueOfFp + 4 * funcSymbolCount,
-                            4 * funcSymbolCount,// length
+//                            globalValueOfFp,
+//                            globalValueOfFp + 4 * funcSymbolCount,
+//                            4 * funcSymbolCount,// length
                             1,                  // is main
                             mainSymbolTable};   // symbol table
-    globalValueOfFp += (4 * funcSymbolCount);
+//    globalValueOfFp += (4 * funcSymbolCount);
     funcStack.push_back(tmpfunc);
     allFuncInfoVector.push_back(tmpfunc);
 
@@ -439,22 +443,21 @@ void handleMidCode(){
         }
 
         // 恢复所有局部变量
-        lw("$t1",  8, "$fp");
-        lw("$t2", 12, "$fp");
-        lw("$t3", 16, "$fp");
-        lw("$t4", 20, "$fp");
-        lw("$t5", 24, "$fp");
-        lw("$t6", 28, "$fp");
-        lw("$t7", 32, "$fp");
-        lw("$t8", 36, "$fp");
-        lw("$t9", 40, "$fp");
+        lw("$t1",  -8, "$fp");
+        lw("$t2", -12, "$fp");
+        lw("$t3", -16, "$fp");
+        lw("$t4", -20, "$fp");
+        lw("$t5", -24, "$fp");
+        lw("$t6", -28, "$fp");
+        lw("$t7", -32, "$fp");
+        lw("$t8", -36, "$fp");
+        lw("$t9", -40, "$fp");
 
         // 还需要干很多事
-        // 取出ra
-        lw("$ra", 4, "$fp");
+        lw("$ra", -4, "$fp");
 
         // 暂时以这种方式恢复sp
-        addi("$sp", "$fp", -4);
+        add("$sp", "$zero", "$fp");
 
         // 还要恢复fp
         lw("$fp", 0, "$fp");
@@ -513,14 +516,16 @@ void handleMidCode(){
             }
 
 //            addi("$s1", "$zero", fp);
-            add("$s1", "$zero", "$fp");
-            sw("$v0", offset1, "$s1");
+//            add("$s1", "$zero", "$fp");
+//            sw("$v0", offset1, "$s1");
+            sw("$v0", -offset1, "$fp");
+
             // read next
             getMid();
         }else{
             // find ID in global table
             int offset2 = 4 * res2;
-            sw("$v0", offset2, "$gp");
+            sw("$v0", -offset2, "$gp");
             // read next
             getMid();
         }
@@ -532,7 +537,7 @@ void handleMidCode(){
     }else if(tmp.one=="push"){
 
         sw(tmp.two, 0, "$sp");
-        addi("$sp", "$sp", 4);
+        addi("$sp", "$sp", -4);
 
         getMid();
 
@@ -544,23 +549,23 @@ void handleMidCode(){
         jal(tmp.two);
 
         // 暂时决定在这里生成新的 func stack
-        int i, length = funcStack.size();
-        functionInfo tmpc;
-        for(i=0;i<length;i++){
-            tmpc = funcStack.at(i);
-            if(tmpc.funcName == tmp.two)
-                break;
-        }
+//        int i, length = funcStack.size();
+//        functionInfo tmpc;
+//        for(i=0;i<length;i++){
+//            tmpc = funcStack.at(i);
+//            if(tmpc.funcName == tmp.two)
+//                break;
+//        }
 
         //functionInfo newTmp = funcStack.at(i);
-        functionInfo newTmp = tmpc;
-        functionInfo oldTmp = funcStack.back();
-        // 将fp设置为oldTmp.sp
-        globalValueOfFp = oldTmp.sp;
-
-        // 将fp sp后修改后的函数体再压入栈，其实这里是需要它的长度
-        newTmp.fp = globalValueOfFp;
-        newTmp.sp = globalValueOfFp + newTmp.length;
+//        functionInfo newTmp = tmpc;
+//        functionInfo oldTmp = funcStack.back();
+//        // 将fp设置为oldTmp.sp
+//        globalValueOfFp = oldTmp.sp;
+//
+//        // 将fp sp后修改后的函数体再压入栈，其实这里是需要它的长度
+//        newTmp.fp = globalValueOfFp;
+//        newTmp.sp = globalValueOfFp + newTmp.length;
 //        funcStack.push_back(newTmp);
 //        printf(">>> push new func in stack :%s, len:%d\n", newTmp.funcName.c_str(), funcStack.size());
 
@@ -675,8 +680,10 @@ void handleMidCode(){
                         offset1 += (8+36);
                     }
                     printf(">>> check: func stack search: index=%d\n", res1.index);
-                    add("$s1", "$zero", "$fp");
-                    lw(tmp.one, offset1, "$s1");
+//                    add("$s1", "$zero", "$fp");
+//                    lw(tmp.one, offset1, "$s1");
+                    lw(tmp.one, -offset1, "$fp");
+
                     // read next
                     getMid();
                 }else{
@@ -724,8 +731,11 @@ void handleMidCode(){
                     addi("$s1", "$zero", 4);
                     mul("$s1", "$s1", tmp.four);
 
-                    add("$s1", "$fp", "$s1");
-                    add("$s1", "$s1", "$s2");
+//                    add("$s1", "$fp", "$s1");
+//                    add("$s1", "$s1", "$s2");
+                    // 修改过后
+                    sub("$s1", "$fp", "$s1");
+                    sub("$s1", "$s1", "$s2");
 
                     // 最终取出
                     lw(tmp.one, 0, "$s1");
@@ -786,14 +796,14 @@ void handleMidCode(){
                         offset1 += (8+36);
                     }
                     //addi("$s1", "$zero", fp);
-                    sw(tmp.two, offset1, "$fp");
+                    sw(tmp.two, -offset1, "$fp");
                     // read next
                     getMid();
                 }else{
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
                     int offset2 = 4 * res2;
-                    sw(tmp.two, - offset2, "$gp");
+                    sw(tmp.two, -offset2, "$gp");
                     // read next
                     getMid();
                 }
@@ -834,8 +844,10 @@ void handleMidCode(){
                     addi("$s1", "$zero", 4);
                     mul("$s1", "$s1", tmp.three);
 
-                    add("$s1", "$fp", "$s1");
-                    add("$s1", "$s1", "$s2");
+//                    add("$s1", "$fp", "$s1");
+//                    add("$s1", "$s1", "$s2");
+                    sub("$s1", "$fp", "$s1");
+                    sub("$s1", "$s1", "$s2");
 
                     // 最终取出
                     sw(tmp.four, 0, "$s1");

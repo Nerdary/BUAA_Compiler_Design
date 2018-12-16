@@ -64,9 +64,9 @@ extern vector<mipsItem> mipsCodeVector;
 struct functionInfo{
     string funcName;
     int level;
-    int fp;
-    int sp;
-    int length;
+    //int fp;
+    //int sp;
+    //int length;
     int isMain;
     vector<funcRecordItem> funcSymbolTable;
 //    vector<midCodeItem> otherMidCodeVec;
