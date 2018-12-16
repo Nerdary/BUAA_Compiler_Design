@@ -32,6 +32,8 @@ int offsetGp = 0;      // 全局变量、常量的偏移量，因为要访问，所以$gp最好不要变
 int offsetFp = 0;
 int offsetSp = 0;
 
+midCodeItem nullItem = {"", "", "", ""};
+
 void printMidCodeTmp(midCodeItem tmp){
     printf("%s\t", tmp.one.c_str());
     printf("%s\t", tmp.two.c_str());
@@ -42,6 +44,7 @@ void printMidCodeTmp(midCodeItem tmp){
 void getMid(){
     if(midCodeIndex>=midCodeVec.size()){
         printf(">>> out of midCodeVec's length\n");
+        tmp = nullItem;
         return ;
     }
     tmp = midCodeVec.at(midCodeIndex++);
@@ -376,6 +379,7 @@ void handleMain(){
         getMid();
     }
 
+    printf(">>> check! before var.\n");
     // 变量数组
     // 变量、数组定义部分
     while(tmp.one=="var" || tmp.one=="array"){
@@ -394,6 +398,7 @@ void handleMain(){
             getMid();
         }
     }
+    printf(">>> check! after var.\n");
 
     // function info func stack
     functionInfo tmpfunc = {"main",

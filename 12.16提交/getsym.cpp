@@ -95,6 +95,14 @@ int myGetsym(int mode){
 		int resultValue = isReserved();
 		if(resultValue == 0){
 			strcpy(symbol, "IDSY");
+
+			// 全部换成小写
+			int i, tlen = strlen(token);
+			for(i=0;i<tlen;i++){
+                if(token[i]>='A' && token[i]<='Z')
+                    token[i] = token[i] - 'A' + 'a';
+			}
+
 			// use global name to save ID-name
 			if(mode==1){
                 // 预读模式

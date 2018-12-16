@@ -434,12 +434,13 @@ void pushMidCodeFactorValue(int tCount, int type, int value){
         };
     }else{
         string t1 = "$t" + to_string(newCount);
-        char ctmp = value;
-        string stmp(&ctmp, 1);
-        string tmpValue = stmp;
+//        char ctmp = value;
+//        string stmp(&ctmp, 1);
+//        string tmpValue = stmp;
         tmp = {
             t1,
-            tmpValue,
+            //tmpValue,
+            to_string(value),
             "",
             "",
         };

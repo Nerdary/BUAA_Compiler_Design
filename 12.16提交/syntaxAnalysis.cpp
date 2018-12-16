@@ -1047,6 +1047,8 @@ int assignSentence(){
         return -1;
     }
     string assignID = IDname;
+    // 记录变量类型
+    //int recordType = searchName2Type(assignID, 0);
 
     getsym();
     int isArray = 0;
@@ -1067,6 +1069,8 @@ int assignSentence(){
                 return -1;
             }
         }
+
+
 
 
         if(result!=RBRACSY){
@@ -1578,7 +1582,6 @@ int expr(){
         opTag = 1;
         getsym();
     }
-
 
 
     term();

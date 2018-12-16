@@ -19,7 +19,7 @@ int main(){
 //	printf("please input a file path:\n");
 //	scanf("%s",path);
 //	fp = fopen(path,"r");
-    fp = fopen("testarray.txt", "r");
+    fp = fopen("testTMP.txt", "r");
 	if (fp==NULL){
 		err(5);
 		return 0;
@@ -34,10 +34,10 @@ int main(){
     // 生成中间代码
     printMidCode();
     MidCode2File();
-    printf(">>> FINISH MID CODE.\n");
+    printf("\n>>> FINISH MID CODE.\n");
     // 根据中间代码生成目标mips指令
     genMips();
-    printf(">>> FINISH MIPS CODE.\n");
+    printf("\n>>> FINISH MIPS CODE.\n");
     Mips2File();
     printMipsCode();
 //    printGlobalRecord();

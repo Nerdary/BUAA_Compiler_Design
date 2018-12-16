@@ -6,11 +6,11 @@ void main(){
 	int m_a[20];
 	char m_c[100];
 	
-	m_a[0] = 999;
-	m_a[19] = 1000;
+	g_a[0] = 999;
+	g_a[19] = 1000;
 
-	x = m_a[0];
-	y = m_a[19];
+	x = g_a[0];
+	y = g_a[19];
 
 	printf(x);
 	printf(y);
