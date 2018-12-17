@@ -1,0 +1,31 @@
+           j        main                        
+       main:                                    
+         add         $fp         $sp       $zero
+        addi         $sp         $sp          -4
+        addi         $sp         $sp          -4
+        addi         $sp         $sp          -4
+        addi         $t1       $zero           1
+          sw         $t1      0($fp)            
+        addi         $t2       $zero           0
+          sw         $t2     -4($fp)            
+           j    label1_1                        
+   label1_2:                                    
+          lw         $t3     -4($fp)            
+        addi         $t4       $zero          10
+         sub         $s1         $t4         $t3
+        blez         $s1    label1_3            
+   label1_1:                                    
+          lw         $t5      0($fp)            
+        addi         $t6       $zero           1
+         add         $t7         $t5         $t6
+          sw         $t7      0($fp)            
+          lw         $t8     -4($fp)            
+        addi         $t9       $zero           1
+         add         $t1         $t8         $t9
+          sw         $t1     -4($fp)            
+           j    label1_2                        
+   label1_3:                                    
+          lw         $t2      0($fp)            
+        addi         $v0       $zero           1
+         add         $a0       $zero         $t2
+     syscall                                    

@@ -1,0 +1,405 @@
+# depslib dependency file v1.0
+1543560965 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543561021 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\error.h
+	<iostream>
+	<string>
+
+1543751029 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\main.cpp
+	<iostream>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"getsym.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"symbolTable.h"
+	"midCode.h"
+	"mipsCode.h"
+
+1543725718 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\getsym.h
+	<stdio.h>
+	<ctype.h>
+	"string"
+
+1543719322 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\syntaxanalysis.h
+	<vector>
+	"symbolTable.h"
+
+1543762712 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\syntaxanalysis.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1543224339 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543224297 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+
+1543725556 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+	"syntaxAnalysis.h"
+	"midCode.h"
+
+1543574406 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\symboltable.h
+	<stdio.h>
+	<string.h>
+	<iostream>
+
+1543574387 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\symboltable.cpp
+	<stdio.h>
+	<string>
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+
+1543748114 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\midcode.h
+	<stdio.h>
+	<string>
+	<iostream>
+	<fstream>
+	<iomanip>
+
+1543761878 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\midcode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	<stdlib.h>
+	<fstream>
+	<iomanip>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1543760420 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\mipscode.h
+	"midCode.h"
+
+1543762291 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.2 Ìá½»\c0_compiler\mipscode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string>
+	<vector>
+	<stdlib.h>
+	"mipsCode.h"
+	"error.h"
+
+1543560965 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543561021 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\error.h
+	<iostream>
+	<string>
+
+1543725556 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+	"syntaxAnalysis.h"
+	"midCode.h"
+
+1543725718 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\getsym.h
+	<stdio.h>
+	<ctype.h>
+	"string"
+
+1543719322 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\syntaxanalysis.h
+	<vector>
+	"symbolTable.h"
+
+1543574406 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\symboltable.h
+	<stdio.h>
+	<string.h>
+	<iostream>
+
+1543748114 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\midcode.h
+	<stdio.h>
+	<string>
+	<iostream>
+	<fstream>
+	<iomanip>
+
+1544428134 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\main.cpp
+	<iostream>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"getsym.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"symbolTable.h"
+	"midCode.h"
+	"mipsCode.h"
+
+1544443212 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\mipscode.h
+	"midCode.h"
+
+1544346420 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\midcode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	<stdlib.h>
+	<fstream>
+	<iomanip>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1543574387 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\symboltable.cpp
+	<stdio.h>
+	<string>
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+
+1544428310 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\syntaxanalysis.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1544443926 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.9 Ìá½»\c0_compiler\mipscode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string>
+	<vector>
+	<stdlib.h>
+	"mipsCode.h"
+	"error.h"
+
+1543560965 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543561021 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\error.h
+	<iostream>
+	<string>
+
+1544973355 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+	"syntaxAnalysis.h"
+	"midCode.h"
+
+1543725718 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\getsym.h
+	<stdio.h>
+	<ctype.h>
+	"string"
+
+1543719322 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\syntaxanalysis.h
+	<vector>
+	"symbolTable.h"
+
+1544778324 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\symboltable.h
+	<stdio.h>
+	<string.h>
+	<iostream>
+
+1544786343 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\midcode.h
+	<stdio.h>
+	<string>
+	<iostream>
+	<fstream>
+	<iomanip>
+
+1544972268 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\midcode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	<stdlib.h>
+	<fstream>
+	<iomanip>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1544972994 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\mipscode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string>
+	<vector>
+	<stdlib.h>
+	<fstream>
+	<iomanip>
+	"mipsCode.h"
+	"error.h"
+
+1544955592 c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\mipscode.h
+	"midCode.h"
+
+1544778310 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\symboltable.cpp
+	<stdio.h>
+	<string>
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+
+1544972808 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\syntaxanalysis.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1544972806 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\12.16Ìá½»\c0_compiler\main.cpp
+	<iostream>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"getsym.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"symbolTable.h"
+	"midCode.h"
+	"mipsCode.h"
+
+1543560965 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\error.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"error.h"
+
+1543561021 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\error.h
+	<iostream>
+	<string>
+
+1545055061 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\getsym.cpp
+	<stdio.h>
+	<string.h>
+	"getsym.h"
+	"error.h"
+	"syntaxAnalysis.h"
+	"midCode.h"
+
+1543725718 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\getsym.h
+	<stdio.h>
+	<ctype.h>
+	"string"
+
+1543719322 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\syntaxanalysis.h
+	<vector>
+	"symbolTable.h"
+
+1544778324 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\symboltable.h
+	<stdio.h>
+	<string.h>
+	<iostream>
+
+1545056941 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\midcode.h
+	<stdio.h>
+	<string>
+	<iostream>
+	<fstream>
+	<iomanip>
+
+1545057512 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\midcode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	<stdlib.h>
+	<fstream>
+	<iomanip>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1545042579 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\mipscode.cpp
+	<stdio.h>
+	<ctype.h>
+	<string>
+	<vector>
+	<stdlib.h>
+	<fstream>
+	<iomanip>
+	"mipsCode.h"
+	"error.h"
+
+1544955592 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\mipscode.h
+	"midCode.h"
+
+1545056336 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\symboltable.cpp
+	<stdio.h>
+	<string>
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+
+1545057496 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\syntaxanalysis.cpp
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<vector>
+	"error.h"
+	"getsym.h"
+	"symbolTable.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"midCode.h"
+
+1545055536 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\main.cpp
+	<iostream>
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"getsym.h"
+	"syntaxAnalysis.h"
+	"error.h"
+	"symbolTable.h"
+	"midCode.h"
+	"mipsCode.h"
+
