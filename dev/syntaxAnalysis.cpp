@@ -46,6 +46,8 @@ int checkArrayValue = 0;
 //
 int exprCountTerm = 0;
 int termCountFactor = 0;
+//
+//int factorType = 0; // default:0 int:1 char:2 else:3
 
 string currentFuncID;
 string callFuncID;
@@ -982,6 +984,8 @@ int loopSentence(){
             return -1;
         }
         getsym();
+
+
         sentence();     // content
 
         // 生成四元式部分
@@ -1080,10 +1084,13 @@ int assignSentence(){
         getsym();
         expr();
         recTCount = tCount;
+
+
         // 检查数组越界
-        if(termCountFactor==1 && exprCountTerm==1){
+        printf(">>> check number1:%d\n", factorType);
+        if(termCountFactor==1 && exprCountTerm==1 && factorType==1){
 //            printf(">>> check number1:%d\n", checkArrayValue);
-            int tableLength = getArrayLength(IDname);
+            int tableLength = getArrayLength(assignID);
 //            printf(">>> check number2:%d\n", tableLength);
             if(checkArrayValue<0 || checkArrayValue>=tableLength){
                 symbolTableError(errArrayOutOfRange);
@@ -1386,6 +1393,7 @@ int factor(){
 
         //语义分析
         //factorType = exprType;
+        factorType = 1; // 参与运算了type就是1:int
 
         if(result==RPARSY){         // result = ")"
             getsym();
@@ -1429,9 +1437,10 @@ int factor(){
             if(result==RBRACSY){
         //        printf("factor-debug branch-2-2\n");
                 getsym();
-                //factorType = searchName2Type(IDname, 0);
 
-                // 取出数组的值，生成中间代码
+
+                //factorType = searchName2Type(recordFactorID, 0);
+                factorType = 3;
 
 
             }else {
@@ -1449,7 +1458,8 @@ int factor(){
             if(result==RPARSY){      // result = ")"
                 getsym();
 
-                //factorType = searchName2Type(IDname, 0);
+                //factorType = searchName2Type(recordFactorID, 1);
+                factorType = 3;
             }else {
                 error();
                 return -1;
@@ -1478,6 +1488,10 @@ int factor(){
                 stackCalc.push_back(tCount);
                 printf("<<<<<< push in:%d\n", tCount);
                 tCount++;
+
+                //factorType = searchName2Type(recordFactorID, 0);
+                factorType = 3;
+
             }else{
                 // 是函数调用
                 printf("This is a function call without parameter.\n");
@@ -1489,7 +1503,7 @@ int factor(){
                 printf("<<<<<< push in:%d\n", tCount);
                 tCount++;
                 // ...
-
+                factorType = 0;
             }
 
         }
@@ -1654,4 +1668,26 @@ int expr(){
 //    printf("tCount:%d\n", tCount);
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

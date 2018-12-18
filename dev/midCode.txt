@@ -3,20 +3,25 @@ Contents of mid codes
         main        void        main            
          var         int           i            
          var        char       ccccc            
-       array         int           a          10
+         var         int           a            
          $t1           0                        
            i         $t1                        
         GOTO       label         1_1            
        label         1_2        norm            
-         $t2           i                        
-         $t3          10                        
-         $t2           <         $t3            
+         $t2           1                        
+         $t3           2                        
+         $t2           >         $t3            
           BZ       label         1_3            
        label         1_1        norm            
-         $t4           i                        
-         $t5           i                        
-         $t6           1                        
-         $t7         $t5           +         $t6
-           i         $t7                        
+         $t4           a                        
+         $t5           1                        
+         $t6         $t4           +         $t5
+           a         $t6                        
+         $t7           i                        
+         $t8           1                        
+         $t9         $t7           +         $t8
+           i         $t9                        
         GOTO       label         1_2            
        label         1_3        norm            
+         $t1           a                        
+       print         $t1                        

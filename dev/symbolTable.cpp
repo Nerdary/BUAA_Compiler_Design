@@ -215,12 +215,24 @@ int getArrayLength(string ID){
         if(symbolTable.at(i).ID==ID){
             if(symbolTable.at(i).field==globalFuncField
                || symbolTable.at(i).level < globalFuncLevel){
+
+                // 输出检查
+                printf("///////////////////////\n");
+                printf("ID:\t%s\n", ID.c_str());
+                printf("field:\t%s\n",symbolTable.at(i).field.c_str());
+                printf("obj:\t%d\n", symbolTable.at(i).IDobject);
+                printf("///////////////////////\n");
+
+
                 if(symbolTable.at(i).IDobject!=4){
                     // 不是array
                     symbolTableError(errArrayLength);
                     return -1;
                 }
-                return symbolTable.at(i).length;
+                else{
+                    return symbolTable.at(i).length;
+                }
+
             }
         }
 

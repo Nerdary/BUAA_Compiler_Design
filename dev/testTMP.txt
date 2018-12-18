@@ -1,9 +1,9 @@
 void main(){
 	int i;
 	char CcCCc;
-	int A[10];
-	for(i=0;i<10;i=i+1){
-		A[i] = i;}
-	printf("success.");
+	int A;
+	for(i=0;1>2;i=i+1)
+		A=A+1;
+	printf(A);
 	
 }
