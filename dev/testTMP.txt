@@ -1,9 +1,16 @@
+char _c1, _c2;
+
 void main(){
-	int i;
-	char CcCCc;
-	int A;
-	for(i=0;1>2;i=i+1)
-		A=A+1;
-	printf(A);
+	char _c3, _c4;
+	
+	_c1 = 'c';
+	_c2 = 'z';
+	_c3 = 'a';
+	_c4 = 's';
+
+	printf(_c1);
+	printf(_c2);
+	printf(_c3);
+	printf(_c4);
 	
 }

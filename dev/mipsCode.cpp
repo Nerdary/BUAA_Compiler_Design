@@ -795,6 +795,7 @@ void handleMidCode(){
                 searchResult res1 = searchStackID(currentFuncName, tmp.one);
                 if(res1.index==-1){
                     flag = 2;
+                    // printf(">>> check 1218 : before search global.\n");
                     res2 = searchGlobalID(tmp.one);
                 }
                 if(res2==-1){
@@ -976,7 +977,7 @@ searchResult searchStackID(string targetFuncName, string targetID){
 //    }
 //    // 没有查到
 
-    printf(">>> NOT find ID in stack\n");
+    //printf(">>> NOT find ID in stack\n");
     return ures;
 }
 
@@ -985,12 +986,13 @@ int searchGlobalID(string ID){
     int i, length = globalRecordVector.size();
     for(i=0;i<length;i++){
         globalRecordItem tmp = globalRecordVector.at(i);
-        if(tmp.ID == ID)
-            printf("find ID in global, index = %d\n", tmp.offset);
+        if(tmp.ID == ID){
+            //printf("find ID:%s in global, index = %d\n", ID.c_str(), tmp.offset);
             return tmp.offset;
+        }
     }
     // 没有查到
-    printf("NOT find ID in global\n");
+    //printf("NOT find ID in global\n");
     return -1;
 }
 
