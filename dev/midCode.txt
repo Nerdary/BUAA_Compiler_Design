@@ -657,7 +657,7 @@ single_chars          []         $t2         $t3
         push         $t4                        
         call         ff1                        
          $t4         RET                        
-       print         $t4                        
+       print         $t4        func            
          $t5         114                        
        print         $t5                        
          $t6           0                        

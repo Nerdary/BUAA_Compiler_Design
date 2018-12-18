@@ -599,6 +599,22 @@ void pushMidCodePrint(string ID, int tCount){
     midCodeVec.push_back(tmp);
 }
 
+void pushMidCodePrintFuncCall(int tCount){
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
+    string st = "$t" + to_string(tCount);
+
+    midCodeItem tmp = {
+        "print",
+        st,
+        "func",
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
 void pushMidCodeMain(){
     midCodeItem tmp = {
         "main",

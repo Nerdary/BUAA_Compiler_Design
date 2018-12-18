@@ -218,7 +218,7 @@ void genMips(){     // 有点类似于 programAnalysis
             funcSymbolTable.push_back(tmp2);
 
             // 从栈中加载参数的值 paracount
-            printf(">>> check para count: %d, type: %d\n", paraCount, to_string(paraType));
+            //printf(">>> check para count: %d, type: %d\n", paraCount, paraType);
             // 必须查函数表才能知道有几个参数
             int gap = 4 * paraCount + 8 + 36;
             addi("$s1", "$sp", gap);
@@ -506,11 +506,18 @@ void handleMidCode(){
     }else if(tmp.one=="print"){
         // print "xxxxx"
         // print $ti
-        if(tmp.two[0]=='$' && tmp.two[1]=='t'){
+        if(tmp.two[0]=='$' && tmp.two[1]=='t' && tmp.three!="func"){
             // v0 = 1, a0 = int
             addi("$v0", "$zero", 1);
             add("$a0", "$zero", tmp.two);
             syscall();
+        }else if(tmp.two[0]=='$' && tmp.two[1]=='t' && tmp.three=="func"){
+            // print $ti func
+            // 返回值类型为char的函数调用
+                addi("$v0", "$zero", 11);
+                add("$a0", "$zero", tmp.two);
+                syscall();
+
         }else if(tmp.three=="IDSY"){
             // 对象是单个标识符，判断是int还是char
             int thisPrintType = searchIDType(currentFuncName, tmp.two);

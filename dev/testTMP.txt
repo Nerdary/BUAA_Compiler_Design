@@ -1,5 +1,9 @@
 char _c1, _c2;
 
+char foo(char x){
+	return(x);
+}
+
 void main(){
 	char _c3, _c4;
 	
@@ -8,9 +12,6 @@ void main(){
 	_c3 = 'a';
 	_c4 = 's';
 
-	printf(_c1);
-	printf(_c2);
-	printf(_c3);
-	printf(_c4);
+	printf(foo(_c1));
 	
 }

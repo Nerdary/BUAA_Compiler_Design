@@ -1272,6 +1272,10 @@ int printSentence(){
         }
     }else{
         expr();
+
+        int getType = exprType;
+        printf(">>> check get out expr type:%d\n", getType);
+
         if(result!=RPARSY){
             error();
             return -1;
@@ -1282,6 +1286,13 @@ int printSentence(){
             // 是单个标识符
             pushMidCodePrint(IDname, tCount);
             printf("This is an ID print sentence.\n");
+            return 0;
+
+        }else if(getType==2){
+            //     有返回值函数调用，应为单个标识符的情况已经在上一个分支解决了，
+            // 这里只可能是返回值类型为char的函数调用
+            pushMidCodePrintFuncCall(tCount);
+            printf("This is a func print sentence.\n");
             return 0;
 
         }else{
@@ -1523,7 +1534,7 @@ int factor(){
 
 
                 //factorType = searchName2Type(recordFactorID, 0);
-                factorType = 3;
+                factorType = 4;
 
 
             }else {
@@ -1541,8 +1552,8 @@ int factor(){
             if(result==RPARSY){      // result = ")"
                 getsym();
 
-                //factorType = searchName2Type(recordFactorID, 1);
-                factorType = 3;
+                factorType = searchName2Type(recordFactorID, 1);
+                //factorType = 4;
             }else {
                 error();
                 return -1;
@@ -1587,7 +1598,8 @@ int factor(){
                 printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
                 // ...
-                factorType = 0;
+                //factorType = 0;
+                factorType = searchName2Type(recordFactorID, 1);
             }
 
         }
