@@ -1272,7 +1272,12 @@ void mipsLabel(string label){
 
     vector<string> v;
     SplitString(label, v,"_");
+    int i, length = v.size();
     string newLbael = v.at(0);
+    for(i=1;i<length-1;i++){
+        newLbael = newLbael + "_" + v.at(i);
+    }
+
     mipsItem tmp = {
         newLbael + ":",
         "",
@@ -1320,7 +1325,7 @@ void Mips2File(){
     //ofile<<"\n"<<endl;
     for(i=0;i<cntMips;i++){
         mipsItem tmp = mipsCodeVector.at(i);
-        ofile<<setw(12)<<tmp.one.c_str()<<setw(12)<<tmp.two.c_str()<<setw(12)<<tmp.three.c_str()<<setw(12)<<tmp.four.c_str()<<endl;
+        ofile<<setw(20)<<tmp.one.c_str()<<"\t"<<setw(20)<<tmp.two.c_str()<<"\t"<<setw(20)<<tmp.three.c_str()<<"\t"<<setw(20)<<tmp.four.c_str()<<endl;
     }
     ofile.close();
 }
