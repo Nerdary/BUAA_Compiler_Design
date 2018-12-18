@@ -19,6 +19,9 @@ vector<char> stackBrace;        // 大括号栈，用于函数定义判断
 vector<int> stackCalc;          // 计算表达式用的运算栈，用来存储将要进行运算的$t的值
 
 vector<int> stackIfElse;        // 用来处理ifelse嵌套的标签问题
+vector<funcInfoItem> AllFuncInfo;
+                                // 用于在函数定义时存储所有（一部分）信息
+
 
 // 局部变量区
     // 无符号整数值
@@ -53,6 +56,7 @@ int termCountFactor = 0;
 
 string currentFuncID;
 string callFuncID;
+vector<int> funcParaType;
 
 // 生成标签计数器
 int labelCount = 1;
@@ -436,6 +440,7 @@ int paraValueList(){
         expr();
         //
         //tCount--;
+
         pushMidCodePara(tCount-1);
         tCount--;
 
@@ -462,6 +467,10 @@ int paraList(){
 
         if(result==INTSY)   paraType = 1;
         else                paraType = 2;
+
+        //
+        funcParaType.push_back(paraType);
+
 
         getsym();
         if(result!=IDSY){
@@ -505,6 +514,13 @@ int retValueFuncDefine(){
         error();
         return -1;
     }
+
+    // 记录函数信息
+    funcInfoItem tmpFuncInfo = {currentFuncID, funcParaType};
+    AllFuncInfo.push_back(tmpFuncInfo);
+    // 清空funcParaType
+    funcParaType.clear();
+
     globalMidCodeInFunc = 1;
     // 符号栈的操作 stack brace
     stackBrace.push_back('{');
@@ -574,6 +590,16 @@ int unretValueFuncDefine(){
         error();
         return -1;
     }
+
+
+    // 记录函数信息
+    funcInfoItem tmpFuncInfo = {currentFuncID, funcParaType};
+    AllFuncInfo.push_back(tmpFuncInfo);
+    // 清空funcParaType
+    funcParaType.clear();
+
+
+
     globalMidCodeInFunc = 1;
     //
     stackBrace.push_back('{');
@@ -1214,14 +1240,24 @@ int printSentence(){
         if(result==COMMASY){
             getsym();
             expr();
+
             if(result!=RPARSY){
                 error();
                 return -1;
+            }
+            getsym();
+
+            // 判断是否是单个标识符
+            if(termCountFactor==1 && exprCountTerm==1 && factorType==3){
+                // 是单个标识符
+                pushMidCodePrint(IDname, tCount);
+                printf("This is an ID print sentence.\n");
+                return 0;
+
             }else{
-                getsym();
+
                 // 四元式操作
                 pushMidCodePrint(2, "", tCount);
-
                 printf("This is a print sentence.\n");
                 return 0;
             }
@@ -1236,16 +1272,25 @@ int printSentence(){
         }
     }else{
         expr();
-        pushMidCodePrint(2, "", tCount);
         if(result!=RPARSY){
             error();
             return -1;
+        }
+        getsym();
+
+        if(termCountFactor==1 && exprCountTerm==1 && factorType==3){
+            // 是单个标识符
+            pushMidCodePrint(IDname, tCount);
+            printf("This is an ID print sentence.\n");
+            return 0;
+
         }else{
-            getsym();
+            pushMidCodePrint(2, "", tCount);
             printf("This is a print sentence.\n");
             return 0;
         }
     }
+
     //如果以上分支都不满足进行到了这里，返回未知错误
     return -2;
 }
@@ -1452,11 +1497,11 @@ int factor(){
 
 
             // 检查数组越界
-            if(termCountFactor==1 && exprCountTerm==1){
-                printf(">>> check number1:%d\n", checkArrayValue);
+            if(termCountFactor==1 && exprCountTerm==1 && factorType==1){
+                //printf(">>> check number1:%d\n", checkArrayValue);
                 printf(">>> check recorded ID:%s\n", recordFactorID.c_str());
                 int tableLength = getArrayLength(recordFactorID);
-                printf(">>> check number2:%d\n", tableLength);
+                //printf(">>> check number2:%d\n", tableLength);
                 if(checkArrayValue<0 || checkArrayValue>=tableLength){
                     symbolTableError(errArrayOutOfRange);
                     return -1;

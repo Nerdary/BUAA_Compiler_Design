@@ -47,6 +47,12 @@
 
 
 
+struct funcInfoItem{
+    string funcName;
+    vector<int> funcParaType;
+};
+extern vector<funcInfoItem> AllFuncInfo;
+
 extern vector<symbolTableItem> symbolTable;
 //extern vector<arrayTableItem> arrayTable;
 //extern vector<funcTableItem> funcTable;

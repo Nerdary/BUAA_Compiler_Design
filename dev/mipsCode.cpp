@@ -7,6 +7,7 @@
 #include <iomanip>
 
 #include "mipsCode.h"
+#include "syntaxAnalysis.h" // 为了引用定义的AllFuncInfo
 #include "error.h"
 
 using namespace std;
@@ -26,11 +27,13 @@ int globalValueOfFp = 0;
 int compareResult;      // 关系运算四元式的结果，作为跳转的条件
                         // 将此结果存入寄存器$s2
 int paraCount;          // 用于记录函数调用的参数个数
-string currentFuncName;
+string currentFuncName = "global";
 
 int offsetGp = 0;      // 全局变量、常量的偏移量，因为要访问，所以$gp最好不要变
 int offsetFp = 0;
 int offsetSp = 0;
+
+funcInfoItem tmpAnaInfo;
 
 midCodeItem nullItem = {"", "", "", ""};
 
@@ -52,18 +55,26 @@ void getMid(){
     printMidCodeTmp(tmp);
 }
 
-void pushGlobalRecord(string ID, int offset){
+void pushGlobalRecord(string ID, int offset, string type){
     globalRecordItem tmp={
         ID,         // 变量名
         offset,     // 相对于$gp的偏移量
+        type,       // 类型
     };
     globalRecordVector.push_back(tmp);
 }
 
 int transNum(string token){
 	int len = token.length();
-	int num = 0,i;
+	int num = 0,i, tag = 1;
+	if(token[0]=='+' || token[0]=='-'){
+        if(token[0]=='-')
+            tag = -1;
+	}
 	for(i=0;i<len;i++){
+        if(i==0 && (token[i]=='+' || token[i]=='-'))
+            continue;
+
 		if(token[i]>='0' && token[i]<='9'){
 			num *= 10;
 			num += (token[i] - '0');
@@ -85,7 +96,7 @@ void genMips(){     // 有点类似于 programAnalysis
     if(tmp.one=="const"){
         while(true){
             // 记录常量信息
-            pushGlobalRecord(tmp.three, globalRecordCount++);   // 第一项count为0
+            pushGlobalRecord(tmp.three, globalRecordCount++, tmp.two);   // 第一项count为0
             // 生成mips
             offsetGp -= 4;
             // 这里需要判断一下int 和 char
@@ -108,14 +119,14 @@ void genMips(){     // 有点类似于 programAnalysis
         // 变量声明
         if(tmp.one=="var"){
             // 记录变量信息
-            pushGlobalRecord(tmp.three, globalRecordCount++);
+            pushGlobalRecord(tmp.three, globalRecordCount++, tmp.two);
             // 生成mips
             // addi("$gp", "$gp", -4);
             offsetGp -= 4;
         }else if(tmp.one=="array"){
             // 记录变量信息
 
-            pushGlobalRecord(tmp.three, globalRecordCount);
+            pushGlobalRecord(tmp.three, globalRecordCount, tmp.two);
             globalRecordCount += transNum(tmp.four);
             // 数组的存储方式
             // head + offset
@@ -144,6 +155,16 @@ void genMips(){     // 有点类似于 programAnalysis
         if(tmp.one=="func"){
             // 记录函数名
             currentFuncName = tmp.three;
+
+            // 将函数信息载体取出来
+
+            int i;
+            for(i=0;i<AllFuncInfo.size();i++){
+                if(AllFuncInfo.at(i).funcName==currentFuncName){
+                    tmpAnaInfo = AllFuncInfo.at(i);
+                    break;
+                }
+            }
 
             // 在这里生成函数头部，操作fp sp，保存ra
             sw("$fp", 0, "$sp");
@@ -189,14 +210,15 @@ void genMips(){     // 有点类似于 programAnalysis
             tmpParaIndex++;
         }
 
-
+        int paraTypeCount = 0;
         while(tmp.one=="para"){
             // 在函数信息表中登记参数信息
-            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 1, ""};
+            int paraType = tmpAnaInfo.funcParaType.at(paraTypeCount);
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 1, "", to_string(paraType)};
             funcSymbolTable.push_back(tmp2);
 
             // 从栈中加载参数的值 paracount
-            printf(">>> check para count: %d\n", paraCount);
+            printf(">>> check para count: %d, type: %d\n", paraCount, to_string(paraType));
             // 必须查函数表才能知道有几个参数
             int gap = 4 * paraCount + 8 + 36;
             addi("$s1", "$sp", gap);
@@ -214,13 +236,15 @@ void genMips(){     // 有点类似于 programAnalysis
 
             // 预读下一条
             getMid();
+
+            paraTypeCount++;
         }
         // 将参数计数器清零
         paraCount = 0;
 
         // 常量定义部分
         while(tmp.one=="const"){
-            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, tmp.four};
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, tmp.four, tmp.two};
             funcSymbolTable.push_back(tmp2);
             // 留出空间并填入常量的值
             //addi("$sp", "$sp", 4);
@@ -240,14 +264,14 @@ void genMips(){     // 有点类似于 programAnalysis
         while(tmp.one=="var" || tmp.one=="array"){
             if(tmp.one=="var"){
                 printf(">>> check value of VAR count:%d\n", funcSymbolCount);
-                funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
+                funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, "", tmp.two};
                 funcSymbolTable.push_back(tmp2);
                 //
                 addi("$sp", "$sp", -4);
                 getMid();
             }else{
                 printf(">>> check value of ARRAY count:%d\n", funcSymbolCount);
-                funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
+                funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, "", tmp.two};
                 funcSymbolCount += transNum(tmp.four);
                 funcSymbolTable.push_back(tmp2);
                 //
@@ -340,6 +364,7 @@ void genMips(){     // 有点类似于 programAnalysis
 // 处理主函数，生成运行栈，生成MIPS
 void handleMain(){
     //
+    currentFuncName = "main";
     mipsLabel("main");
     getMid();
 
@@ -363,7 +388,7 @@ void handleMain(){
 
     // 常量部分
     while(tmp.one=="const"){
-        funcRecordItem tmpm = {tmp.three, funcSymbolCount++, 0, tmp.four};
+        funcRecordItem tmpm = {tmp.three, funcSymbolCount++, 0, tmp.four, tmp.two};
         mainSymbolTable.push_back(tmpm);
         // 留出空间并填入常量的值
 
@@ -385,13 +410,13 @@ void handleMain(){
     // 变量、数组定义部分
     while(tmp.one=="var" || tmp.one=="array"){
         if(tmp.one=="var"){
-            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, ""};
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, "", tmp.two};
             mainSymbolTable.push_back(tmp2);
             //
             addi("$sp", "$sp", -4);
             getMid();
         }else{
-            funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, ""};
+            funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, "", tmp.two};
             funcSymbolCount += transNum(tmp.four);
             mainSymbolTable.push_back(tmp2);
             //
@@ -486,6 +511,24 @@ void handleMidCode(){
             addi("$v0", "$zero", 1);
             add("$a0", "$zero", tmp.two);
             syscall();
+        }else if(tmp.three=="IDSY"){
+            // 对象是单个标识符，判断是int还是char
+            int thisPrintType = searchIDType(currentFuncName, tmp.two);
+            //printf(">>> check search print type:%d\n",thisPrintType );
+            if(thisPrintType==1){
+                // int
+                addi("$v0", "$zero", 1);
+                add("$a0", "$zero", tmp.four);
+                syscall();
+            }else if(thisPrintType==2){
+                // ! char
+                addi("$v0", "$zero", 11);
+                add("$a0", "$zero", tmp.four);
+                syscall();
+            }else{
+                printf("UNEXPECTED print ID type.\n");
+            }
+
         }else{
             // v0 = 11, ao = char
             string content = tmp.two;
@@ -536,6 +579,7 @@ void handleMidCode(){
             // read next
             getMid();
         }else{
+
             // find ID in global table
             int offset2 = 4 * res2;
             sw("$v0", -offset2, "$gp");
@@ -993,6 +1037,57 @@ int searchGlobalID(string ID){
     }
     // 没有查到
     //printf("NOT find ID in global\n");
+    return -1;
+}
+
+int searchIDType(string func, string ID){
+    int i, j, length = funcStack.size();
+
+    // 找出自己的函数体的符号表
+    functionInfo tmpinfo;
+    for(i=0;i<length;i++){
+        tmpinfo = funcStack.at(i);
+        if(tmpinfo.funcName==func){
+            // printf(">>> find func name in stack:%s\n", tmpinfo.funcName.c_str());
+            break;
+        }
+
+    }
+
+
+    int symSize = tmpinfo.funcSymbolTable.size();
+    for(j=0;j<symSize;j++){
+        funcRecordItem ftmp = tmpinfo.funcSymbolTable.at(j);
+        //printf(">>> %s\n", ftmp.ID.c_str());
+        if(ftmp.ID==ID){
+            //printf(">>> %s\n", ftmp.type.c_str());
+            if(ftmp.type=="int")
+                return 1;
+            else if(ftmp.type=="char")
+                return 2;
+            else
+                return -1;
+        }
+    }
+    //printf("not find this ID in stack\n");
+
+    // 再在全局中查找
+    length = globalRecordVector.size();
+    for(i=0;i<length;i++){
+        globalRecordItem ftmp = globalRecordVector.at(i);
+        //printf(">>> %s\n", ftmp.ID.c_str());
+        if(ftmp.ID == ID){
+            //printf(">>> %s\n", ftmp.type.c_str());
+            if(ftmp.type=="int")
+                return 1;
+            else if(ftmp.type=="char")
+                return 2;
+            else
+                return -1;
+        }
+    }
+
+    printf("Can not find this ID's type.\n");
     return -1;
 }
 

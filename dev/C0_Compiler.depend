@@ -327,7 +327,7 @@
 	<ctype.h>
 	"string"
 
-1543719322 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\syntaxanalysis.h
+1545135427 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\syntaxanalysis.h
 	<vector>
 	"symbolTable.h"
 
@@ -336,14 +336,14 @@
 	<string.h>
 	<iostream>
 
-1545056941 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\midcode.h
+1545135427 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\midcode.h
 	<stdio.h>
 	<string>
 	<iostream>
 	<fstream>
 	<iomanip>
 
-1545057512 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\midcode.cpp
+1545135343 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\midcode.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -358,7 +358,7 @@
 	"error.h"
 	"midCode.h"
 
-1545042579 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\mipscode.cpp
+1545140008 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\mipscode.cpp
 	<stdio.h>
 	<ctype.h>
 	<string>
@@ -367,9 +367,10 @@
 	<fstream>
 	<iomanip>
 	"mipsCode.h"
+	"syntaxAnalysis.h"
 	"error.h"
 
-1544955592 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\mipscode.h
+1545135913 c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\mipscode.h
 	"midCode.h"
 
 1545121399 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\symboltable.cpp
@@ -379,7 +380,7 @@
 	"syntaxAnalysis.h"
 	"error.h"
 
-1545124010 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\syntaxanalysis.cpp
+1545139352 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
@@ -391,7 +392,7 @@
 	"error.h"
 	"midCode.h"
 
-1545128986 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\main.cpp
+1545140357 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\c0_compiler_backup\main.cpp
 	<iostream>
 	<stdio.h>
 	<ctype.h>

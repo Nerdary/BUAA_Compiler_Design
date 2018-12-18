@@ -43,6 +43,7 @@ extern int funcLevel;
 struct globalRecordItem{
     string ID;
     int offset;
+    string type;
 };
 
 struct funcRecordItem{
@@ -50,6 +51,7 @@ struct funcRecordItem{
     int offset;
     int isPara;
     string value;
+    string type;
 };
 
 struct mipsItem{
@@ -86,6 +88,7 @@ void printMipsCode();
 
 searchResult searchStackID(string targetFuncName, string ID);
 int searchGlobalID(string ID);
+int searchIDType(string func, string ID);
 
 void addi(string res, string in, int value);
 void add(string res, string n1, string n2);
