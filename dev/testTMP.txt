@@ -1,17 +1,18 @@
 char _c1, _c2;
 
-char foo(char x){
-	return(x);
-}
-
 void main(){
-	char _c3, _c4;
-	
-	_c1 = 'c';
-	_c2 = 'z';
-	_c3 = 'a';
-	_c4 = 's';
+	int T9, a;
+	char _c3, _c4, c3, C4;
+	char _array[51];	
 
-	printf(foo(_c1));
+	T9 = 9;
+        	c3 = '3';
+       	 C4 = '4';
+	a = C4-c3+T9;
+	printf(a);
+	if(a!=10)
+		printf("error");
+	else
+		printf("success");
 	
 }

@@ -183,8 +183,8 @@ int myGetsym(int mode){
 		charCount += 1;
 		if(a=='='){
 			strcpy(symbol, "LOMSY");
-			result = 36;
-			return 36;
+			result = 37;
+			return 37;
 		}
 		else{
 			ungetc(a,fp);

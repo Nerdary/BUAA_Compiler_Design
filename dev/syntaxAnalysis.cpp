@@ -1533,8 +1533,8 @@ int factor(){
                 getsym();
 
 
-                //factorType = searchName2Type(recordFactorID, 0);
-                factorType = 4;
+                factorType = searchName2Type(recordFactorID, 0);
+                //factorType = 4;
 
 
             }else {
