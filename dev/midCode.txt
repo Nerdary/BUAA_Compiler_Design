@@ -1,0 +1,22 @@
+Contents of mid codes
+           1           2           3           4
+        main        void        main            
+         var         int           i            
+         var        char       ccccc            
+       array         int           a          10
+         $t1           0                        
+           i         $t1                        
+        GOTO       label         1_1            
+       label         1_2        norm            
+         $t2           i                        
+         $t3          10                        
+         $t2           <         $t3            
+          BZ       label         1_3            
+       label         1_1        norm            
+         $t4           i                        
+         $t5           i                        
+         $t6           1                        
+         $t7         $t5           +         $t6
+           i         $t7                        
+        GOTO       label         1_2            
+       label         1_3        norm            

@@ -1,0 +1,22 @@
+           j        main                        
+       main:                                    
+         add         $fp         $sp       $zero
+        addi         $sp         $sp          -4
+        addi         $sp         $sp          -4
+        addi         $sp         $sp         -40
+        addi         $t1       $zero           0
+          sw         $t1      0($fp)            
+           j    label1_1                        
+   label1_2:                                    
+          lw         $t2      0($fp)            
+        addi         $t3       $zero          10
+         sub         $s1         $t3         $t2
+        blez         $s1    label1_3            
+   label1_1:                                    
+          lw         $t4      0($fp)            
+          lw         $t5      0($fp)            
+        addi         $t6       $zero           1
+         add         $t7         $t5         $t6
+          sw         $t7      0($fp)            
+           j    label1_2                        
+   label1_3:                                    

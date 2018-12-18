@@ -1,8 +1,0 @@
-Contents of MIPS
-
-
-           j        main                        
-       main:                                    
-         add         $fp         $sp       $zero
-        addi         $sp         $sp          -4
-        addi         $sp         $sp          -4
