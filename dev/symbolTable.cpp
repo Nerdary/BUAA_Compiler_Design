@@ -218,9 +218,9 @@ int getArrayLength(string ID){
 
                 // Êä³ö¼ì²é
                 printf("///////////////////////\n");
-                printf("ID:\t%s\n", ID.c_str());
-                printf("field:\t%s\n",symbolTable.at(i).field.c_str());
-                printf("obj:\t%d\n", symbolTable.at(i).IDobject);
+                printf("// ID:\t%s\n", ID.c_str());
+                printf("// field:\t%s\n",symbolTable.at(i).field.c_str());
+                printf("// obj:\t%d\n", symbolTable.at(i).IDobject);
                 printf("///////////////////////\n");
 
 

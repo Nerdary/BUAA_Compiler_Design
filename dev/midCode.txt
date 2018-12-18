@@ -689,7 +689,7 @@ single_chars          []         $t2         $t3
          $t4         $t9           +         $t3
          $t5    t_array2          []         $t4
          $t6          23                        
-         $t7         $t1           /         $t6
+         $t7         $t5           /         $t6
          $t8          22                        
          $t9           i                        
          $t1         $t8           *         $t9
@@ -698,8 +698,8 @@ single_chars          []         $t2         $t3
          $t4           1                        
          $t5    t_array2          []         $t4
          $t6        1000                        
-         $t7         $t3           *         $t6
-         $t8         $t5           *         $t7
+         $t7         $t5           *         $t6
+         $t8         $t3           *         $t8
          $t9        1000                        
          $t1         $t8           /         $t9
          $t2          57                        
@@ -708,8 +708,8 @@ single_chars          []         $t2         $t3
          $t5         $t1           +         $t4
          $t6    t_array2          []         $t5
          $t7          30                        
-         $t8$t-1946157055           /         $t9
-         $t9         $t9           +         $t8
+         $t8         $t6           /         $t7
+         $t9         $t7           +         $t8
          $t1    t_array2          []         $t9
            i         $t1                        
          $t2          34                        
@@ -732,8 +732,8 @@ single_chars          []         $t2         $t3
          $t1           1                        
          $t2    t_array2          []         $t1
          $t3        1000                        
-         $t4         $t9           *         $t3
-         $t5         $t4           *         $t4
+         $t4         $t2           *         $t3
+         $t5         $t9           *         $t5
          $t6        1000                        
          $t7         $t5           /         $t6
          $t8          57                        
@@ -742,8 +742,8 @@ single_chars          []         $t2         $t3
          $t2         $t7           +         $t1
          $t3    t_array2          []         $t2
          $t4          30                        
-         $t5         $t2           /         $t4
-         $t6$t-253701951           +         $t5
+         $t5         $t3           /         $t4
+         $t6         $t4           +         $t5
          $t7    t_array2          []         $t6
         push         $t7                        
         call   factorial                        

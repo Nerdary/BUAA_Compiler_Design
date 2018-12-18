@@ -1431,6 +1431,12 @@ int factor(){
             error();
             return -1;
         }
+
+        // 嵌套表达式，返回值也应该入计算栈
+        stackCalc.push_back(tCount);
+        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+
+
     }else if(result==IDSY){         // result = IDSY
         string recordFactorID = token;
 
@@ -1462,6 +1468,8 @@ int factor(){
             // $ti a [] j
             // named as "getArrayValue"
             pushMidCodeGetArrayValue(tCount, recordFactorID, tCount-1);
+            stackCalc.push_back(tCount);
+            printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
 
             if(result==RBRACSY){
@@ -1504,7 +1512,7 @@ int factor(){
             ///////////////////////////////////////////////////////////////////////////////////////
             pushMidCodeRET(tCount);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\n", tCount);
+            printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
 
             printf("This is a function call with returned value.\n");
@@ -1512,11 +1520,12 @@ int factor(){
         }else{
             // 需要查表判断是标识符还是无参数的函数调用
             int thisTag = 0;
+
             if(searchIsFunc(recordFactorID)==-1){
                 // 普通的标识符，是个变量
                 pushMidCodeGetValue(tCount, IDname);
                 stackCalc.push_back(tCount);
-                printf("<<<<<< push in:%d\n", tCount);
+                printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
 
                 //factorType = searchName2Type(recordFactorID, 0);
@@ -1530,7 +1539,7 @@ int factor(){
 
                 pushMidCodeRET(tCount);
                 stackCalc.push_back(tCount);
-                printf("<<<<<< push in:%d\n", tCount);
+                printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
                 // ...
                 factorType = 0;
@@ -1555,7 +1564,7 @@ int factor(){
 
             pushMidCodeFactorValue(tCount, 1, checkArrayValue);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\n", tCount);
+            printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
 
             getsym();
@@ -1568,14 +1577,14 @@ int factor(){
 
         pushMidCodeFactorValue(tCount, 1, checkArrayValue);
         stackCalc.push_back(tCount);
-        printf("<<<<<< push in:%d\n", tCount);
+        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
         tCount++;
 
         factorType = 1;
     }else if(result==ACHARSY){
         pushMidCodeFactorValue(tCount, 2, globalChar);
         stackCalc.push_back(tCount);
-        printf("<<<<<< push in:%d\n", tCount);
+        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
         tCount++;
 
         getsym();               // 字符 ACHARSY
@@ -1611,6 +1620,9 @@ int term(){
                 return -1;
             }
             // 此处可以进行值计算、栈操作、生成四元式
+
+            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+
             int n2 = stackCalc.back();
             stackCalc.pop_back();
             printf("<<<<<< pop out :%d\n", n2);
@@ -1620,6 +1632,9 @@ int term(){
             pushMidCodeCalc(tCount, n1, opTag, n2);
             stackCalc.push_back(tCount);
             printf("<<<<<< push in:%d\n", tCount);
+
+            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+
             tCount++;
 
             termType = 1;   // 只要参与运算了就自动转化为int型
@@ -1673,6 +1688,9 @@ int expr(){
             // 参与运算，则为int
             // 此处可以进行值计算、栈操作、生成四元式
 //            printf(">>>> size:%d\n", stackCalc.size());
+
+            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+
             int n2 = stackCalc.back();
             stackCalc.pop_back();
             printf("<<<<<< pop out :%d\n", n2);
@@ -1684,6 +1702,9 @@ int expr(){
             pushMidCodeCalc(tCount, n1, opFlag, n2);
             stackCalc.push_back(tCount);
             printf("<<<<<< push in:%d\n", tCount);
+
+            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+
 //            printf(">>>> size:%d\n", stackCalc.size());
             tCount++;
 
