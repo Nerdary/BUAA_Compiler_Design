@@ -19,7 +19,7 @@ int main(){
 //	printf("please input a file path:\n");
 //	scanf("%s",path);
 //	fp = fopen(path,"r");
-    fp = fopen("testTMP.txt", "r");
+    fp = fopen("test.txt", "r");
 
 	if (fp==NULL){
 		err(5);
@@ -40,7 +40,7 @@ int main(){
     genMips();
     printf("\n>>> FINISH MIPS CODE.\n");
     Mips2File();
-    printMipsCode();
+    //printMipsCode();
 //    printGlobalRecord();
 
 

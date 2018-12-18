@@ -18,6 +18,8 @@ vector<symbolTableItem> symbolTable;
 vector<char> stackBrace;        // 大括号栈，用于函数定义判断
 vector<int> stackCalc;          // 计算表达式用的运算栈，用来存储将要进行运算的$t的值
 
+vector<int> stackIfElse;        // 用来处理ifelse嵌套的标签问题
+
 // 局部变量区
     // 无符号整数值
 int unsignValue = 0;
@@ -812,6 +814,12 @@ int complexSentence(){
 }
 
 int condSentence(){
+
+    labelCount++;
+
+    // 入栈
+    stackIfElse.push_back(labelCount);
+
     if(result!=IFSY){
         error();
         return -1;
@@ -832,14 +840,18 @@ int condSentence(){
         return -1;
     }
     // 开始生成条件语句的四元式
-    pushMidCodeBZ(labelCount, 1);
+    //pushMidCodeBZ(labelCount, 1);
+    pushMidCodeBZ(stackIfElse.back(), 1);
 
     getsym();
 //    printf("in cond 4\n");
     sentence();
     // 四元式部分
-    pushMidCodeGOTO(labelCount, 2);
-    pushMidCodeLabel(labelCount, 1);
+    //pushMidCodeGOTO(labelCount, 2);
+    pushMidCodeGOTO(stackIfElse.back(), 2);
+    //pushMidCodeLabel(labelCount, 1);
+    pushMidCodeLabel(stackIfElse.back(), 1);
+
 
     // 可选项 else分支
     if(result==ELSESY){
@@ -847,8 +859,11 @@ int condSentence(){
         getsym();
         sentence();
     }
-    pushMidCodeLabel(labelCount, 2);
-    labelCount++;
+    //pushMidCodeLabel(labelCount, 2);
+    pushMidCodeLabel(stackIfElse.back(), 2);
+    stackIfElse.pop_back();
+
+    //labelCount++;
 
     printf("This is a conditional sentence.\n");
     return 0;
@@ -882,7 +897,12 @@ int stepLength(){
 
 int loopSentence(){
     if(result==WHILESY){
-        pushMidCodeLabel(labelCount, 1);
+        labelCount++;
+
+        stackIfElse.push_back(labelCount);
+
+        //pushMidCodeLabel(labelCount, 1);
+        pushMidCodeLabel(stackIfElse.back(), 1);
 
         getsym();
         if(result!=LPARSY){
@@ -891,7 +911,8 @@ int loopSentence(){
         }
         getsym();
         condition();
-        pushMidCodeBZ(labelCount, 2);
+
+        pushMidCodeBZ(stackIfElse.back(), 2);
 
         if(result!=RPARSY){
             error();
@@ -900,11 +921,17 @@ int loopSentence(){
         getsym();
 
         sentence();
-        pushMidCodeGOTO(labelCount, 1);
-        pushMidCodeLabel(labelCount, 2);
+        pushMidCodeGOTO(stackIfElse.back(), 1);
+        pushMidCodeLabel(stackIfElse.back(), 2);
+
+        stackIfElse.pop_back();
+
+        //labelCount++;
 
     }else if(result==FORSY){
         // ENDRIGHTGERE!!!!
+        labelCount++;
+        stackIfElse.push_back(labelCount);
 
         getsym();
         if(result!=LPARSY){
@@ -927,8 +954,8 @@ int loopSentence(){
         expr();
         // 把表达式的值取出来
         pushMidCodeAssign(saveID, 0, 0, tCount);
-        pushMidCodeGOTO(labelCount, 1);
-        pushMidCodeLabel(labelCount, 2);
+        pushMidCodeGOTO(stackIfElse.back(), 1);
+        pushMidCodeLabel(stackIfElse.back(), 2);
 
 
         if(result!=SEMISY){
@@ -938,8 +965,8 @@ int loopSentence(){
         getsym();
         condition();
 
-        pushMidCodeBZ(labelCount, 3);
-        pushMidCodeLabel(labelCount, 1);
+        pushMidCodeBZ(stackIfElse.back(), 3);
+        pushMidCodeLabel(stackIfElse.back(), 1);
 
         if(result!=SEMISY){
             error();
@@ -1003,8 +1030,11 @@ int loopSentence(){
 
         pushMidCodeAssign(tmpRecordName, 0, 0, tCount);
 
-        pushMidCodeGOTO(labelCount, 2);
-        pushMidCodeLabel(labelCount, 3);
+        pushMidCodeGOTO(stackIfElse.back(), 2);
+        pushMidCodeLabel(stackIfElse.back(), 3);
+
+        stackIfElse.pop_back();
+        //labelCount++;
 
     }else{
         error();
