@@ -240,10 +240,20 @@ void main(){
         printf(ff1('g')); 
         printf(('r')); 
         
-        for(i=0; i<int_100; i=i+1)
+        for(i=0; i<int_100; i=i+1){
             t_array2[i] = i;
+printf(t_array2[i]);
+	}
+
+
         i = t_array2[t_array2[34/4*6+char_z/10]/23+t_array2[22*i/23*(t_array2[1]*1000)/1000+'9'/17]/30];
-        
+printf("---");
+        printf(i);
+printf(22*i/23*(t_array2[1]*1000)/1000);
+printf(t_array2[22*i/23*(t_array2[1]*1000)/1000+'9'/17]);
+printf(t_array2[34/4*6+char_z/10]);
+printf(t_array2[34/4*6+char_z/10]/23+t_array2[22*i/23*(t_array2[1]*1000)/1000+'9'/17]/30);
+printf("---");
         printf(factorial(t_array2[t_array2[34/4*6+char_z/10]/23+t_array2[22*i/23*(t_array2[1]*1000)/1000+'9'/17]/30]) );
 
     }    

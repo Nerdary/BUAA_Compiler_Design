@@ -1711,6 +1711,8 @@ int term(){
     }
     termType = factorType;
 
+    int fisrtTCount = transTCount2Register(tCount - 1);
+
     while(true){
         if(result==STARSY||result==DIVISY){
             int opTag = 3;
@@ -1844,6 +1846,15 @@ int expr(){
     printf("This is an expression.\n");
 //    printf("tCount:%d\n", tCount);
     return 0;
+}
+
+int transTCount2Register(int tCount){
+    int dul = tCount + 1;
+    if(dul>9){
+        if(dul%9==0) dul = 9;
+        else    dul %= 9;
+    }
+    return dul;
 }
 
 
