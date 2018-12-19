@@ -371,8 +371,8 @@
                  add	                 $t5	                 $t3	                 $t4
                 addi	                 $t6	               $zero	                   1
                  sub	                 $t7	                 $t5	                 $t6
-                 mul	                 $t8	                 $t7	                 $t8
-                 add	                 $t9	                 $t2	                 $t8
+                 mul	                 $t8	                 $t2	                 $t7
+                 add	                 $t9	                 $t1	                 $t8
                   lw	                 $t1	            -28($gp)	                    
                   lw	                 $t2	            -24($fp)	                    
                  sub	                 $t3	                 $t1	                 $t2
@@ -447,18 +447,18 @@
                  jal	                rt15	                    	                    
                  add	                 $t4	                 $v0	               $zero
                  add	                 $t5	                 $t3	                 $t4
-                 mul	                 $t6	                 $t5	                 $t6
-                  lw	                 $t7	             -4($fp)	                    
-                  lw	                 $t8	            -12($fp)	                    
-                addi	                 $t9	               $zero	                   9
-                 mul	                 $t1	                 $t8	                 $t9
-                 sub	                 $t2	                 $t7	                 $t1
-                 add	                 $t3	                 $t2	                 $t3
-                addi	                 $t4	               $zero	                   2
-                addi	                 $t5	               $zero	                 109
-                 mul	                 $t6	                 $t4	                 $t5
-                 add	                 $t7	                 $t3	                 $t6
-                 sub	                 $t8	               $zero	                 $t7
+                 mul	                 $t6	                 $t2	                 $t5
+                 sub	                 $t7	               $zero	                 $t6
+                  lw	                 $t8	             -4($fp)	                    
+                  lw	                 $t9	            -12($fp)	                    
+                addi	                 $t1	               $zero	                   9
+                 mul	                 $t2	                 $t9	                 $t1
+                 sub	                 $t3	                 $t8	                 $t2
+                 add	                 $t4	                 $t7	                 $t3
+                addi	                 $t5	               $zero	                   2
+                addi	                 $t6	               $zero	                 109
+                 mul	                 $t7	                 $t5	                 $t6
+                 add	                 $t8	                 $t4	                 $t7
                   sw	                 $t8	            -60($fp)	                    
                   lw	                 $t9	            -60($fp)	                    
                 addi	                 $v0	               $zero	                   1

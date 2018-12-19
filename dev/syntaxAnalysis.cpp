@@ -1525,8 +1525,9 @@ int factor(){
         }
 
         // 嵌套表达式，返回值也应该入计算栈
-        stackCalc.push_back(tCount);
-        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+//        stackCalc.push_back(tCount);
+//        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+        // 修改过后，没有立即清空，这里不用
 
 
     }else if(result==IDSY){         // result = IDSY
@@ -1763,6 +1764,21 @@ int expr(){
 
     term();
 
+    if(opTag==-1){
+        pushMidCodeGetMinusExpr(tCount);
+
+        // 将运算栈中那个数替换掉
+        int n = stackCalc.back();
+        stackCalc.pop_back();
+        printf("<<<<<< pop out :%d\n", n);
+        stackCalc.push_back(tCount);
+        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+
+
+        tCount++;
+    }
+
+
 
     // 如果有正负号，则第一个项不能是字符型
 //    if(termType==2 && opTag==1){
@@ -1812,10 +1828,10 @@ int expr(){
 //    stackCalc.pop_back();
 
     // 检测之前的MINUSSY
-    if(opTag==-1){
-        pushMidCodeGetMinusExpr(tCount);
-        tCount++;
-    }
+//    if(opTag==-1){
+//        pushMidCodeGetMinusExpr(tCount);
+//        tCount++;
+//    }
 
 
     printf("This is an expression.\n");
