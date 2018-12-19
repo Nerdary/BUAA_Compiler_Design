@@ -441,6 +441,9 @@ int paraValueList(){
         //
         //tCount--;
 
+        // 最后有一个操作数应该取出来
+        stackCalc.pop_back();
+
         pushMidCodePara(tCount-1);
         tCount--;
 
@@ -897,12 +900,22 @@ int condSentence(){
 
 int condition(){
     expr();
+
+    // 最后有一个操作数应该取出来
+    stackCalc.pop_back();
+
+
     int expr1Count = tCount;
+
     if(result==LESSSY||result==LOESY||result==MORESY||
        result==MOESY||result==LOMSY||result==AEQUSY){
         int op = result;
         getsym();
         expr();
+
+        // 最后有一个操作数应该取出来
+        stackCalc.pop_back();
+
         // 生成四元式
         pushMidCodeCondition(expr1Count, op, tCount);
     }else{
@@ -978,6 +991,10 @@ int loopSentence(){
         }
         getsym();
         expr();
+
+        // 最后有一个操作数应该取出来
+        stackCalc.pop_back();
+
         // 把表达式的值取出来
         pushMidCodeAssign(saveID, 0, 0, tCount);
         pushMidCodeGOTO(stackIfElse.back(), 1);
@@ -1141,6 +1158,9 @@ int assignSentence(){
         expr();
         recTCount = tCount;
 
+        // 最后有一个操作数应该取出来
+        stackCalc.pop_back();
+
 
         // 检查数组越界
         printf(">>> check number1:%d\n", factorType);
@@ -1170,6 +1190,10 @@ int assignSentence(){
     getsym();
 //    printf("assign tag 4\n");
     expr();
+
+    // 最后有一个操作数应该取出来
+    stackCalc.pop_back();
+
 //    printf("assign tag 5\n");
     // 生成四元式
     pushMidCodeAssign(assignID, isArray, recTCount, tCount);
@@ -1242,6 +1266,9 @@ int printSentence(){
             getsym();
             expr();
 
+            // 最后有一个操作数应该取出来
+            stackCalc.pop_back();
+
             if(result!=RPARSY){
                 error();
                 return -1;
@@ -1273,6 +1300,9 @@ int printSentence(){
         }
     }else{
         expr();
+
+        // 最后有一个操作数应该取出来
+        stackCalc.pop_back();
 
         int getType = exprType;
         printf(">>> check get out expr type:%d\n", getType);
@@ -1329,6 +1359,10 @@ int retSentence(){
     if(result==LPARSY){
         getsym();
         expr();
+
+        // 最后有一个操作数应该取出来
+        stackCalc.pop_back();
+
         if(result!=RPARSY){
             error();
             return -1;
@@ -1472,7 +1506,8 @@ int mainAnalysis(){
 }
 
 int factor(){
-//    printf("DEBUG: in factor\n");
+    printf("DEBUG: in factor, result=%d\n", result);
+
     if(result==LPARSY){             // result = "("
     //    printf("factor-debug branch-1\n");
         getsym();
@@ -1605,6 +1640,7 @@ int factor(){
 
         }
     }else if(result==PLUSSY || result==MINUSSY){
+        printf(">>>>>> in this branch: factor: MINUSSY/PLUSSY\n");
         // 判断一下符号
         int resultTag = 1;
         if(result==MINUSSY) resultTag = -1;
@@ -1719,6 +1755,8 @@ int expr(){
 
     if(result==PLUSSY||result==MINUSSY){
         opTag = 1;
+        if(result==MINUSSY)
+            opTag = -1;
         getsym();
     }
 
@@ -1770,8 +1808,15 @@ int expr(){
         }else   break;
     }
 
-    // 最后有一个操作数应该取出来
-    stackCalc.pop_back();
+//    // 最后有一个操作数应该取出来
+//    stackCalc.pop_back();
+
+    // 检测之前的MINUSSY
+    if(opTag==-1){
+        pushMidCodeGetMinusExpr(tCount);
+        tCount++;
+    }
+
 
     printf("This is an expression.\n");
 //    printf("tCount:%d\n", tCount);

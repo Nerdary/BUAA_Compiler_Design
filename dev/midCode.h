@@ -48,6 +48,7 @@ void pushMidCodePrint(int mode, string content, int tCount);
 void pushMidCodePrint(string ID, int tCount);
 void pushMidCodePrintFuncCall(int tCount);
 void pushMidCodeMain();
+void pushMidCodeGetMinusExpr(int tCount);
 
 void MidCode2File();
 void printMidCode();

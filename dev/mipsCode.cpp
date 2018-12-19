@@ -647,7 +647,7 @@ void handleMidCode(){
     }else{
         if(tmp.one[0]=='$' && tmp.one[1]=='t'){
             //printf(">>> in branch tmp.one = '$ti' \n");
-            // "$ti" 一共有si种可能
+            // "$ti" 一共有...种可能
             //  $t6         $t4           *         $t5
             if(tmp.two[0]=='$' && tmp.two[1]=='t' &&
                tmp.four[0]=='$' && tmp.four[1]=='t'){
@@ -713,6 +713,11 @@ void handleMidCode(){
                     sub("$s1", tmp.one, tmp.three);
                     getMid();
                     beq("$s1", "$zero", "label" + tmp.three);
+                    getMid();
+
+                }else if(tmp.two=="-"){
+                    // $t1  = - $t2
+                    sub(tmp.one, "$zero", tmp.three);
                     getMid();
 
                 }else{

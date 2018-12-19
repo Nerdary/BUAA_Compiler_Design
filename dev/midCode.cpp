@@ -625,6 +625,30 @@ void pushMidCodeMain(){
     midCodeVec.push_back(tmp);
 }
 
+void pushMidCodeGetMinusExpr(int tCount){
+
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
+    string st = "$t" + to_string(tCount);
+
+    int dul = tCount + 1;
+    if(dul>9){
+        if(dul%9==0) dul = 9;
+        else    dul %= 9;
+    }
+    string res = "$t" + to_string(dul);
+
+    midCodeItem tmp = {
+        res,
+        "-",
+        st,
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
 void printMidCode(){
     printf("\nContents of mid codes\n1\t2\t3\t4\n");
     int i, cntMidCode = midCodeVec.size();
