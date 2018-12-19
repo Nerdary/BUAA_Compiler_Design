@@ -40,6 +40,11 @@ using namespace std;
 
 extern int funcLevel;
 
+struct transResult{
+    int success;
+    int value;
+};
+
 struct globalRecordItem{
     string ID;
     int offset;

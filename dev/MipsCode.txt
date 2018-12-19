@@ -251,7 +251,7 @@
                 addi	                 $sp	                 $sp	                 -32
                 addi	                 $sp	                 $sp	                  -4
                 addi	                 $sp	                 $sp	                  -4
-                addi	                 $t3	               $zero	                   1
+                addi	                 $t3	               $zero	                  -1
                   sw	                 $t3	            -28($gp)	                    
                 addi	                 $t4	               $zero	                   4
                  sub	                 $t5	               $zero	                 $t4
@@ -662,7 +662,7 @@
                    j	            label7_2	                    	                    
            label7_1:	                    	                    	                    
                   lw	                 $t2	            -24($fp)	                    
-                addi	                 $t3	               $zero	                   1
+                addi	                 $t3	               $zero	                  -1
                  mul	                 $t4	                 $t2	                 $t3
                   sw	                 $t4	            -24($fp)	                    
                   lw	                 $t5	            -24($fp)	                    

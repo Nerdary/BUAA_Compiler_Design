@@ -1,15 +1,8 @@
-int factorial(int a){
-    int b;
-    if(a==1){
-        return (1);
-    }
-    else{
-        b = (factorial(a-1)*a);
-	
-        return (b);
-    }
+void fun2(int a, int b, int c, int d, int e, int f)
+{
+    printf(a+b*c*d/e-f);
 }
 
 void main(){
-	printf(factorial(1)+factorial(3)+factorial(5));
+	func2(3, 6, 1, 4, 2, -2);
 }

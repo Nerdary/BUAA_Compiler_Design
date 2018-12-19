@@ -64,7 +64,7 @@ void pushGlobalRecord(string ID, int offset, string type){
     globalRecordVector.push_back(tmp);
 }
 
-int transNum(string token){
+transResult transNum(string token){
 	int len = token.length();
 	int num = 0,i, tag = 1;
 	if(token[0]=='+' || token[0]=='-'){
@@ -79,11 +79,14 @@ int transNum(string token){
 			num *= 10;
 			num += (token[i] - '0');
 		} else{
-		//	printf("wrong character in transNum\n");
-			return -1;
+			printf("wrong character in transNum\n");
+            transResult errRes = {0, 0};
+			return errRes;
 		}
 	}
-	return num;
+    //printf(">>> check the res of transNum num:%d\ttag:%d", num, tag);
+    transResult theRes = {1, num*tag};
+	return theRes;
 }
 
 void genMips(){     // 有点类似于 programAnalysis
@@ -127,7 +130,7 @@ void genMips(){     // 有点类似于 programAnalysis
             // 记录变量信息
 
             pushGlobalRecord(tmp.three, globalRecordCount, tmp.two);
-            globalRecordCount += transNum(tmp.four);
+            globalRecordCount += transNum(tmp.four).value;
             // 数组的存储方式
             // head + offset
 
@@ -136,7 +139,7 @@ void genMips(){     // 有点类似于 programAnalysis
             li("$t2", tmp.four);
             mul("$t3", "$t1", "$t2");
 
-            offsetGp -= 4 * transNum(tmp.four);
+            offsetGp -= 4 * transNum(tmp.four).value;
         }else{
             printf(">>> ERROR: in dealing with global var and array.\n");
         }
@@ -272,10 +275,10 @@ void genMips(){     // 有点类似于 programAnalysis
             }else{
                 printf(">>> check value of ARRAY count:%d\n", funcSymbolCount);
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, "", tmp.two};
-                funcSymbolCount += transNum(tmp.four);
+                funcSymbolCount += transNum(tmp.four).value;
                 funcSymbolTable.push_back(tmp2);
                 //
-                addi("$sp", "$sp", -4*transNum(tmp.four));
+                addi("$sp", "$sp", -4*transNum(tmp.four).value);
                 getMid();
             }
         }
@@ -417,10 +420,10 @@ void handleMain(){
             getMid();
         }else{
             funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, "", tmp.two};
-            funcSymbolCount += transNum(tmp.four);
+            funcSymbolCount += transNum(tmp.four).value;
             mainSymbolTable.push_back(tmp2);
             //
-            addi("$sp", "$sp", -4 * transNum(tmp.four));
+            addi("$sp", "$sp", -4 * transNum(tmp.four).value);
             getMid();
         }
     }
@@ -727,10 +730,10 @@ void handleMidCode(){
                 }
             }
             // $t22           1
-            else if(transNum(tmp.two)!=-1){
+            else if(transNum(tmp.two).success==1){
                 //printf(">>> check! in branch ; $ti   integer; \n");
 
-                int value1 = transNum(tmp.two);
+                int value1 = transNum(tmp.two).value;
                 // 直接赋值
                 addi(tmp.one, "$zero", value1);
                 getMid();
