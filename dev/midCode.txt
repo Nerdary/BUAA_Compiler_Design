@@ -6,24 +6,25 @@ Contents of mid codes
        const         intcomparelessequal           3
        const         intcomparegreater           4
        const         intcomparegreaterequal           5
+       array        char         g_a          20
        labelprintcompareop_1        func            
         func        voidprintcompareop            
-       printCompareEqual:                         
+       print          :                         
          $t1compareequal                        
        printcompareequal        IDSY         $t1
-       printCompareNotEqual:                         
+       print          :                         
          $t2comparenotequal                        
        printcomparenotequal        IDSY         $t2
-       printCompareLess:                         
+       print          :                         
          $t3 compareless                        
        print compareless        IDSY         $t3
-       printCompareLessEqual:                         
+       print          :                         
          $t4comparelessequal                        
        printcomparelessequal        IDSY         $t4
-       printCompareGreater:                         
+       print          :                         
          $t5comparegreater                        
        printcomparegreater        IDSY         $t5
-       printCompareGreaterEqual:                         
+       print          :                         
          $t6comparegreaterequal                        
        printcomparegreaterequal        IDSY         $t6
        labelprintcompareop_2        func            
@@ -32,9 +33,17 @@ Contents of mid codes
          var         int           b            
          var         int   compareop            
          var         int      result            
-       printPlease input three integers: A, B and CompareOp                        
-       printwhere CompareOp are:                        
+       array         int         g_b          20
+         $t7          19                        
+         $t8          97                        
+         g_a          []         $t7         $t8
+         $t9          19                        
+         $t1         999                        
+         g_b          []         $t9         $t1
         callprintcompareop                        
-        scan                       a            
-        scan                       b            
-        scan               compareop            
+         $t2          19                        
+         $t3         g_a          []         $t2
+       print         $t3        func            
+         $t4          19                        
+         $t5         g_b          []         $t4
+       print         $t5                        

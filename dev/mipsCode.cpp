@@ -588,7 +588,7 @@ void handleMidCode(){
         }else{
 
             // find ID in global table
-            int offset2 = 4 * res2;
+            int offset2 = 4 * res2 + 4;
             sw("$v0", -offset2, "$gp");
             // read next
             getMid();
@@ -755,7 +755,7 @@ void handleMidCode(){
                 }else{
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
-                    int offset2 = 4 * res2;
+                    int offset2 = 4 * res2 + 4;
                     lw(tmp.one, -offset2, "$gp");
                     // read next
                     getMid();
@@ -811,7 +811,7 @@ void handleMidCode(){
                 }else{
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
-                    int offset2 = 4 * res2;
+                    int offset2 = 4 * res2 + 4;
                     add("$s1", "$gp", "$zero");
                     addi("$s1", "$s1", -offset2);
 
@@ -871,7 +871,7 @@ void handleMidCode(){
                 }else{
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
-                    int offset2 = 4 * res2;
+                    int offset2 = 4 * res2 + 4;
                     sw(tmp.two, -offset2, "$gp");
                     // read next
                     getMid();
@@ -928,7 +928,7 @@ void handleMidCode(){
                 }else{
                     // 在全局表中查到了ID
                     // res2*4 是相对于gp的offset
-                    int offset2 = 4 * res2;
+                    int offset2 = 4 * res2 + 4;
                     add("$s1", "$gp", "$zero");
                     addi("$s1", "$s1", -offset2);
 
@@ -1038,7 +1038,7 @@ int searchGlobalID(string ID){
     for(i=0;i<length;i++){
         globalRecordItem tmp = globalRecordVector.at(i);
         if(tmp.ID == ID){
-            //printf("find ID:%s in global, index = %d\n", ID.c_str(), tmp.offset);
+            printf("find ID:%s in global, index = %d\n", ID.c_str(), tmp.offset);
             return tmp.offset;
         }
     }

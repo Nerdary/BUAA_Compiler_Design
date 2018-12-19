@@ -10,6 +10,9 @@
                   sw	                 $t1	            -20($gp)	                    
                   li	                 $t1	                   5	                    
                   sw	                 $t1	            -24($gp)	                    
+                  li	                 $t1	                   4	                    
+                  li	                 $t2	                  20	                    
+                 mul	                 $t3	                 $t1	                 $t2
                    j	                main	                    	                    
      printcompareop:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -28,323 +31,62 @@
                   sw	                 $t8	              8($sp)	                    
                   sw	                 $t9	              4($sp)	                    
                 addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  69
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 113
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 117
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 108
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
-                  lw	                 $t1	              0($gp)	                    
+                  lw	                 $t1	             -4($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t1
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  78
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 116
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  69
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 113
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 117
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 108
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
-                  lw	                 $t2	             -4($gp)	                    
+                  lw	                 $t2	             -8($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t2
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  76
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 115
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 115
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
-                  lw	                 $t3	             -8($gp)	                    
+                  lw	                 $t3	            -12($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t3
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  76
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 115
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 115
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  69
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 113
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 117
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 108
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
-                  lw	                 $t4	            -12($gp)	                    
+                  lw	                 $t4	            -16($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t4
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  71
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 116
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
-                  lw	                 $t5	            -16($gp)	                    
+                  lw	                 $t5	            -20($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t5
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  71
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 116
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  69
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 113
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 117
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 108
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
-                  lw	                 $t6	            -20($gp)	                    
+                  lw	                 $t6	            -24($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t6
              syscall	                    	                    	                    
@@ -367,214 +109,45 @@
                 addi	                 $sp	                 $sp	                  -4
                 addi	                 $sp	                 $sp	                  -4
                 addi	                 $sp	                 $sp	                  -4
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  80
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 108
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 115
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 105
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 110
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 117
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 116
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 116
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 104
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 105
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 110
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 116
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 103
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 115
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  58
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  65
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  44
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  66
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 110
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 100
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  79
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 119
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 104
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  67
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 111
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 109
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  79
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 112
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  32
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  97
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 114
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                 101
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  58
-             syscall	                    	                    	                    
+                addi	                 $sp	                 $sp	                 -80
+                addi	                 $t7	               $zero	                  19
+                addi	                 $t8	               $zero	                  97
+                 add	                 $s1	                 $gp	               $zero
+                addi	                 $s1	                 $s1	                 -28
+                addi	                 $s2	               $zero	                   4
+                 mul	                 $s2	                 $s2	                 $t7
+                 sub	                 $s1	                 $s1	                 $s2
+                  sw	                 $t8	              0($s1)	                    
+                addi	                 $t9	               $zero	                  19
+                addi	                 $t1	               $zero	                 999
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                   4
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t9
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  sw	                 $t1	              0($s1)	                    
                  jal	      printcompareop	                    	                    
-                addi	                 $v0	               $zero	                   5
+                addi	                 $t2	               $zero	                  19
+                 add	                 $s1	                 $gp	               $zero
+                addi	                 $s1	                 $s1	                 -28
+                addi	                 $s2	               $zero	                   4
+                 mul	                 $s2	                 $s2	                 $t2
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t3	              0($s1)	                    
+                addi	                 $v0	               $zero	                  11
+                 add	                 $a0	               $zero	                 $t3
              syscall	                    	                    	                    
-                  sw	                 $v0	              0($fp)	                    
-                addi	                 $v0	               $zero	                   5
+                addi	                 $t4	               $zero	                  19
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                   4
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t4
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t5	              0($s1)	                    
+                addi	                 $v0	               $zero	                   1
+                 add	                 $a0	               $zero	                 $t5
              syscall	                    	                    	                    
-                  sw	                 $v0	             -4($fp)	                    
-                addi	                 $v0	               $zero	                   5
-             syscall	                    	                    	                    
-                  sw	                 $v0	             -8($fp)	                    

@@ -4,23 +4,26 @@ const int CompareEqual = 0,
           CompareLessEqual = 3,
           CompareGreater = 4,
           CompareGreaterEqual = 5;
+char g_a[20];
 
 void PrintCompareOp {
-  printf("CompareEqual: ", CompareEqual);
-  printf("CompareNotEqual: ", CompareNotEqual);
-  printf("CompareLess: ", CompareLess);
-  printf("CompareLessEqual: ", CompareLessEqual);
-  printf("CompareGreater: ", CompareGreater);
-  printf("CompareGreaterEqual: ", CompareGreaterEqual);
+  printf(": ", CompareEqual);
+  printf(": ", CompareNotEqual);
+  printf(": ", CompareLess);
+  printf(": ", CompareLessEqual);
+  printf(": ", CompareGreater);
+  printf(": ", CompareGreaterEqual);
 }
 
 void main(){
 	int A, B, CompareOp;
   int Result;
-
-  printf("Please input three integers: A, B and CompareOp");
-  printf("where CompareOp are:");
+	int g_b[20];
+	g_a[19] = 'a';
+	g_b[19] = 999;
+  
   PrintCompareOp;
-  scanf(A, B, CompareOp);
+	printf(g_a[19]);
+	printf(g_b[19]);
 	
 }
