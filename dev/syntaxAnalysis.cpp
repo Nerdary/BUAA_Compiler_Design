@@ -1543,6 +1543,7 @@ int factor(){
             getsym();
             expr();                 // 表达式
 
+            stackCalc.pop_back();
 
             // 检查数组越界
             if(termCountFactor==1 && exprCountTerm==1 && factorType==1){

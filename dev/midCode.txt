@@ -212,7 +212,7 @@ Contents of mid codes
          $t3        _abc                        
          $t4           i                        
          $t5        data          []         $t4
-         $t6         $t4           +         $t5
+         $t6         $t3           +         $t5
         _abc         $t6                        
          $t7           i                        
          $t8           1                        

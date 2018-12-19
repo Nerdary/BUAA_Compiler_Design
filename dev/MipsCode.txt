@@ -74,6 +74,19 @@
                 addi	                 $sp	                 $sp	                  24
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                  24
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
                fool:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -107,6 +120,19 @@
                 addi	                 $sp	                 $sp	                   0
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
              getabs:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -168,7 +194,7 @@
                   lw	                 $t9	            -40($fp)	                    
                   lw	                 $ra	             -4($fp)	                    
                  add	                 $sp	               $zero	                 $fp
-                addi	                 $sp	                 $sp	                   0
+                addi	                 $sp	                 $sp	                   4
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
                    j	            label3_2	                    	                    
@@ -191,13 +217,26 @@
                   lw	                 $t9	            -40($fp)	                    
                   lw	                 $ra	             -4($fp)	                    
                  add	                 $sp	               $zero	                 $fp
-                addi	                 $sp	                 $sp	                   0
+                addi	                 $sp	                 $sp	                   4
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
                    j	            label4_2	                    	                    
            label4_1:	                    	                    	                    
            label4_2:	                    	                    	                    
            label3_2:	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
                fibo:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -268,10 +307,23 @@
                   lw	                 $t9	            -40($fp)	                    
                   lw	                 $ra	             -4($fp)	                    
                  add	                 $sp	               $zero	                 $fp
-                addi	                 $sp	                 $sp	                   0
+                addi	                 $sp	                 $sp	                   4
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
            label5_2:	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
     test_strelement:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -367,6 +419,19 @@
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
  test_chartypetrans:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -406,6 +471,19 @@
                 addi	                 $sp	                 $sp	                   4
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
      test_condition:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -467,10 +545,23 @@
                   lw	                 $t9	            -40($fp)	                    
                   lw	                 $ra	             -4($fp)	                    
                  add	                 $sp	               $zero	                 $fp
-                addi	                 $sp	                 $sp	                   0
+                addi	                 $sp	                 $sp	                   4
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
            label6_2:	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
           call_fibo:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -564,6 +655,19 @@
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
     test_arrayindex:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -607,6 +711,19 @@
                  mul	                 $s2	                 $s2	                 $t1
                  sub	                 $s1	                 $s1	                 $s2
                   sw	                 $t2	              0($s1)	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
    test_arrayassign:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -668,6 +785,19 @@
                   sw	                 $t5	            -72($gp)	                    
                    j	            label7_1	                    	                    
            label7_2:	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
            test_for:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -706,7 +836,7 @@
                  mul	                 $s2	                 $s2	                 $t4
                  sub	                 $s1	                 $s1	                 $s2
                   lw	                 $t5	              0($s1)	                    
-                 add	                 $t6	                 $t4	                 $t5
+                 add	                 $t6	                 $t3	                 $t5
                   sw	                 $t6	            -84($gp)	                    
                   lw	                 $t7	            -72($gp)	                    
                 addi	                 $t8	               $zero	                   1
@@ -730,6 +860,19 @@
                 addi	                 $sp	                 $sp	                   0
                   lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
  test_bra_statement:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -747,6 +890,19 @@
                   sw	                 $t7	             12($sp)	                    
                   sw	                 $t8	              8($sp)	                    
                   sw	                 $t9	              4($sp)	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
            call_abs:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -816,6 +972,19 @@
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                 add	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   0
+                  lw	                 $fp	              0($fp)	                    
                   jr	                 $ra	                    	                    
                main:	                    	                    	                    
                  add	                 $fp	                 $sp	               $zero
@@ -1194,4 +1363,3 @@
                  add	                 $sp	               $zero	                 $fp
                 addi	                 $sp	                 $sp	                   0
                   lw	                 $fp	              0($fp)	                    
-                  jr	                 $ra	                    	                    
