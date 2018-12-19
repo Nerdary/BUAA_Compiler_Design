@@ -51,6 +51,8 @@ int checkArrayValue = 0;
 //
 int exprCountTerm = 0;
 int termCountFactor = 0;
+
+
 //
 //int factorType = 0; // default:0 int:1 char:2 else:3
 
@@ -60,6 +62,14 @@ vector<int> funcParaType;
 
 // 生成标签计数器
 int labelCount = 1;
+
+// 防止寄存器冲突
+int factorFirstTCount = 0;
+int exprFirstTCount = 0;
+
+vector<int> factorFirstTCountVector;
+vector<int> exprFirstTCountVector;
+
 
 
 // 函数声明区
@@ -1571,6 +1581,7 @@ int factor(){
             stackCalc.push_back(tCount);
             printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
+            checkConflict();
 
             if(result==RBRACSY){
         //        printf("factor-debug branch-2-2\n");
@@ -1614,6 +1625,7 @@ int factor(){
             stackCalc.push_back(tCount);
             printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
+            checkConflict();
 
             printf("This is a function call with returned value.\n");
 
@@ -1627,6 +1639,7 @@ int factor(){
                 stackCalc.push_back(tCount);
                 printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
+                checkConflict();
 
                 //factorType = searchName2Type(recordFactorID, 0);
                 factorType = 3;
@@ -1641,6 +1654,7 @@ int factor(){
                 stackCalc.push_back(tCount);
                 printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
+                checkConflict();
                 // ...
                 //factorType = 0;
                 factorType = searchName2Type(recordFactorID, 1);
@@ -1668,6 +1682,7 @@ int factor(){
             stackCalc.push_back(tCount);
             printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
+            checkConflict();
 
             getsym();
 
@@ -1681,6 +1696,7 @@ int factor(){
         stackCalc.push_back(tCount);
         printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
         tCount++;
+        checkConflict();
 
         factorType = 1;
     }else if(result==ACHARSY){
@@ -1688,6 +1704,7 @@ int factor(){
         stackCalc.push_back(tCount);
         printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
         tCount++;
+        checkConflict();
 
         getsym();               // 字符 ACHARSY
         factorType = 2;
@@ -1711,7 +1728,8 @@ int term(){
     }
     termType = factorType;
 
-    int fisrtTCount = transTCount2Register(tCount - 1);
+    factorFirstTCount = transTCount2Register();
+    printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
 
     while(true){
         if(result==STARSY||result==DIVISY){
@@ -1740,6 +1758,9 @@ int term(){
             printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
 
             tCount++;
+            checkConflict();
+            factorFirstTCount = transTCount2Register();
+            printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
 
             termType = 1;   // 只要参与运算了就自动转化为int型
 
@@ -1748,6 +1769,7 @@ int term(){
     }
 
     exprCountTerm += 1;
+    factorFirstTCount = 0;
     printf("This is a term.\n");
     return 0;
 }
@@ -1773,6 +1795,10 @@ int expr(){
 
     term();
 
+    exprFirstTCount = transTCount2Register();
+    printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
+    exprFirstTCountVector.push_back(exprFirstTCount);
+
     if(opTag==-1){
         pushMidCodeGetMinusExpr(tCount);
 
@@ -1785,6 +1811,7 @@ int expr(){
 
 
         tCount++;
+        checkConflict();
     }
 
 
@@ -1828,6 +1855,11 @@ int expr(){
 
 //            printf(">>>> size:%d\n", stackCalc.size());
             tCount++;
+            checkConflict();
+            exprFirstTCount = transTCount2Register();
+            printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
+            exprFirstTCountVector.pop_back();
+            exprFirstTCountVector.push_back(exprFirstTCount);
 
             exprType = 1;
         }else   break;
@@ -1843,18 +1875,155 @@ int expr(){
 //    }
 
 
+    exprFirstTCountVector.pop_back();
+    if(exprFirstTCountVector.size()==0){
+        exprFirstTCount = 0;
+    }else{
+        exprFirstTCount = exprFirstTCountVector.back();
+    }
+
+
     printf("This is an expression.\n");
 //    printf("tCount:%d\n", tCount);
     return 0;
 }
 
-int transTCount2Register(int tCount){
-    int dul = tCount + 1;
+int transTCount2Register(){
+    int dul = tCount;
     if(dul>9){
         if(dul%9==0) dul = 9;
         else    dul %= 9;
     }
     return dul;
+}
+
+int transTCount2Register(int offsetFp){
+    int dul = tCount + offsetFp;
+    if(dul>9){
+        if(dul%9==0) dul = 9;
+        else    dul %= 9;
+    }
+    return dul;
+}
+
+void checkConflict(){
+    // return:  1:conflict
+    //          0:safe
+
+    // 放置在每一次tCount++后
+    // 这里的 tCount 是即将被使用的tCount
+    int i, tmpReg, tmpExpr;
+    printf("\t\t====== IN CHECK CONFLICT ====== factor: %d expr:%d\n", factorFirstTCount, exprFirstTCount);
+    if(factorFirstTCount!=0||exprFirstTCount!=0){
+        while(true){
+            tmpReg = transTCount2Register(1);
+
+            printf("\t\t======target:%d factor:%d ", tmpReg, factorFirstTCount);
+            for(i=0;i<exprFirstTCountVector.size();i++)
+                printf("%d ", exprFirstTCountVector.at(i));
+            printf("\n");
+
+
+            if(factorFirstTCount==tmpReg){
+                // 发生了寄存器冲突
+                printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                tCount++;
+            }else{
+                int conflictTag = 0;
+                for(i=0;i<exprFirstTCountVector.size();i++){
+                    tmpExpr = exprFirstTCountVector.at(i);
+                    if(tmpExpr==tmpReg){
+                        // 发生了寄存器冲突
+                        conflictTag = 1;
+                        printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                        tCount++;
+                        // 不能break
+                    }
+                }
+                if(conflictTag==0)
+                    break;
+            }
+        }
+
+//        tmpReg = transTCount2Register();
+//        if(factorFirstTCount==tmpReg){
+//            // 发生了寄存器冲突
+//            printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+//            tCount++;
+//        }else{
+//            for(i=0;i<exprFirstTCountVector.size();i++){
+//                tmpExpr = exprFirstTCountVector.at(i);
+//                if(tmpExpr==tmpReg){
+//                    // 发生了寄存器冲突
+//                    printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+//                    tCount++;
+//                    // 不能break
+//                }
+//            }
+//        }
+    }
+
+//    // 防止二次冲突，再检测一边
+//    if(factorFirstTCount!=0||exprFirstTCount!=0){
+//        tmpReg = transTCount2Register();
+//        if(factorFirstTCount==tmpReg){
+//            // 发生了寄存器冲突
+//            printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+//            tCount++;
+//        }else{
+//            for(i=0;i<exprFirstTCountVector.size();i++){
+//                tmpExpr = exprFirstTCountVector.at(i);
+//                if(tmpExpr==tmpReg){
+//                    // 发生了寄存器冲突
+//                    printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+//                    tCount++;
+//                    // 不能break
+//                }
+//            }
+//        }
+//    }
+}
+void checkConflict(int offset){
+    // return:  1:conflict
+    //          0:safe
+
+    // 放置在每一次tCount++后
+    // 这里的 tCount 是即将被使用的tCount
+    int i, tmpReg, tmpExpr;
+    printf("\t\t====== IN CHECK CONFLICT ====== factor: %d expr:%d\n", factorFirstTCount, exprFirstTCount);
+    if(factorFirstTCount!=0||exprFirstTCount!=0){
+        while(true){
+            tmpReg = transTCount2Register(offset);
+
+            printf("\t\t======target:%d factor:%d ", tmpReg, factorFirstTCount);
+            for(i=0;i<exprFirstTCountVector.size();i++)
+                printf("%d ", exprFirstTCountVector.at(i));
+            printf("\n");
+
+
+            if(factorFirstTCount==tmpReg){
+                // 发生了寄存器冲突
+                printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                tCount++;
+            }else{
+                int conflictTag = 0;
+                for(i=0;i<exprFirstTCountVector.size();i++){
+                    tmpExpr = exprFirstTCountVector.at(i);
+                    if(tmpExpr==tmpReg){
+                        // 发生了寄存器冲突
+                        conflictTag = 1;
+                        printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                        tCount++;
+                        // 不能break
+                    }
+                }
+                if(conflictTag==0)
+                    break;
+            }
+        }
+
+    }
+
 }
 
 

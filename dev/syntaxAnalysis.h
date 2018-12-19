@@ -66,5 +66,11 @@ extern int labelCount;
 
 int programAnalysis();
 
+// ¼ì²é¼Ä´æÆ÷³åÍ»µÄº¯Êý
+int transTCount2Register();
+int transTCount2Register(int offsetFp);
+void checkConflict();
+void checkConflict(int offset);
+
 
 #endif // SYNTAXANALYSIS_H_INCLUDED
