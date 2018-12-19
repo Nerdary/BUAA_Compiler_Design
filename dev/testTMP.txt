@@ -1,18 +1,26 @@
-char _c1, _c2;
+const int CompareEqual = 0,
+          CompareNotEqual = 1,
+          CompareLess = 2,
+          CompareLessEqual = 3,
+          CompareGreater = 4,
+          CompareGreaterEqual = 5;
+
+void PrintCompareOp {
+  printf("CompareEqual: ", CompareEqual);
+  printf("CompareNotEqual: ", CompareNotEqual);
+  printf("CompareLess: ", CompareLess);
+  printf("CompareLessEqual: ", CompareLessEqual);
+  printf("CompareGreater: ", CompareGreater);
+  printf("CompareGreaterEqual: ", CompareGreaterEqual);
+}
 
 void main(){
-	int T9, a;
-	char _c3, _c4, c3, C4;
-	char _array[51];	
+	int A, B, CompareOp;
+  int Result;
 
-	T9 = 9;
-        	c3 = '3';
-       	 C4 = '4';
-	a = C4-c3+T9;
-	printf(a);
-	if(a!=10)
-		printf("error");
-	else
-		printf("success");
+  printf("Please input three integers: A, B and CompareOp");
+  printf("where CompareOp are:");
+  PrintCompareOp;
+  scanf(A, B, CompareOp);
 	
 }

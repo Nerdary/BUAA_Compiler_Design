@@ -1236,6 +1236,7 @@ int printSentence(){
     // 接下来判断是一个表达式还是一个字符串
     if(result==STRINGSY){
         pushMidCodePrint(1, globalString, tCount);
+        globalString = "";
         getsym();
         if(result==COMMASY){
             getsym();

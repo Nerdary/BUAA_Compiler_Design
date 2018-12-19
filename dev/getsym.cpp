@@ -212,7 +212,22 @@ int myGetsym(int mode){
 				return -1;
 			}
 		}
+		strings[index] = '\0';
 		globalString = strings;
+//		int i, length = strlen(strings);
+////		globalString[length] = '\0';
+//        globalString = "";
+//        for(i=0;i<length;i++){
+//            globalString[i] = strings[i];
+//        }
+
+//        string tmpString = new string(strings);
+//        string tmpString(strings);
+
+//        globalString = tmpString;
+//        globalString.assign(strings);
+//        printf("check strings:%s\t\tglo:%s\n", strings, globalString.c_str());
+
 		strcpy(symbol, "STRINGSY");
 		result = 21;
 		return 21;
@@ -382,10 +397,12 @@ int getsym(int mode){
         // STRING
         else if (result == 21){
             printf("%d\tSTRINGSY\t\"%s\"\n",lc, strings);
+//            strings = "";
         }
         // a char
         else if (result == 19){
             printf("%d\tACHARSY\t%c\n",lc, strings[0]);
+//            strings = "";
         }
         // others
             // reserved
@@ -448,10 +465,14 @@ int getsym(){
         // STRING
         else if (result == 21){
             printf("%d\tSTRINGSY\t\"%s\"\n",lc, strings);
+//            int i;
+//            for(i=0;i<200;i++)
+//                strings[i]
         }
         // a char
         else if (result == 19){
             printf("%d\tACHARSY\t%c\n",lc, strings[0]);
+            strings[0] = '\0';
         }
         // others
             // reserved
