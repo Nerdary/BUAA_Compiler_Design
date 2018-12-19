@@ -511,13 +511,16 @@ void handleMidCode(){
             addi("$v0", "$zero", 1);
             add("$a0", "$zero", tmp.two);
             syscall();
+
+            nextLine();
         }else if(tmp.two[0]=='$' && tmp.two[1]=='t' && tmp.three=="func"){
             // print $ti func
             // 返回值类型为char的函数调用
-                addi("$v0", "$zero", 11);
-                add("$a0", "$zero", tmp.two);
-                syscall();
+            addi("$v0", "$zero", 11);
+            add("$a0", "$zero", tmp.two);
+            syscall();
 
+            nextLine();
         }else if(tmp.three=="IDSY"){
             // 对象是单个标识符，判断是int还是char
             int thisPrintType = searchIDType(currentFuncName, tmp.two);
@@ -527,11 +530,15 @@ void handleMidCode(){
                 addi("$v0", "$zero", 1);
                 add("$a0", "$zero", tmp.four);
                 syscall();
+
+                nextLine();
             }else if(thisPrintType==2){
                 // ! char
                 addi("$v0", "$zero", 11);
                 add("$a0", "$zero", tmp.four);
                 syscall();
+
+                nextLine();
             }else{
                 printf("UNEXPECTED print ID type.\n");
             }
@@ -548,6 +555,8 @@ void handleMidCode(){
                 addi("$a0", "$zero", tmpi);
                 syscall();
             }
+
+            nextLine();
         }
         // get next
         getMid();
@@ -1065,7 +1074,7 @@ int searchIDType(string func, string ID){
     int symSize = tmpinfo.funcSymbolTable.size();
     for(j=0;j<symSize;j++){
         funcRecordItem ftmp = tmpinfo.funcSymbolTable.at(j);
-        //printf(">>> %s\n", ftmp.ID.c_str());
+        //kf(">>> %s\n", ftmp.ID.c_str());
         if(ftmp.ID==ID){
             //printf(">>> %s\n", ftmp.type.c_str());
             if(ftmp.type=="int")
@@ -1096,6 +1105,14 @@ int searchIDType(string func, string ID){
 
     printf("Can not find this ID's type.\n");
     return -1;
+}
+
+void nextLine(){
+    char nextLineSymC = '\n';
+    int nextLineSymI = nextLineSymC;
+    addi("$v0", "$zero", 11);
+    addi("$a0", "$zero", nextLineSymI);
+    syscall();
 }
 
 void addi(string res, string in, int value){

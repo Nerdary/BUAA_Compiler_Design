@@ -36,59 +36,95 @@
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
                   lw	                 $t1	             -4($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t1
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
                   lw	                 $t2	             -8($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t2
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
                   lw	                 $t3	            -12($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t3
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
                   lw	                 $t4	            -16($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t4
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
                   lw	                 $t5	            -20($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t5
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  58
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  32
              syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
                   lw	                 $t6	            -24($gp)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t6
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
                   lw	                 $t1	             -8($fp)	                    
                   lw	                 $t2	            -12($fp)	                    
@@ -139,6 +175,9 @@
                 addi	                 $v0	               $zero	                  11
                  add	                 $a0	               $zero	                 $t3
              syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
                 addi	                 $t4	               $zero	                  19
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                   4
@@ -150,4 +189,7 @@
                   lw	                 $t5	              0($s1)	                    
                 addi	                 $v0	               $zero	                   1
                  add	                 $a0	               $zero	                 $t5
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    

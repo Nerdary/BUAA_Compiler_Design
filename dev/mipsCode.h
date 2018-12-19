@@ -90,6 +90,8 @@ searchResult searchStackID(string targetFuncName, string ID);
 int searchGlobalID(string ID);
 int searchIDType(string func, string ID);
 
+void nextLine();
+
 void addi(string res, string in, int value);
 void add(string res, string n1, string n2);
 void sub(string res, string n1, string n2);
