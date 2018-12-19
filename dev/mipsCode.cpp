@@ -242,8 +242,7 @@ void genMips(){     // 有点类似于 programAnalysis
 
             paraTypeCount++;
         }
-        // 将参数计数器清零
-        paraCount = 0;
+
 
         // 常量定义部分
         while(tmp.one=="const"){
@@ -317,32 +316,44 @@ void genMips(){     // 有点类似于 programAnalysis
             //getMid();
         }
 
-        // 恢复所有局部变量
-        lw("$t1",  -8, "$fp");
-        lw("$t2", -12, "$fp");
-        lw("$t3", -16, "$fp");
-        lw("$t4", -20, "$fp");
-        lw("$t5", -24, "$fp");
-        lw("$t6", -28, "$fp");
-        lw("$t7", -32, "$fp");
-        lw("$t8", -36, "$fp");
-        lw("$t9", -40, "$fp");
-
-        // 当前为label_func_2,取出ra，生成一句jr
-        lw("$ra", -4, "$fp");
-
-        // 暂时以这种方式恢复sp
-        //addi("$sp", "$fp", -4);
-        add("$sp", "$zero", "$fp");
-
-        // 还要恢复fp
-        lw("$fp", 0, "$fp");
-
-        // 将sp移动到最后一个局部变量的下一个位置
-        // funcSymbolCount  globalValueOfFp
-//        printf("setting sp as : %d\n", globalValueOfFp);
-//        addi("$sp", "$zero", globalValueOfFp);
-//        addi("$sp", "$fp", 8+4*funcSymbolCount);
+//        // 恢复所有局部变量
+//        lw("$t1",  -8, "$fp");
+//        lw("$t2", -12, "$fp");
+//        lw("$t3", -16, "$fp");
+//        lw("$t4", -20, "$fp");
+//        lw("$t5", -24, "$fp");
+//        lw("$t6", -28, "$fp");
+//        lw("$t7", -32, "$fp");
+//        lw("$t8", -36, "$fp");
+//        lw("$t9", -40, "$fp");
+//
+//        // 当前为label_func_2,取出ra，生成一句jr
+//        lw("$ra", -4, "$fp");
+//
+//        // 暂时以这种方式恢复sp
+//        //addi("$sp", "$fp", -4);
+//        add("$sp", "$zero", "$fp");
+//        /*  本来需要保存sp
+//            现在有一个替代的方案：
+//            恢复sp时sp=fp+paraCount*4
+//            paraCount
+//        */
+//
+//
+//        addi("$sp", "$sp", paraCount*4);
+//        // 将参数计数器清零
+//        paraCount = 0;
+//
+//
+//
+//        // 还要恢复fp
+//        lw("$fp", 0, "$fp");
+//
+//        // 将sp移动到最后一个局部变量的下一个位置
+//        // funcSymbolCount  globalValueOfFp
+////        printf("setting sp as : %d\n", globalValueOfFp);
+////        addi("$sp", "$zero", globalValueOfFp);
+////        addi("$sp", "$fp", 8+4*funcSymbolCount);
 
 
 
@@ -499,6 +510,11 @@ void handleMidCode(){
 
         // 暂时以这种方式恢复sp
         add("$sp", "$zero", "$fp");
+
+        // 更新之后新的恢复sp的方法
+        addi("$sp", "$sp", paraCount*4);
+        // 将参数计数器清零
+        paraCount = 0;
 
         // 还要恢复fp
         lw("$fp", 0, "$fp");

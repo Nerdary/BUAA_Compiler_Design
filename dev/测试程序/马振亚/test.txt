@@ -79,7 +79,7 @@ void call_abs{
     printf("...abs is: ",t);
 }
 
-void main(){
+void MAIN(){
     int a;
     a=-99;
     x=003;
