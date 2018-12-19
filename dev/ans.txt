@@ -1,44 +1,19 @@
-case 1
-输入:
-9
-1
-10
-输出:
--31
-...for loop work well
-...fibo result is :1
-...abs is: 10
-T
-\n! ~}|{abcABC<=+-$%&*()/
-1
+===========测试1===========
+输入：（注意mars中输入时应是这个顺序： 1 enter 5 enter bc6 enter）
+1 5bc6
+输出：
+588___ !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~___\n\t\\\'___@@@@@b
 
 
-
-case2:
-输入:
-5
+===========测试2===========
+输入：
 2
-0
 输出：
--31
-...for loop work well
-...fibo result is :1
-...abs is: 0
-T
-\n! ~}|{abcABC<=+-$%&*()/
-1
+-3304 2585 1 ojbk ojbk 10186
 
 
-case3:
-输入:
-0
-5
--9
+===========测试3===========
+输入：
+3
 输出：
--31
-...for loop work well
-...fibo result is :5
-...abs is: 9
-T
-\n! ~}|{abcABC<=+-$%&*()/
-0
+123b-300_ff4_1686722hg1142

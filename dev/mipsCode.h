@@ -114,6 +114,7 @@ void bltz(string tag, string label);
 void bne(string s1, string s2, string label);
 void beq(string s1, string s2, string label);
 void mipsLabel(string label);
+void mipsEndLabel();
 void syscall();
 
 

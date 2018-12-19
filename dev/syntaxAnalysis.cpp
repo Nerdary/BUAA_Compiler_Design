@@ -1218,7 +1218,9 @@ int scanSentence(){
         return -1;
     }
     //
-    pushMidCodeScan(0, IDname);
+
+    int type = searchName2Type(IDname, 0);
+    pushMidCodeScan(type, IDname);
 
     getsym();
     while(true){
@@ -1229,7 +1231,8 @@ int scanSentence(){
                 error();
                 return -1;
             }else{
-                pushMidCodeScan(0, IDname);
+                int type = searchName2Type(IDname, 0);
+                pushMidCodeScan(type, IDname);
                 getsym();
                 continue;
             }

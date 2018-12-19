@@ -79,7 +79,7 @@ transResult transNum(string token){
 			num *= 10;
 			num += (token[i] - '0');
 		} else{
-			printf("wrong character in transNum\n");
+			//printf("wrong character in transNum\n");
             transResult errRes = {0, 0};
 			return errRes;
 		}
@@ -465,6 +465,7 @@ void handleMain(){
             break;
     }
     handleMidCode();
+    mipsEndLabel();
 }
 
 // 即处理复杂语句，处理一条的四元式，生成大部分MIPS
@@ -495,36 +496,41 @@ void handleMidCode(){
 
         }
 
-        // 恢复所有局部变量
-        lw("$t1",  -8, "$fp");
-        lw("$t2", -12, "$fp");
-        lw("$t3", -16, "$fp");
-        lw("$t4", -20, "$fp");
-        lw("$t5", -24, "$fp");
-        lw("$t6", -28, "$fp");
-        lw("$t7", -32, "$fp");
-        lw("$t8", -36, "$fp");
-        lw("$t9", -40, "$fp");
+        if(currentFuncName!="main"){
 
-        // 还需要干很多事
-        lw("$ra", -4, "$fp");
+            // 恢复所有局部变量
+            lw("$t1",  -8, "$fp");
+            lw("$t2", -12, "$fp");
+            lw("$t3", -16, "$fp");
+            lw("$t4", -20, "$fp");
+            lw("$t5", -24, "$fp");
+            lw("$t6", -28, "$fp");
+            lw("$t7", -32, "$fp");
+            lw("$t8", -36, "$fp");
+            lw("$t9", -40, "$fp");
 
-        // 暂时以这种方式恢复sp
-        add("$sp", "$zero", "$fp");
+            // 还需要干很多事
+            lw("$ra", -4, "$fp");
 
-        // 更新之后新的恢复sp的方法
-        addi("$sp", "$sp", paraCount*4);
+            // 暂时以这种方式恢复sp
+            add("$sp", "$zero", "$fp");
+
+            // 更新之后新的恢复sp的方法
+            addi("$sp", "$sp", paraCount*4);
 
         // ret 分支不清零
 //        // 将参数计数器清零
 //        paraCount = 0;
 
         // 还要恢复fp
-        lw("$fp", 0, "$fp");
+            lw("$fp", 0, "$fp");
 
-        if(currentFuncName!="main")
+
             jr();
-
+        }else{
+            // main 里面的return ;
+            j("THIS_IS_THE_END_OF_ALL");
+        }
 
         getMid();
 
@@ -587,8 +593,15 @@ void handleMidCode(){
         getMid();
     }else if(tmp.one=="scan"){
         // v0 = 5
-        addi("$v0", "$zero", 5);
+
+        if (tmp.two=="int"){
+            addi("$v0", "$zero", 5);
+        }else if(tmp.two=="char"){
+            addi("$v0", "$zero", 12);
+        }
         syscall();
+
+
         // assignment
         // search ID tmp.three
         int flag = 1;
@@ -1327,6 +1340,16 @@ void mipsLabel(string label){
 
     mipsItem tmp = {
         newLbael + ":",
+        "",
+        "",
+        "",
+    };
+    mipsCodeVector.push_back(tmp);
+}
+
+void mipsEndLabel(){
+    mipsItem tmp = {
+        "THIS_IS_THE_END_OF_ALL:",
         "",
         "",
         "",
