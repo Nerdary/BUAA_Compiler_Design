@@ -250,13 +250,17 @@ void genMips(){     // 有点类似于 programAnalysis
             funcSymbolTable.push_back(tmp2);
             // 留出空间并填入常量的值
             //addi("$sp", "$sp", 4);
-            if(tmp.two=="int"){
-                li("$t1", tmp.four);
-            }else{
-                char ctmp = tmp.four[0];
-                int itmp = ctmp;
-                li("$t1", to_string(itmp));
-            }
+//            if(tmp.two=="int"){
+//                li("$t1", tmp.four);
+//            }else{
+////                char ctmp = tmp.four[0];
+////                int itmp = ctmp;
+////                li("$t1", to_string(itmp));
+//                    li("$t1", tmp.four);
+//            }
+
+            li("$t1", tmp.four);
+
             sw("$t1", 0, "$sp");
             addi("$sp", "$sp", -4);
             getMid();
@@ -1090,7 +1094,7 @@ int searchGlobalID(string ID){
     for(i=0;i<length;i++){
         globalRecordItem tmp = globalRecordVector.at(i);
         if(tmp.ID == ID){
-            printf("find ID:%s in global, index = %d\n", ID.c_str(), tmp.offset);
+            //printf("find ID:%s in global, index = %d\n", ID.c_str(), tmp.offset);
             return tmp.offset;
         }
     }

@@ -1,8 +1,12 @@
-void fun2(int a, int b, int c, int d, int e, int f)
-{
-    printf(a+b*c*d/e-f);
-}
+char _c1;
 
+char ff1(char c){
+    const char temp_c = 'b';
+    _c1 = temp_c;
+    return (c);
+}
 void main(){
-	func2(3, 6, 1, 4, 2, -2);
+    _c1 = 'a';
+    ff1('+');
+    printf(_c1); 
 }

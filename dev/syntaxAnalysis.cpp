@@ -197,7 +197,10 @@ int constDefine(){
                                 if(result==EQUSY){
                                     getsym();
                                     if(result==ACHARSY){
-                                        constValue = strings[0];
+                                        char tmpc = globalChar;
+                                        //printf(">>> check tmpc:%c\n", tmpc);
+                                        constValue = tmpc;
+                                        //printf(">>> check value:%d\n", constValue);
 
                                         int pushResult = 0;
                                         pushResult = pushConstantTable(IDname, 2, constValue);

@@ -25,6 +25,7 @@ char strings[200] = "";
 char symbol[10] = "";
 char token[200] = "";
 char IDname[200] = "";
+
 string globalString;
 
 

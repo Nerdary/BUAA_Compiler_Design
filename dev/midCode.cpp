@@ -33,9 +33,12 @@ void pushMidCodeConst(int type, string ID, int value){
     //    tmpValue[1] = '\0';
 
     //    sprintf(tmpValue, "%c", value);
-        char ctmp = value;
-        string stmp(&ctmp, 1);
-        tmpValue = stmp;
+//        char ctmp = value;
+//        string stmp(&ctmp, 1);
+//        tmpValue = stmp;
+
+        tmpValue = to_string(value);
+
     //    printf(">>>> %s\n", tmpValue.c_str());
     }
 
