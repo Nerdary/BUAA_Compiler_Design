@@ -532,6 +532,9 @@ void jump2SEMISY(int a){
     while(a!=';'){
         a = fgetc(fp);
         jumpCount++;
+
+        if(a=='\n')
+            lc++;
     }
 
     // ½«·ÖºÅÍË»Ø

@@ -55,6 +55,9 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
         case(errCondSentence):
             printf("Line:%d\tCondition sentence does not finished normally.\n", line);
             break;
+        case(errAssignDifferType):
+            printf("Line:%d\tDifferent type assignment, can not assign.\n", line);
+            break;
 
         case(errSomethingElse):
             printf("Line:%d\tSomething else occurred.\n", line);

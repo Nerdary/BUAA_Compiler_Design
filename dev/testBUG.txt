@@ -10,5 +10,13 @@ void main(){
     if(0!1)
          printf("err");    
 
+
+    printf("test 2");
+    a = 'z';
+    z = 's';
+    x = 99;
+
     printf("end of testBUG");
+
+    
 }

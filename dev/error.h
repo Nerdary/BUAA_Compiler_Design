@@ -32,6 +32,7 @@ enum SyntaxError{
     errCondNotComplete,     // 条件没有正常结束
     errAssignNotComplete,   // 赋值语句中出错
     errCondSentence,        // 条件语句中出错
+    errAssignDifferType,    // 赋值语句两边类型不同
 
     errSomethingElse,
 };

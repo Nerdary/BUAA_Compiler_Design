@@ -1260,6 +1260,7 @@
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
                   lw	                 $t2	              0($s1)	                    
+                  sw	                 $t2	           -168($fp)	                    
                 addi	                 $t3	               $zero	                   7
                  sub	                 $t4	               $zero	                 $t3
                   sw	                 $t4	           -108($fp)	                    
@@ -1283,6 +1284,7 @@
                 addi	                 $sp	                 $sp	                  -4
                  jal	                 ff1	                    	                    
                  add	                 $t9	                 $v0	               $zero
+                  sw	                 $t9	           -172($fp)	                    
                   lw	                 $t1	           -104($fp)	                    
                   lw	                 $t2	           -160($fp)	                    
                  add	                 $t3	                 $t1	                 $t2
@@ -1799,7 +1801,9 @@
                   sw	                 $t1	            -16($gp)	                    
                  jal	                 ff5	                    	                    
                 addi	                 $t2	               $zero	                6666
+                  sw	                 $t2	           -976($fp)	                    
                 addi	                 $t3	               $zero	                  56
+                  sw	                 $t3	           -984($fp)	                    
                   lw	                 $t4	           -976($fp)	                    
                   lw	                 $t5	           -984($fp)	                    
                  add	                 $t6	                 $t4	                 $t5

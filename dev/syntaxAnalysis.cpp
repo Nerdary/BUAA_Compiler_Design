@@ -42,6 +42,7 @@ int tCount = 0;
 //int exprValue = 0;
 // 其实只需要类型就可以进行语义分析了
 int factorType = 0;
+int factorType2 = 0;
 int termType = 0;
 int exprType = 0;   // 0:default | 1:int | 2:char | 3:else
 
@@ -69,6 +70,8 @@ int exprFirstTCount = 0;
 
 vector<int> factorFirstTCountVector;
 vector<int> exprFirstTCountVector;
+
+int nestedExpr = 0;     // 用来记录因子与表达式的嵌套是否发生
 
 
 
@@ -1174,7 +1177,7 @@ int assignSentence(){
     }
     string assignID = IDname;
     // 记录变量类型
-    //int recordType = searchName2Type(assignID, 0);
+    int recordFisrtType = searchName2Type(assignID, 0);
 
     getsym();
     int isArray = 0;
@@ -1218,6 +1221,7 @@ int assignSentence(){
     getsym();
 //    printf("assign tag 4\n");
 
+    nestedExpr = 0;
     if(expr()==-1){
         SyntaxAnalysisError(errExprNotComplete, lc);
         // printf("Line:%d\tERROR: This is an ILLEGAL assignment sentence.\n", lc);
@@ -1231,6 +1235,39 @@ int assignSentence(){
     // 最后有一个操作数应该取出来
     stackCalc.pop_back();
 
+    // 判断两边赋值的类型是否合法
+    // illegal: int = char; char = int; char = (char); ......
+    // legal:   int = (char);
+    // 只判断是否违法就行
+    int recordSecondType;
+    if(termCountFactor==1 && exprCountTerm==1){
+        // 赋值语句右边是一个元素
+        if(nestedExpr==1){
+            // 发生嵌套也是int
+            recordSecondType = 1;
+        }else{
+            if(factorType==3){
+                recordSecondType = factorType2;
+            }else{
+                recordSecondType = factorType;
+            }
+
+        }
+    }else{
+        // 多个元素一定是int
+        recordSecondType = 1;
+    }
+
+    // 检查是否违法
+    printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
+//    if(recordFisrtType!=recordSecondType){
+//        //printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
+//        SyntaxAnalysisError(errAssignDifferType, lc);
+//        return -1;
+//    }
+
+
+    nestedExpr = 0;
 //    printf("assign tag 5\n");
     // 生成四元式
     pushMidCodeAssign(assignID, isArray, recTCount, tCount);
@@ -1551,6 +1588,10 @@ int factor(){
     if(result==LPARSY){             // result = "("
     //    printf("factor-debug branch-1\n");
         getsym();
+
+        // 用一个标志记录这里发生了嵌套
+        nestedExpr = 1;
+
         expr();                     // 表达式
 
         //语义分析
@@ -1667,6 +1708,7 @@ int factor(){
 
                 //factorType = searchName2Type(recordFactorID, 0);
                 factorType = 3;
+                factorType2 = searchName2Type(recordFactorID, 0);
 
             }else{
                 // 是函数调用
