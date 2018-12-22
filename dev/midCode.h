@@ -36,6 +36,7 @@ void pushMidCodeRet(int tCount);
 void pushMidCodeRet();
 void pushMidCodeRET(int tCount);
 void pushMidCodeAssign(string ID, int isArray, int index, int tCount);
+void pushMidCodeCondition(int tCount);
 void pushMidCodeCondition(int expr1, int op, int expr2);
 void pushMidCodeFactorValue(int tCount, int type, int value);
 void pushMidCodeLabel(int labelCount, int index);

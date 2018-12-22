@@ -404,6 +404,26 @@ void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
     midCodeVec.push_back(tmp);
 }
 
+void pushMidCodeCondition(int tCount){
+    // 条件是一个表达式的情况
+    // 结果存在寄存器tCount里
+    // 解决方案：将tCount的值存到s1中
+
+    if(tCount>9){
+        if(tCount%9==0) tCount = 9;
+        else    tCount %= 9;
+    }
+    string t = "$t" + to_string(tCount);
+
+    midCodeItem tmp = {
+        "$s1",
+        t,
+        "",
+        "",
+    };
+    midCodeVec.push_back(tmp);
+}
+
 void pushMidCodeCondition(int expr1, int op, int expr2){
     if(expr1>9){
         if(expr1%9==0) expr1 = 9;

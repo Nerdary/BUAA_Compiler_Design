@@ -386,6 +386,7 @@ single_chars          []         $t2         $t3
          $t9           4                        
          $t1           5                        
          $t2         $t9           /         $t1
+         $s1         $t2                        
           BZ       label        14_1            
        print     error10                        
         GOTO       label        14_2            
@@ -557,6 +558,7 @@ single_chars          []         $t2         $t3
        label        26_2        norm            
        label        27_1        norm            
          $t9           1                        
+         $s1         $t9                        
           BZ       label        27_2            
          $t1           0                        
          t23         $t1                        

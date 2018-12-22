@@ -480,8 +480,13 @@ void handleMidCode(){
     if(tmp.one=="BZ"){
         // BZ的上一条一定是条件，所以对于$ti<$tj的形式，将值存起来
         // 直接从变量中取值判断
-        // 这个分支应该是进不来的，进来的先抱一个错吧
-        printf("Unexpected branch 'BZ' \n");
+        // 这个分支是可以进来的，比如条件是一个表达式
+        // 表达式的值为0则不满足， 非0则满足
+
+
+        beq("$s1", "$zero", "label" + tmp.three);
+
+        //printf("Unexpected branch 'BZ' \n");
         getMid();
     }else if(tmp.one=="GOTO"){
         j("label" + tmp.three);
@@ -893,6 +898,11 @@ void handleMidCode(){
                 getMid();
                 error();
             }
+        }else if(tmp.one[0]=='$' && tmp.one[1]=='s'){
+            // $s1 $ti 赋值操作
+            add(tmp.one, tmp.two, "$zero");
+            getMid();
+
         }else{
             //printf(">>> check in branch: 'ID $ti' \n");
             // ID      $ti

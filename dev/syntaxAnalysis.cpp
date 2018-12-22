@@ -932,8 +932,8 @@ int condition(){
         // 生成四元式
         pushMidCodeCondition(expr1Count, op, tCount);
     }else{
-        error();
-        return -1;
+        // 不应该报错，存在条件是一个表达式的情况
+        pushMidCodeCondition(tCount);
     }
 
     printf("This is a condition.\n");
@@ -1983,6 +1983,7 @@ void checkConflict(){
 //        }
 //    }
 }
+
 void checkConflict(int offset){
     // return:  1:conflict
     //          0:safe

@@ -1354,6 +1354,8 @@
                 addi	                 $t9	               $zero	                   4
                 addi	                 $t1	               $zero	                   5
                  div	                 $t2	                 $t9	                 $t1
+                 add	                 $s1	                 $t2	               $zero
+                 beq	                 $s1	               $zero	           label14_1
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                 101
              syscall	                    	                    	                    
@@ -1650,6 +1652,8 @@
           label26_2:	                    	                    	                    
           label27_1:	                    	                    	                    
                 addi	                 $t9	               $zero	                   1
+                 add	                 $s1	                 $t9	               $zero
+                 beq	                 $s1	               $zero	           label27_2
                 addi	                 $t1	               $zero	                   0
                   sw	                 $t1	           -156($fp)	                    
                    j	           label28_1	                    	                    
