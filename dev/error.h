@@ -35,6 +35,7 @@ enum SyntaxError{
     errAssignDifferType,    // 赋值语句两边类型不同
 
     errUnfitParaType,       // 传入的参数类型不正确
+    errParaAmount,          // 传入的参数个数不正确
     errParaValueList,       // 值参数表分程序没有正常完成
     errFuncCallNotComplete, // 函数调用分程序没有正常完成
 

@@ -463,6 +463,11 @@ int paraValueList(){
         expr();
         printf("1.\n");
 
+        if(paraSeqCnt>=res.size()){
+             SyntaxAnalysisError(errParaAmount, lc);
+            return -1;
+        }
+
         // exprType
         if(exprType != res.at(paraSeqCnt)){
 //            printf("para type not fit in:%s at %d\n", callFuncID.c_str(), paraSeqCnt);
@@ -488,6 +493,12 @@ int paraValueList(){
         }
     }
     //tCount++;
+
+    // 判断参数个数是否一致
+    if(paraSeqCnt!=res.size()){
+        SyntaxAnalysisError(errParaAmount, lc);
+        return -1;
+    }
 
     printf("This is a parameter value list.\n");
     return 0;

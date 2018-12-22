@@ -13,7 +13,8 @@ void main(){
     x = 'x';
 
     
-    foo(a, a);
+    foo(a, z, a);
+    foo(a);
 
     printf("end of testBUG");
 
