@@ -58,6 +58,15 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
         case(errAssignDifferType):
             printf("Line:%d\tDifferent type assignment, can not assign.\n", line);
             break;
+        case(errUnfitParaType):
+            printf("Line:%d\tPara types not match definition.\n", line);
+            break;
+        case(errFuncCallNotComplete):
+            printf("Line:%d\tFunction call does not finished normally.\n", line);
+            break;
+        case(errParaValueList):
+            printf("Line:%d\tPara value list does not finished normally.\n", line);
+            break;
 
         case(errSomethingElse):
             printf("Line:%d\tSomething else occurred.\n", line);

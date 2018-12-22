@@ -7,8 +7,16 @@
 
 using namespace std;
 
+//struct paralistItem{
+//    string funcName;
+//    int paraTypes[1000];
+//    string paraNames[1000];
+//};
+
 extern int globalFuncLevel;
 extern string globalFuncField;
+//extern vector<paralistItem> paralistVector;
+
 
 
 struct symbolTableItem{

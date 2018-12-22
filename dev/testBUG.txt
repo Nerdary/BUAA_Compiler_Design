@@ -1,20 +1,19 @@
 const int g_i = 100;
 
+int foo(int aa, char cc){
+	return(1);
+}
+
 void main(){
     char z;
     char x;
     int a;
-    z = 'ss';
-    x = '!';
+    a = 1;
+    z = 'z';
+    x = 'x';
 
-    if(0!1)
-         printf("err");    
-
-
-    printf("test 2");
-    a = 'z';
-    z = 's';
-    x = 99;
+    
+    foo(a, a);
 
     printf("end of testBUG");
 

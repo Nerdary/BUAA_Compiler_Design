@@ -9,6 +9,8 @@ int globalFuncLevel = 0;            // 全局为0 main 为1
 string globalFuncField = "Global";  // 初始设置为全局
 
 using namespace std;
+//
+//vector<paralistItem> paralistVector;
 
 // 常量 int char
 int pushConstantTable(string ID, int type, int value){
@@ -267,3 +269,5 @@ int getArrayLength(string ID){
 
     return -1;
 }
+
+

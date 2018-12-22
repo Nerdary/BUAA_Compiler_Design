@@ -10,6 +10,10 @@
 #include "error.h"
 #include "midCode.h"
 
+
+extern FILE* fp;                // 用于跳读
+
+
 vector<symbolTableItem> symbolTable;
 //vector<arrayTableItem> arrayTable;
 //vector<funcTableItem> funcTable;
@@ -21,6 +25,7 @@ vector<int> stackCalc;          // 计算表达式用的运算栈，用来存储将要进行运算的$
 vector<int> stackIfElse;        // 用来处理ifelse嵌套的标签问题
 vector<funcInfoItem> AllFuncInfo;
                                 // 用于在函数定义时存储所有（一部分）信息
+vector<int> res;
 
 
 // 局部变量区
@@ -451,11 +456,19 @@ int varState(){
 }
 
 int paraValueList(){
+    int paraSeqCnt = 0;
+
     while(true){
         //
         expr();
-        //
-        //tCount--;
+        // exprType
+        if(exprType != res.at(paraSeqCnt)){
+//            printf("para type not fit in:%s at %d\n", callFuncID.c_str(), paraSeqCnt);
+            SyntaxAnalysisError(errUnfitParaType, lc);
+
+            return -1;
+        }
+
 
         // 最后有一个操作数应该取出来
         stackCalc.pop_back();
@@ -465,6 +478,7 @@ int paraValueList(){
 
         if(result==COMMASY){
             getsym();
+            paraSeqCnt++;
             continue;
         }else{
             break;
@@ -477,6 +491,9 @@ int paraValueList(){
 }
 
 int paraList(){
+//    int paralistItemCount = 0;
+//    paralistItem tmpParalistItem;
+
     while(true){
         int paraType = 0;   // 0:default | 1:int | 2;char
         if(result!=INTSY&&result!=CHARSY){
@@ -496,11 +513,18 @@ int paraList(){
             error();
             return -1;
         }
+
+        string thisParaName = IDname;
         getsym();
 
         //
         pushVarTable(IDname, paraType, globalOffset, 1);
         pushMidCodePara(paraType, IDname);
+
+//        tmpParalistItem.paraTypes[paralistItemCount] = paraType;
+//        tmpParalistItem.paraNames[paralistItemCount] = thisParaName;
+//        paralistItemCount++;
+//        tmpParalistItem.funcName = currentFuncID;
 
         if(result==COMMASY){
             getsym();
@@ -509,6 +533,7 @@ int paraList(){
             break;
         }
     }
+
 
     printf("This is a parameter list.\n");
     return 0;
@@ -746,7 +771,11 @@ int sentence(){
 
                 if(senTag==1){              // 函数调用
                     callFuncID = tmpFuncName;
-                    retValueFuncCall();
+                    if(retValueFuncCall()==-1){
+                        SyntaxAnalysisError(errFuncCallNotComplete, lc);
+                        jump2SEMISY2();
+                        getsym();
+                    }
                     if(result!=SEMISY){
                         error();
                         return -1;
@@ -1128,9 +1157,30 @@ int retValueFuncCall(){
 //    string FuncID = IDname;
 
     getsym();
-    if(result==LPARSY){
+
+    res = searchFuncPara(callFuncID);
+    int paraNum = res.size();
+
+    if(paraNum==0){
+        // 应该是没有参数的
+        if(result==LPARSY){
+            error();
+            return -1;
+        }
+        // 否则一切正常
+    }else{
+        if(result!=LPARSY){
+            error();
+            return -1;
+        }
+        //
         getsym();
-        paraValueList();
+
+        if(paraValueList()==-1){
+            SyntaxAnalysisError(errParaValueList, lc);
+            return -1;
+        }
+
         if(result!=RPARSY){
             error();
             return -1;
@@ -1138,6 +1188,7 @@ int retValueFuncCall(){
             getsym();
         }
     }
+
 
     pushMidCodeFuncCall(callFuncID);
     printf("This is a function call with returned value.\n");
@@ -1816,7 +1867,7 @@ int term(){
         SyntaxAnalysisError(errFactorNotComplete, lc);
         return -1;
     }
-    termType = factorType;
+    termType = factorType2;
 
     factorFirstTCount = transTCount2Register();
     printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
@@ -2123,6 +2174,44 @@ void checkConflict(int offset){
 
 }
 
+
+vector<int> searchFuncPara(string funcName){
+    int i, length = AllFuncInfo.size();
+    for(i=0;i<length;i++){
+        funcInfoItem funcInfoItem2 = AllFuncInfo.at(i);
+        if(funcInfoItem2.funcName == funcName){
+            return funcInfoItem2.funcParaType;
+        }
+    }
+
+    if(i==length){
+        printf("in function 'searchFuncPara' no such name:%s\n", funcName.c_str());
+    }
+
+    vector<int> nonsence;
+
+    return nonsence;
+}
+
+// 跳读到下一个分号
+void jump2SEMISY2(){
+    int jumpCount = 0;
+    int a = fgetc(fp);
+    while(a!=';'){
+        printf("%d\n", a);
+        a = fgetc(fp);
+        jumpCount++;
+
+        if(a=='\n')
+            lc++;
+    }
+
+    // 将分号退回
+    ungetc(a,fp);
+
+    printf(">>> Jump pass %d lexical characters.\n", jumpCount);
+
+}
 
 
 

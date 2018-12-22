@@ -71,6 +71,8 @@ int transTCount2Register();
 int transTCount2Register(int offsetFp);
 void checkConflict();
 void checkConflict(int offset);
+vector<int> searchFuncPara(string funcName);
+void jump2SEMISY2();
 
 
 #endif // SYNTAXANALYSIS_H_INCLUDED
