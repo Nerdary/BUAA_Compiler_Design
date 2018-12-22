@@ -29,7 +29,6 @@
                   sw	                 $t1	              0($sp)	                    
                 addi	                 $sp	                 $sp	                  -4
                   lw	                 $t1	            -48($fp)	                    
-                  sw	                 $t1	            -16($gp)	                    
                   lw	                 $t2	            -44($fp)	                    
                  add	                 $v0	               $zero	                 $t2
                   lw	                 $t1	             -8($fp)	                    
@@ -1250,7 +1249,6 @@
                 addi	                 $t8	               $zero	                  43
                   sw	                 $t8	           -160($fp)	                    
                   lw	                 $t9	           -160($fp)	                    
-                  sw	                 $t9	           -164($fp)	                    
                 addi	                 $t1	               $zero	                   0
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 144
@@ -1260,12 +1258,10 @@
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
                   lw	                 $t2	              0($s1)	                    
-                  sw	                 $t2	           -168($fp)	                    
                 addi	                 $t3	               $zero	                   7
                  sub	                 $t4	               $zero	                 $t3
                   sw	                 $t4	           -108($fp)	                    
                   lw	                 $t5	           -108($fp)	                    
-                  sw	                 $t5	           -112($fp)	                    
                 addi	                 $t6	               $zero	                   0
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                  44
@@ -1284,7 +1280,6 @@
                 addi	                 $sp	                 $sp	                  -4
                  jal	                 ff1	                    	                    
                  add	                 $t9	                 $v0	               $zero
-                  sw	                 $t9	           -172($fp)	                    
                   lw	                 $t1	           -104($fp)	                    
                   lw	                 $t2	           -160($fp)	                    
                  add	                 $t3	                 $t1	                 $t2
@@ -1801,9 +1796,7 @@
                   sw	                 $t1	            -16($gp)	                    
                  jal	                 ff5	                    	                    
                 addi	                 $t2	               $zero	                6666
-                  sw	                 $t2	           -976($fp)	                    
                 addi	                 $t3	               $zero	                  56
-                  sw	                 $t3	           -984($fp)	                    
                   lw	                 $t4	           -976($fp)	                    
                   lw	                 $t5	           -984($fp)	                    
                  add	                 $t6	                 $t4	                 $t5
@@ -1867,14 +1860,6 @@
           label31_1:	                    	                    	                    
                   lw	                 $t7	           -980($fp)	                    
                   lw	                 $t8	           -980($fp)	                    
-                addi	                 $s1	               $zero	                   4
-                addi	                 $s2	               $zero	                 247
-                 mul	                 $s2	                 $s1	                 $s2
-                addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t7
-                 sub	                 $s1	                 $fp	                 $s1
-                 sub	                 $s1	                 $s1	                 $s2
-                  sw	                 $t8	              0($s1)	                    
                   lw	                 $t9	           -980($fp)	                    
                 addi	                 $t1	               $zero	                   1
                  add	                 $t2	                 $t9	                 $t1
