@@ -194,6 +194,8 @@ int myGetsym(int mode){
 		//	printf("illegal '!=' \n");
 //		err(6);
             LexicalAnalysisError(errNotEqual, lc);
+            jump2SEMISY(a);
+
             result = -1;
 			return -1;
 		}

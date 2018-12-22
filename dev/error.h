@@ -29,6 +29,9 @@ enum SyntaxError{
     errFactorNotComplete,   // 因子分程序没有正常结束
     errTermNotComplete,     // 项分程序没有正常结束
     errExprNotComplete,     // 表达式分程序没有正常结束
+    errCondNotComplete,     // 条件没有正常结束
+    errAssignNotComplete,   // 赋值语句中出错
+    errCondSentence,        // 条件语句中出错
 
     errSomethingElse,
 };

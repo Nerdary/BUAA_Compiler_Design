@@ -46,6 +46,16 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
         case(errExprNotComplete):
             printf("Line:%d\tExpression does not finished normally.\n", line);
             break;
+        case(errCondNotComplete):
+            printf("Line:%d\tCondition does not finished normally.\n", line);
+            break;
+        case(errAssignNotComplete):
+            printf("Line:%d\tAssignment sentence does not finished normally.\n", line);
+            break;
+        case(errCondSentence):
+            printf("Line:%d\tCondition sentence does not finished normally.\n", line);
+            break;
+
         case(errSomethingElse):
             printf("Line:%d\tSomething else occurred.\n", line);
             break;

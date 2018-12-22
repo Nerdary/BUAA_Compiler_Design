@@ -666,7 +666,9 @@ int sentence(){
 //    printf("result=%d\n", result);
     switch(result){
         case(IFSY):             // 条件语句
-            condSentence();
+            if(condSentence()==-1){
+                SyntaxAnalysisError(errCondSentence, lc);
+            }
             break;
         case(WHILESY):          // 循环语句
             loopSentence();
@@ -750,7 +752,9 @@ int sentence(){
                     }
                     break;
                 }else if(senTag==2){        // 赋值语句
-                    assignSentence();
+                    if(assignSentence()==-1){
+                        SyntaxAnalysisError(errAssignNotComplete, lc);
+                    }
                     if(result!=SEMISY){
                         SyntaxAnalysisError(errLackSemiSymbol, lc);
                         return -1;
@@ -874,7 +878,10 @@ int condSentence(){
     }
 //    printf("in cond 2\n");
     getsym();
-    condition();
+    if(condition()==-1){
+        SyntaxAnalysisError(errCondNotComplete, lc);
+        return -1;
+    }
 //    printf("in cond 3\n");
 //    printf("result = %d\n", result);
     if(result!=RPARSY){
@@ -912,7 +919,15 @@ int condSentence(){
 }
 
 int condition(){
-    expr();
+    if(expr()==-1){
+        SyntaxAnalysisError(errExprNotComplete, lc);
+        //printf("Line:%d\tERROR: This is an ILLEGAL assignment sentence.\n", lc);
+
+        // getsym, 将下一个符号SEMISY读入
+        getsym();
+
+        return -1;
+    }
 
     // 最后有一个操作数应该取出来
     stackCalc.pop_back();
@@ -1205,7 +1220,7 @@ int assignSentence(){
 
     if(expr()==-1){
         SyntaxAnalysisError(errExprNotComplete, lc);
-        printf("Line:%d\tERROR: This is an ILLEGAL assignment sentence.\n", lc);
+        // printf("Line:%d\tERROR: This is an ILLEGAL assignment sentence.\n", lc);
 
         // getsym, 将下一个符号SEMISY读入
         getsym();
@@ -1698,7 +1713,9 @@ int factor(){
             factorType = 1;
         }
     }else if(result==USINTSY){
-        getsym();
+        if(getsym()==-1){
+            return -1;
+        }
         checkArrayValue = IntValue;
 
         pushMidCodeFactorValue(tCount, 1, checkArrayValue);
