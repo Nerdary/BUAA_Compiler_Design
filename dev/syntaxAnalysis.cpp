@@ -461,6 +461,8 @@ int paraValueList(){
     while(true){
         //
         expr();
+        printf("1.\n");
+
         // exprType
         if(exprType != res.at(paraSeqCnt)){
 //            printf("para type not fit in:%s at %d\n", callFuncID.c_str(), paraSeqCnt);
@@ -469,9 +471,10 @@ int paraValueList(){
             return -1;
         }
 
-
+        printf("<<< 1:%d\n", stackCalc.size());
         // 最后有一个操作数应该取出来
         stackCalc.pop_back();
+        printf("<<< 2:%d\n", stackCalc.size());
 
         pushMidCodePara(tCount-1);
         tCount--;
@@ -1160,6 +1163,7 @@ int retValueFuncCall(){
 
     res = searchFuncPara(callFuncID);
     int paraNum = res.size();
+//    printf(">> %d.\n", paraNum);
 
     if(paraNum==0){
         // 应该是没有参数的
@@ -1732,7 +1736,24 @@ int factor(){
             int tmpsave2 = exprCountTerm;
 
             getsym();
-            paraValueList();             // 值参数表
+//            paraValueList();             // 值参数表
+
+            res = searchFuncPara(recordFactorID);
+            int paraNum = res.size();
+
+            if(paraNum==0){
+                // 应该是没有参数的
+                error();
+                return -1;
+                // 否则一切正常
+            }else{
+
+                if(paraValueList()==-1){
+                    SyntaxAnalysisError(errParaValueList, lc);
+                    return -1;
+                }
+
+            }
 
             termCountFactor = tmpsave1;
             exprCountTerm = tmpsave2;
