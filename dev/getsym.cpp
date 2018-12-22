@@ -134,9 +134,10 @@ int myGetsym(int mode){
 		charCount -= 1;
 		int num = transNum(token);
 		if (num==-1){
-			err(1);										// transNum 出错
-			result = 0;
-			return 0;
+//			err(1);										// transNum 出错
+			LexicalAnalysisError(errTransInt, lc);
+			result = -1;
+			return -1;
 		} else {
 			strcpy(symbol, "USINTSY");
             IntValue = num;
@@ -191,7 +192,8 @@ int myGetsym(int mode){
 			ungetc(a,fp);
 			charCount -= 1;
 		//	printf("illegal '!=' \n");
-		err(6);
+//		err(6);
+            LexicalAnalysisError(errNotEqual, lc);
             result = -1;
 			return -1;
 		}
@@ -207,8 +209,10 @@ int myGetsym(int mode){
 				a = fgetc(fp);
 				charCount += 1;
 			} else{
-				err(2);
+				//err(2);
+				LexicalAnalysisError(errIllegalString, lc);
 			//	printf("illegal charactor while dealing string\n");
+                jump2SEMISY(a);
                 result = -1;
 				return -1;
 			}
@@ -252,14 +256,20 @@ int myGetsym(int mode){
 				ungetc(b,fp);
 				ungetc(a,fp);
 				charCount -= 2;
-				err(3);
+				//err(3);
 			//	printf("more than one charactor\n");
+                LexicalAnalysisError(errSingleChar, lc);
+                jump2SEMISY(a);
+
+
                 result = -1;
 				return -1;
 			}
 		} else{
-			err(4);
+			//err(4);
+			LexicalAnalysisError(errIllegalChar, lc);
 		//	printf("illegal charactor in single char\n");
+            jump2SEMISY(a);
             result = -1;
 			return -1;
 		}
@@ -512,6 +522,21 @@ void err(int index){
 		case(7):    printf("illegal or unexpected character in code.\n");               break;
 		default:	printf("an illegal index in err.\n");								break;
 	}
+}
+
+// 跳读到下一个分号
+void jump2SEMISY(int a){
+    int jumpCount = 0;
+    while(a!=';'){
+        a = fgetc(fp);
+        jumpCount++;
+    }
+
+    // 将分号退回
+    ungetc(a,fp);
+
+    printf(">>> Jump pass %d lexical characters.\n", jumpCount);
+
 }
 
 // 清空TOKEN

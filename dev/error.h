@@ -24,6 +24,13 @@ enum SyntaxError{
     errLackRightBrace,      // 缺少右大括号
     errLackRightParen,      // 缺少右小括号
     errLackSemiSymbol,      // 没有出现预期的分号
+
+    errUnexpextedBranch,    // 预期之外的分支
+    errFactorNotComplete,   // 因子分程序没有正常结束
+    errTermNotComplete,     // 项分程序没有正常结束
+    errExprNotComplete,     // 表达式分程序没有正常结束
+
+    errSomethingElse,
 };
 
 enum TableError{

@@ -30,7 +30,27 @@ void LexicalAnalysisError(LexicalError errorCode, int line){
 }
 
 void SyntaxAnalysisError(SyntaxError errorCode, int line){
+    switch(errorCode){
+        case(errUnexpextedBranch):
+            printf("Line:%d\tUnexpected branch.\n", line);
+            break;
+        case(errLackSemiSymbol):
+            printf("Line:%d\tExpected Semi Symbol not exist.\n", line);
+            break;
+        case(errFactorNotComplete):
+            printf("Line:%d\tFactor does not finished normally.\n", line);
+            break;
+        case(errTermNotComplete):
+            printf("Line:%d\tTerm does not finished normally.\n", line);
+            break;
+        case(errExprNotComplete):
+            printf("Line:%d\tExpression does not finished normally.\n", line);
+            break;
+        case(errSomethingElse):
+            printf("Line:%d\tSomething else occurred.\n", line);
+            break;
 
+    }
 }
 
 void error(){

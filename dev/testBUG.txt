@@ -1,0 +1,14 @@
+const int g_i = 100;
+
+void main(){
+    char z;
+    char x;
+    int a;
+    z = 'ss';
+    x = '!';
+
+    if(0!1)
+         printf("err");    
+
+    printf("end of testBUG");
+}

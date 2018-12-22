@@ -23,7 +23,7 @@ int getsym(int mode);
 int getsym();
 void err(int index);
 
-
+void jump2SEMISY(int a);
 void clearToken();
 int isSpace(char a);
 int isNewline(char a);

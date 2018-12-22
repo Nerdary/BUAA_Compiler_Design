@@ -752,7 +752,7 @@ int sentence(){
                 }else if(senTag==2){        // 赋值语句
                     assignSentence();
                     if(result!=SEMISY){
-                        error();
+                        SyntaxAnalysisError(errLackSemiSymbol, lc);
                         return -1;
                     }else{
                         getsym();
@@ -1202,7 +1202,16 @@ int assignSentence(){
     }
     getsym();
 //    printf("assign tag 4\n");
-    expr();
+
+    if(expr()==-1){
+        SyntaxAnalysisError(errExprNotComplete, lc);
+        printf("Line:%d\tERROR: This is an ILLEGAL assignment sentence.\n", lc);
+
+        // getsym, 将下一个符号SEMISY读入
+        getsym();
+
+        return -1;
+    }
 
     // 最后有一个操作数应该取出来
     stackCalc.pop_back();
@@ -1522,7 +1531,7 @@ int mainAnalysis(){
 }
 
 int factor(){
-    printf("DEBUG: in factor, result=%d\n", result);
+    //printf("DEBUG: in factor, result=%d\n", result);
 
     if(result==LPARSY){             // result = "("
     //    printf("factor-debug branch-1\n");
@@ -1709,7 +1718,7 @@ int factor(){
         getsym();               // 字符 ACHARSY
         factorType = 2;
     }else{
-        error();
+        SyntaxAnalysisError(errSomethingElse, lc);
         return -1;
     }
 
@@ -1723,7 +1732,7 @@ int term(){
     termCountFactor = 0;
 
     if(factor()==-1){
-        error();
+        SyntaxAnalysisError(errFactorNotComplete, lc);
         return -1;
     }
     termType = factorType;
@@ -1738,7 +1747,7 @@ int term(){
 
             getsym();
             if(factor()==-1){
-                error();
+                SyntaxAnalysisError(errFactorNotComplete, lc);
                 return -1;
             }
             // 此处可以进行值计算、栈操作、生成四元式
@@ -1793,7 +1802,10 @@ int expr(){
     }
 
 
-    term();
+    if(term()==-1){
+        SyntaxAnalysisError(errTermNotComplete, lc);
+        return -1;
+    }
 
     exprFirstTCount = transTCount2Register();
     printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
@@ -1832,7 +1844,10 @@ int expr(){
             if(result==MINUSSY) opFlag = 2;
 
             getsym();
-            term();
+            if(term()==-1){
+                SyntaxAnalysisError(errTermNotComplete, lc);
+                return -1;
+            }
             // 参与运算，则为int
             // 此处可以进行值计算、栈操作、生成四元式
 //            printf(">>>> size:%d\n", stackCalc.size());
