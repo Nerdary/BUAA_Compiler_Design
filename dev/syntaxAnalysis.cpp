@@ -1240,18 +1240,14 @@ int assignSentence(){
     // legal:   int = (char);
     // 只判断是否违法就行
     int recordSecondType;
+    printf(">>> termCountFactor:%d exprCountTerm:%d\n", termCountFactor, exprCountTerm);
     if(termCountFactor==1 && exprCountTerm==1){
         // 赋值语句右边是一个元素
         if(nestedExpr==1){
             // 发生嵌套也是int
             recordSecondType = 1;
         }else{
-            if(factorType==3){
-                recordSecondType = factorType2;
-            }else{
-                recordSecondType = factorType;
-            }
-
+            recordSecondType = factorType2;
         }
     }else{
         // 多个元素一定是int
@@ -1259,12 +1255,13 @@ int assignSentence(){
     }
 
     // 检查是否违法
-    printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
-//    if(recordFisrtType!=recordSecondType){
-//        //printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
-//        SyntaxAnalysisError(errAssignDifferType, lc);
-//        return -1;
-//    }
+
+    if(recordFisrtType!=recordSecondType){
+        printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test: %d=%d\n", recordFisrtType, recordSecondType);
+        //printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
+        SyntaxAnalysisError(errAssignDifferType, lc);
+        return -1;
+    }
 
 
     nestedExpr = 0;
@@ -1597,6 +1594,7 @@ int factor(){
         //语义分析
         //factorType = exprType;
         factorType = 1; // 参与运算了type就是1:int
+        factorType2 = 1;
 
         if(result==RPARSY){         // result = ")"
             getsym();
@@ -1621,6 +1619,12 @@ int factor(){
         getsym();
         if(result==LBRACSY){        // result = "["
         //    printf("factor-debug branch-2\n");
+
+            // 调用expr前先记录termCountFactor和exprCountTerm
+            // 调用后恢复
+            int tmpsave1 = termCountFactor;
+            int tmpsave2 = exprCountTerm;
+
             getsym();
             expr();                 // 表达式
 
@@ -1652,8 +1656,12 @@ int factor(){
         //        printf("factor-debug branch-2-2\n");
                 getsym();
 
+                termCountFactor = tmpsave1;
+                exprCountTerm = tmpsave2;
+
 
                 factorType = searchName2Type(recordFactorID, 0);
+                factorType2 = factorType;
                 //factorType = 4;
 
 
@@ -1661,18 +1669,28 @@ int factor(){
                 error();
                 return -1;
             }
+
+
         }else if(result==LPARSY){   // result = "(" 有返回值函数调用
         //    printf("factor-debug branch-3\n");
 
             // 有返回值函数调用
 //            retValueFuncCall();
 
+            int tmpsave1 = termCountFactor;
+            int tmpsave2 = exprCountTerm;
+
             getsym();
             paraValueList();             // 值参数表
+
+            termCountFactor = tmpsave1;
+            exprCountTerm = tmpsave2;
+
             if(result==RPARSY){      // result = ")"
                 getsym();
 
                 factorType = searchName2Type(recordFactorID, 1);
+                factorType2 = factorType;
                 //factorType = 4;
             }else {
                 error();
@@ -1724,6 +1742,7 @@ int factor(){
                 // ...
                 //factorType = 0;
                 factorType = searchName2Type(recordFactorID, 1);
+                factorType2 = factorType;
             }
 
         }
@@ -1753,6 +1772,7 @@ int factor(){
             getsym();
 
             factorType = 1;
+            factorType2 = 1;
         }
     }else if(result==USINTSY){
         if(getsym()==-1){
@@ -1767,6 +1787,7 @@ int factor(){
         checkConflict();
 
         factorType = 1;
+        factorType2 = 1;
     }else if(result==ACHARSY){
         pushMidCodeFactorValue(tCount, 2, globalChar);
         stackCalc.push_back(tCount);
@@ -1776,6 +1797,7 @@ int factor(){
 
         getsym();               // 字符 ACHARSY
         factorType = 2;
+        factorType2 = 2;
     }else{
         SyntaxAnalysisError(errSomethingElse, lc);
         return -1;

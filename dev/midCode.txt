@@ -648,116 +648,108 @@ single_chars          []         $t2         $t3
          $t1          42                        
          _c1         $t1                        
         call         ff5                        
-         $t2        6666                        
-         _c4         $t2                        
-         $t3          56                        
-         _t1         $t3                        
-         $t4         _c4                        
-         $t5         _t1                        
-         $t6         $t4           +         $t5
-       print         $t6                        
-         $t7          50                        
-         $t8         104                        
-    c_array2          []         $t7         $t8
-         $t9          50                        
-         $t1    c_array2          []         $t9
-       print         $t1        func            
-         $t2         103                        
-        push         $t2                        
+         $t2          50                        
+         $t3         104                        
+    c_array2          []         $t2         $t3
+         $t4          50                        
+         $t5    c_array2          []         $t4
+       print         $t5        func            
+         $t6         103                        
+        push         $t6                        
         call         ff1                        
-         $t2         RET                        
-       print         $t2        func            
-         $t3         114                        
-       print         $t3                        
-         $t4           0                        
-           i         $t4                        
+         $t6         RET                        
+       print         $t6        func            
+         $t7         114                        
+       print         $t7                        
+         $t8           0                        
+           i         $t8                        
         GOTO       label        31_1            
        label        31_2        norm            
-         $t5           i                        
-         $t6     int_100                        
-         $t5           <         $t6            
+         $t9           i                        
+         $t1     int_100                        
+         $t9           <         $t1            
           BZ       label        31_3            
        label        31_1        norm            
-         $t7           i                        
-         $t8           i                        
-    t_array2          []         $t7         $t8
-         $t9           i                        
-         $t1           1                        
-         $t2         $t9           +         $t1
-           i         $t2                        
+         $t2           i                        
+         $t3           i                        
+    t_array2          []         $t2         $t3
+         $t4           i                        
+         $t5           1                        
+         $t6         $t4           +         $t5
+           i         $t6                        
         GOTO       label        31_2            
        label        31_3        norm            
-         $t3          34                        
-         $t4           4                        
-         $t5         $t3           /         $t4
-         $t6           6                        
-         $t7         $t5           *         $t6
-         $t8      char_z                        
-         $t9          10                        
-         $t1         $t8           /         $t9
-         $t2         $t7           +         $t1
-         $t3    t_array2          []         $t2
-         $t4          23                        
-         $t5         $t3           /         $t4
-         $t6          22                        
-         $t7           i                        
-         $t8         $t6           *         $t7
-         $t9          23                        
-         $t1         $t8           /         $t9
-         $t2           1                        
-         $t3    t_array2          []         $t2
-         $t4        1000                        
-         $t6         $t3           *         $t4
-         $t7         $t1           *         $t6
-         $t8        1000                        
+         $t7          34                        
+         $t8           4                        
          $t9         $t7           /         $t8
-         $t1          57                        
-         $t2          17                        
-         $t3         $t1           /         $t2
-         $t4         $t9           +         $t3
-         $t6    t_array2          []         $t5
-         $t7          30                        
-         $t8         $t6           /         $t7
-         $t9         $t5           +         $t8
-         $t1    t_array2          []         $t9
-           i         $t1                        
-         $t2          34                        
-         $t3           4                        
-         $t4         $t2           /         $t3
-         $t5           6                        
-         $t6         $t4           *         $t5
-         $t7      char_z                        
-         $t8          10                        
-         $t9         $t7           /         $t8
-         $t1         $t6           +         $t9
-         $t2    t_array2          []         $t1
-         $t3          23                        
-         $t4         $t2           /         $t3
-         $t5          22                        
-         $t6           i                        
-         $t7         $t5           *         $t6
+         $t1           6                        
+         $t2         $t9           *         $t1
+         $t3      char_z                        
+         $t4          10                        
+         $t5         $t3           /         $t4
+         $t6         $t2           +         $t5
+         $t7    t_array2          []         $t6
          $t8          23                        
          $t9         $t7           /         $t8
-         $t1           1                        
-         $t2    t_array2          []         $t1
+         $t1          22                        
+         $t2           i                        
+         $t3         $t1           *         $t2
+         $t4          23                        
+         $t5         $t3           /         $t4
+         $t6           1                        
+         $t7    t_array2          []         $t6
+         $t8        1000                        
+         $t1         $t7           *         $t8
+         $t2         $t5           *         $t1
          $t3        1000                        
-         $t5         $t2           *         $t3
-         $t6         $t9           *         $t5
-         $t7        1000                        
-         $t8         $t6           /         $t7
-         $t9          57                        
-         $t1          17                        
-         $t2         $t9           /         $t1
-         $t3         $t8           +         $t2
-         $t5    t_array2          []         $t4
-         $t6          30                        
+         $t4         $t2           /         $t3
+         $t5          57                        
+         $t6          17                        
          $t7         $t5           /         $t6
          $t8         $t4           +         $t7
+         $t1    t_array2          []         $t9
+         $t2          30                        
+         $t3         $t1           /         $t2
+         $t4         $t9           +         $t3
+         $t5    t_array2          []         $t4
+           i         $t5                        
+         $t6          34                        
+         $t7           4                        
+         $t8         $t6           /         $t7
+         $t9           6                        
+         $t1         $t8           *         $t9
+         $t2      char_z                        
+         $t3          10                        
+         $t4         $t2           /         $t3
+         $t5         $t1           +         $t4
+         $t6    t_array2          []         $t5
+         $t7          23                        
+         $t8         $t6           /         $t7
+         $t9          22                        
+         $t1           i                        
+         $t2         $t9           *         $t1
+         $t3          23                        
+         $t4         $t2           /         $t3
+         $t5           1                        
+         $t6    t_array2          []         $t5
+         $t7        1000                        
+         $t9         $t6           *         $t7
+         $t1         $t4           *         $t9
+         $t2        1000                        
+         $t3         $t1           /         $t2
+         $t4          57                        
+         $t5          17                        
+         $t6         $t4           /         $t5
+         $t7         $t3           +         $t6
          $t9    t_array2          []         $t8
-        push         $t9                        
+         $t1          30                        
+         $t2         $t9           /         $t1
+         $t3         $t8           +         $t2
+         $t4    t_array2          []         $t3
+        push         $t4                        
         call   factorial                        
-         $t9         RET                        
-       print         $t9                        
+         $t4         RET                        
+       print         $t4                        
         GOTO       label        30_2            
        label        30_1        norm            
        label        30_2        norm            

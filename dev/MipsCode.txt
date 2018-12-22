@@ -1800,140 +1800,116 @@
                 addi	                 $t1	               $zero	                  42
                   sw	                 $t1	            -16($gp)	                    
                  jal	                 ff5	                    	                    
-                addi	                 $t2	               $zero	                6666
-                  sw	                 $t2	           -976($fp)	                    
-                addi	                 $t3	               $zero	                  56
-                  sw	                 $t3	           -984($fp)	                    
-                  lw	                 $t4	           -976($fp)	                    
-                  lw	                 $t5	           -984($fp)	                    
-                 add	                 $t6	                 $t4	                 $t5
-                addi	                 $v0	               $zero	                   1
+                addi	                 $t2	               $zero	                  50
+                addi	                 $t3	               $zero	                 104
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                 347
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t2
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  sw	                 $t3	              0($s1)	                    
+                addi	                 $t4	               $zero	                  50
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                 347
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t4
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t5	              0($s1)	                    
+                addi	                 $v0	               $zero	                  11
+                 add	                 $a0	               $zero	                 $t5
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $t6	               $zero	                 103
+                  sw	                 $t6	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                 jal	                 ff1	                    	                    
+                 add	                 $t6	                 $v0	               $zero
+                addi	                 $v0	               $zero	                  11
                  add	                 $a0	               $zero	                 $t6
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
-                addi	                 $t7	               $zero	                  50
-                addi	                 $t8	               $zero	                 104
-                addi	                 $s1	               $zero	                   4
-                addi	                 $s2	               $zero	                 347
-                 mul	                 $s2	                 $s1	                 $s2
-                addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t7
-                 sub	                 $s1	                 $fp	                 $s1
-                 sub	                 $s1	                 $s1	                 $s2
-                  sw	                 $t8	              0($s1)	                    
-                addi	                 $t9	               $zero	                  50
-                addi	                 $s1	               $zero	                   4
-                addi	                 $s2	               $zero	                 347
-                 mul	                 $s2	                 $s1	                 $s2
-                addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t9
-                 sub	                 $s1	                 $fp	                 $s1
-                 sub	                 $s1	                 $s1	                 $s2
-                  lw	                 $t1	              0($s1)	                    
-                addi	                 $v0	               $zero	                  11
-                 add	                 $a0	               $zero	                 $t1
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  10
-             syscall	                    	                    	                    
-                addi	                 $t2	               $zero	                 103
-                  sw	                 $t2	              0($sp)	                    
-                addi	                 $sp	                 $sp	                  -4
-                 jal	                 ff1	                    	                    
-                 add	                 $t2	                 $v0	               $zero
-                addi	                 $v0	               $zero	                  11
-                 add	                 $a0	               $zero	                 $t2
-             syscall	                    	                    	                    
-                addi	                 $v0	               $zero	                  11
-                addi	                 $a0	               $zero	                  10
-             syscall	                    	                    	                    
-                addi	                 $t3	               $zero	                 114
+                addi	                 $t7	               $zero	                 114
                 addi	                 $v0	               $zero	                   1
-                 add	                 $a0	               $zero	                 $t3
+                 add	                 $a0	               $zero	                 $t7
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  10
              syscall	                    	                    	                    
-                addi	                 $t4	               $zero	                   0
-                  sw	                 $t4	           -980($fp)	                    
+                addi	                 $t8	               $zero	                   0
+                  sw	                 $t8	           -980($fp)	                    
                    j	           label31_1	                    	                    
           label31_2:	                    	                    	                    
-                  lw	                 $t5	           -980($fp)	                    
-                  lw	                 $t6	              0($fp)	                    
-                 sub	                 $s1	                 $t6	                 $t5
+                  lw	                 $t9	           -980($fp)	                    
+                  lw	                 $t1	              0($fp)	                    
+                 sub	                 $s1	                 $t1	                 $t9
                 blez	                 $s1	           label31_3	                    
           label31_1:	                    	                    	                    
-                  lw	                 $t7	           -980($fp)	                    
-                  lw	                 $t8	           -980($fp)	                    
+                  lw	                 $t2	           -980($fp)	                    
+                  lw	                 $t3	           -980($fp)	                    
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 247
                  mul	                 $s2	                 $s1	                 $s2
                 addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t7
+                 mul	                 $s1	                 $s1	                 $t2
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
-                  sw	                 $t8	              0($s1)	                    
-                  lw	                 $t9	           -980($fp)	                    
-                addi	                 $t1	               $zero	                   1
-                 add	                 $t2	                 $t9	                 $t1
-                  sw	                 $t2	           -980($fp)	                    
+                  sw	                 $t3	              0($s1)	                    
+                  lw	                 $t4	           -980($fp)	                    
+                addi	                 $t5	               $zero	                   1
+                 add	                 $t6	                 $t4	                 $t5
+                  sw	                 $t6	           -980($fp)	                    
                    j	           label31_2	                    	                    
           label31_3:	                    	                    	                    
-                addi	                 $t3	               $zero	                  34
-                addi	                 $t4	               $zero	                   4
+                addi	                 $t7	               $zero	                  34
+                addi	                 $t8	               $zero	                   4
+                 div	                 $t9	                 $t7	                 $t8
+                addi	                 $t1	               $zero	                   6
+                 mul	                 $t2	                 $t9	                 $t1
+                  lw	                 $t3	             -4($fp)	                    
+                addi	                 $t4	               $zero	                  10
                  div	                 $t5	                 $t3	                 $t4
-                addi	                 $t6	               $zero	                   6
-                 mul	                 $t7	                 $t5	                 $t6
-                  lw	                 $t8	             -4($fp)	                    
-                addi	                 $t9	               $zero	                  10
-                 div	                 $t1	                 $t8	                 $t9
-                 add	                 $t2	                 $t7	                 $t1
+                 add	                 $t6	                 $t2	                 $t5
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 247
                  mul	                 $s2	                 $s1	                 $s2
                 addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t2
+                 mul	                 $s1	                 $s1	                 $t6
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
-                  lw	                 $t3	              0($s1)	                    
+                  lw	                 $t7	              0($s1)	                    
+                addi	                 $t8	               $zero	                  23
+                 div	                 $t9	                 $t7	                 $t8
+                addi	                 $t1	               $zero	                  22
+                  lw	                 $t2	           -980($fp)	                    
+                 mul	                 $t3	                 $t1	                 $t2
                 addi	                 $t4	               $zero	                  23
                  div	                 $t5	                 $t3	                 $t4
-                addi	                 $t6	               $zero	                  22
-                  lw	                 $t7	           -980($fp)	                    
-                 mul	                 $t8	                 $t6	                 $t7
-                addi	                 $t9	               $zero	                  23
-                 div	                 $t1	                 $t8	                 $t9
-                addi	                 $t2	               $zero	                   1
+                addi	                 $t6	               $zero	                   1
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 247
                  mul	                 $s2	                 $s1	                 $s2
                 addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t2
+                 mul	                 $s1	                 $s1	                 $t6
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
-                  lw	                 $t3	              0($s1)	                    
-                addi	                 $t4	               $zero	                1000
-                 mul	                 $t6	                 $t3	                 $t4
-                 mul	                 $t7	                 $t1	                 $t6
+                  lw	                 $t7	              0($s1)	                    
                 addi	                 $t8	               $zero	                1000
-                 div	                 $t9	                 $t7	                 $t8
-                addi	                 $t1	               $zero	                  57
-                addi	                 $t2	               $zero	                  17
-                 div	                 $t3	                 $t1	                 $t2
-                 add	                 $t4	                 $t9	                 $t3
-                addi	                 $s1	               $zero	                   4
-                addi	                 $s2	               $zero	                 247
-                 mul	                 $s2	                 $s1	                 $s2
-                addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t5
-                 sub	                 $s1	                 $fp	                 $s1
-                 sub	                 $s1	                 $s1	                 $s2
-                  lw	                 $t6	              0($s1)	                    
-                addi	                 $t7	               $zero	                  30
-                 div	                 $t8	                 $t6	                 $t7
-                 add	                 $t9	                 $t5	                 $t8
+                 mul	                 $t1	                 $t7	                 $t8
+                 mul	                 $t2	                 $t5	                 $t1
+                addi	                 $t3	               $zero	                1000
+                 div	                 $t4	                 $t2	                 $t3
+                addi	                 $t5	               $zero	                  57
+                addi	                 $t6	               $zero	                  17
+                 div	                 $t7	                 $t5	                 $t6
+                 add	                 $t8	                 $t4	                 $t7
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 247
                  mul	                 $s2	                 $s1	                 $s2
@@ -1942,49 +1918,9 @@
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
                   lw	                 $t1	              0($s1)	                    
-                  sw	                 $t1	           -980($fp)	                    
-                addi	                 $t2	               $zero	                  34
-                addi	                 $t3	               $zero	                   4
-                 div	                 $t4	                 $t2	                 $t3
-                addi	                 $t5	               $zero	                   6
-                 mul	                 $t6	                 $t4	                 $t5
-                  lw	                 $t7	             -4($fp)	                    
-                addi	                 $t8	               $zero	                  10
-                 div	                 $t9	                 $t7	                 $t8
-                 add	                 $t1	                 $t6	                 $t9
-                addi	                 $s1	               $zero	                   4
-                addi	                 $s2	               $zero	                 247
-                 mul	                 $s2	                 $s1	                 $s2
-                addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t1
-                 sub	                 $s1	                 $fp	                 $s1
-                 sub	                 $s1	                 $s1	                 $s2
-                  lw	                 $t2	              0($s1)	                    
-                addi	                 $t3	               $zero	                  23
-                 div	                 $t4	                 $t2	                 $t3
-                addi	                 $t5	               $zero	                  22
-                  lw	                 $t6	           -980($fp)	                    
-                 mul	                 $t7	                 $t5	                 $t6
-                addi	                 $t8	               $zero	                  23
-                 div	                 $t9	                 $t7	                 $t8
-                addi	                 $t1	               $zero	                   1
-                addi	                 $s1	               $zero	                   4
-                addi	                 $s2	               $zero	                 247
-                 mul	                 $s2	                 $s1	                 $s2
-                addi	                 $s1	               $zero	                   4
-                 mul	                 $s1	                 $s1	                 $t1
-                 sub	                 $s1	                 $fp	                 $s1
-                 sub	                 $s1	                 $s1	                 $s2
-                  lw	                 $t2	              0($s1)	                    
-                addi	                 $t3	               $zero	                1000
-                 mul	                 $t5	                 $t2	                 $t3
-                 mul	                 $t6	                 $t9	                 $t5
-                addi	                 $t7	               $zero	                1000
-                 div	                 $t8	                 $t6	                 $t7
-                addi	                 $t9	               $zero	                  57
-                addi	                 $t1	               $zero	                  17
-                 div	                 $t2	                 $t9	                 $t1
-                 add	                 $t3	                 $t8	                 $t2
+                addi	                 $t2	               $zero	                  30
+                 div	                 $t3	                 $t1	                 $t2
+                 add	                 $t4	                 $t9	                 $t3
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 247
                  mul	                 $s2	                 $s1	                 $s2
@@ -1993,9 +1929,49 @@
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
                   lw	                 $t5	              0($s1)	                    
-                addi	                 $t6	               $zero	                  30
-                 div	                 $t7	                 $t5	                 $t6
-                 add	                 $t8	                 $t4	                 $t7
+                  sw	                 $t5	           -980($fp)	                    
+                addi	                 $t6	               $zero	                  34
+                addi	                 $t7	               $zero	                   4
+                 div	                 $t8	                 $t6	                 $t7
+                addi	                 $t9	               $zero	                   6
+                 mul	                 $t1	                 $t8	                 $t9
+                  lw	                 $t2	             -4($fp)	                    
+                addi	                 $t3	               $zero	                  10
+                 div	                 $t4	                 $t2	                 $t3
+                 add	                 $t5	                 $t1	                 $t4
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                 247
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t5
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t6	              0($s1)	                    
+                addi	                 $t7	               $zero	                  23
+                 div	                 $t8	                 $t6	                 $t7
+                addi	                 $t9	               $zero	                  22
+                  lw	                 $t1	           -980($fp)	                    
+                 mul	                 $t2	                 $t9	                 $t1
+                addi	                 $t3	               $zero	                  23
+                 div	                 $t4	                 $t2	                 $t3
+                addi	                 $t5	               $zero	                   1
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                 247
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t5
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t6	              0($s1)	                    
+                addi	                 $t7	               $zero	                1000
+                 mul	                 $t9	                 $t6	                 $t7
+                 mul	                 $t1	                 $t4	                 $t9
+                addi	                 $t2	               $zero	                1000
+                 div	                 $t3	                 $t1	                 $t2
+                addi	                 $t4	               $zero	                  57
+                addi	                 $t5	               $zero	                  17
+                 div	                 $t6	                 $t4	                 $t5
+                 add	                 $t7	                 $t3	                 $t6
                 addi	                 $s1	               $zero	                   4
                 addi	                 $s2	               $zero	                 247
                  mul	                 $s2	                 $s1	                 $s2
@@ -2004,12 +1980,23 @@
                  sub	                 $s1	                 $fp	                 $s1
                  sub	                 $s1	                 $s1	                 $s2
                   lw	                 $t9	              0($s1)	                    
-                  sw	                 $t9	              0($sp)	                    
+                addi	                 $t1	               $zero	                  30
+                 div	                 $t2	                 $t9	                 $t1
+                 add	                 $t3	                 $t8	                 $t2
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                 247
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t3
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t4	              0($s1)	                    
+                  sw	                 $t4	              0($sp)	                    
                 addi	                 $sp	                 $sp	                  -4
                  jal	           factorial	                    	                    
-                 add	                 $t9	                 $v0	               $zero
+                 add	                 $t4	                 $v0	               $zero
                 addi	                 $v0	               $zero	                   1
-                 add	                 $a0	               $zero	                 $t9
+                 add	                 $a0	               $zero	                 $t4
              syscall	                    	                    	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                  10

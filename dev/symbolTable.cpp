@@ -164,6 +164,30 @@ void printSymbolTable(){
     }
 }
 
+int searchName2Obj(string Name){
+    // 输入标识符ID(name)返回标识符类型
+    // update: 修改后也可以查函数的返回值类型了 mode: 0:others | 1:functions
+    // 0:default | 1:int | 2:char | 3:else/unknown
+    int i, cntTable = symbolTable.size();
+
+    for(i=0;i<cntTable;i++){
+        if(symbolTable.at(i).ID==Name){
+            // 名字相同
+            if(symbolTable.at(i).field==globalFuncField){
+                // 作用域相同
+                return symbolTable.at(i).IDobject;
+            }else if(symbolTable.at(i).level<globalFuncLevel){
+                // 作用域不同，但有全局定义
+                return symbolTable.at(i).IDobject;
+            }else   continue;
+        }
+    }
+    printf("No such ID in symbol table, fail to trans name to type.\n");
+
+
+    return 0;
+}
+
 int searchName2Type(string Name, int mode){
     // 输入标识符ID(name)返回标识符类型
     // update: 修改后也可以查函数的返回值类型了 mode: 0:others | 1:functions
@@ -176,9 +200,11 @@ int searchName2Type(string Name, int mode){
                 // 名字相同
                 if(symbolTable.at(i).field==globalFuncField){
                     // 作用域相同
+                    printf("search2type1: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
                     return symbolTable.at(i).IDType;
                 }else if(symbolTable.at(i).level<globalFuncLevel){
                     // 作用域不同，但有全局定义
+                    printf("search2type2: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
                     return symbolTable.at(i).IDType;
                 }else   continue;
             }

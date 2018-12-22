@@ -67,6 +67,7 @@ int checkDuplicate(string ID);
 
 void printSymbolTable();
 
+int searchName2Obj(string Name);
 int searchName2Type(string Name, int mode);
 
 int searchIsFunc(string Name);

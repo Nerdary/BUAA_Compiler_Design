@@ -229,11 +229,7 @@ void main(){
         ff4;
         
         _c1 = '*';
-        ff5;
-        
-        _c4 = 6666;
-        _t1 = '8';
-        printf(_c4+_t1);   
+        ff5;  
         
         c_array2[50] = 'h';
         printf(c_array2[50]); 
