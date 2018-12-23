@@ -39,6 +39,10 @@ enum SyntaxError{
     errParaValueList,       // 值参数表分程序没有正常完成
     errFuncCallNotComplete, // 函数调用分程序没有正常完成
 
+    errRetValueInVoid,      // 在无返回值函数中返回了值
+
+    errAssignToConst,       // 给常量复制
+
     errSomethingElse,
 };
 

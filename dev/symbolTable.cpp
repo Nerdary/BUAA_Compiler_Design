@@ -263,11 +263,18 @@ int getArrayLength(string ID){
 
             }
         }
-
-
     }
-
     return -1;
+}
+
+int judgeConst(string Name){
+    int i, cntTable = symbolTable.size();
+    for(i=0;i<cntTable;i++){
+        if(symbolTable.at(i).ID==Name && symbolTable.at(i).IDobject==1)
+               return 1;
+    }
+    // printf("No such func in symbol table, fail to trans name to type.\n");
+    return 0;
 }
 
 

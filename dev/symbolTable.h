@@ -82,4 +82,6 @@ int searchIsFunc(string Name);
 
 int getArrayLength(string ID);
 
+int judgeConst(string Name);
+
 #endif // SYMBOLTABLE_H_INCLUDED

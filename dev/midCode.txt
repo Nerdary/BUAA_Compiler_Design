@@ -8,21 +8,27 @@ Contents of mid codes
          $t1           1                        
          ret         $t1                        
        label       foo_2        func            
+       label        ff_1        func            
+        func        void          ff            
+         $t2           1                        
+         ret         $t2                        
+       label        ff_2        func            
         main        void        main            
          var        char           z            
          var        char           x            
          var         int           a            
-         $t2           1                        
-           a         $t2                        
-         $t3         122                        
-           z         $t3                        
-         $t4         120                        
-           x         $t4                        
-         $t5           a                        
-        push         $t5                        
-         $t5           z                        
-        push         $t5                        
-         $t5           a                        
+         $t3           1                        
+           a         $t3                        
+         $t4         122                        
+           z         $t4                        
+         $t5         120                        
+           x         $t5                        
          $t6           a                        
         push         $t6                        
+         $t6           z                        
+        push         $t6                        
+         $t6           a                        
+         $t7           a                        
+        push         $t7                        
+         $t7           1                        
        printend of testBUG                        

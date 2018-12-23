@@ -70,6 +70,12 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
         case(errParaValueList):
             printf("Line:%d\tPara value list does not finished normally.\n", line);
             break;
+        case(errRetValueInVoid):
+            printf("Line:%d\tReturn value in an none return function definition.\n", line);
+            break;
+        case(errAssignToConst):
+            printf("Line:%d\tAssign value to a const.\n", line);
+            break;
 
         case(errSomethingElse):
             printf("Line:%d\tSomething else occurred.\n", line);

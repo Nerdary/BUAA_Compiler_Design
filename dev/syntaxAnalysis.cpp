@@ -39,6 +39,7 @@ int globalOffset = 1;
 // 语义分析
     //
 int retExist = 0;
+int retNone = 0;
 
 // 值计算
 int tCount = 0;
@@ -692,9 +693,15 @@ int unretValueFuncDefine(){
     globalFuncLevel = 0;
 
     if(retExist!=0){        // 这里可能有问题，重新查返回值限制条件
-        error();
-        printf("Return sentence in unretFunc Definition.\n");
+//        error();
+//        printf("Return sentence in unretFunc Definition.\n");
     //    return -1;
+
+        // 表示有return语句
+        if(retNone==1){
+            // 返回不为空
+            SyntaxAnalysisError(errRetValueInVoid, lc);
+        }
     }
 
     pushMidCodeFuncTail(currentFuncID);
@@ -1244,6 +1251,11 @@ int assignSentence(){
     string assignID = IDname;
     // 记录变量类型
     int recordFisrtType = searchName2Type(assignID, 0);
+    int judgeIFConst = judgeConst(assignID);
+    if(judgeIFConst==1){
+        // 先报一个错，后面不生成四元式就行了
+        SyntaxAnalysisError(errAssignToConst, lc);
+    }
 
     getsym();
     int isArray = 0;
@@ -1323,7 +1335,7 @@ int assignSentence(){
     // 检查是否违法
 
     if(recordFisrtType!=recordSecondType){
-        printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test: %d=%d\n", recordFisrtType, recordSecondType);
+        //printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test: %d=%d\n", recordFisrtType, recordSecondType);
         //printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
         SyntaxAnalysisError(errAssignDifferType, lc);
         return -1;
@@ -1333,7 +1345,12 @@ int assignSentence(){
     nestedExpr = 0;
 //    printf("assign tag 5\n");
     // 生成四元式
-    pushMidCodeAssign(assignID, isArray, recTCount, tCount);
+    if(judgeIFConst==1){
+        // 不生成四元式
+    }else{
+        pushMidCodeAssign(assignID, isArray, recTCount, tCount);
+    }
+
 
     printf("This is an assignment sentence.\n");
     return 0;
@@ -1497,6 +1514,9 @@ int retSentence(){
     getsym();
 
     if(result==LPARSY){
+        // ret不为空
+        retNone = 1;
+
         getsym();
         expr();
 
@@ -1510,6 +1530,7 @@ int retSentence(){
         pushMidCodeRet(tCount);
 
     }else{
+        retNone = 0;
         pushMidCodeRet();
     }
     getsym();
