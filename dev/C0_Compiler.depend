@@ -404,13 +404,13 @@
 	"midCode.h"
 	"mipsCode.h"
 
-1545467053 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\error.cpp
+1545539640 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\error.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>
 	"error.h"
 
-1545537098 c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\error.h
+1545539653 c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\error.h
 	<iostream>
 	<string>
 
@@ -485,14 +485,15 @@
 	"syntaxAnalysis.h"
 	"error.h"
 
-1545462802 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\symboltable.cpp
+1545539724 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\symboltable.cpp
 	<stdio.h>
 	<string>
 	"symbolTable.h"
 	"syntaxAnalysis.h"
 	"error.h"
+	"getsym.h"
 
-1545467147 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\syntaxanalysis.cpp
+1545539631 source:c:\users\retriver\desktop\±àÒë¿ÎÉè\development_branch\syntaxanalysis.cpp
 	<stdio.h>
 	<ctype.h>
 	<string.h>

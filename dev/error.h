@@ -41,7 +41,7 @@ enum SyntaxError{
 
     errRetValueInVoid,      // 在无返回值函数中返回了值
 
-    errAssignToConst,       // 给常量复制
+    errAssignToConst,       // 给常量赋值
 
     errSomethingElse,
 };
@@ -54,7 +54,7 @@ enum TableError{
 
 extern void LexicalAnalysisError(LexicalError errorCode, int line);
 extern void SyntaxAnalysisError(SyntaxError errorCode, int line);
-extern void symbolTableError(TableError errorCode);
+extern void symbolTableError(TableError errorCode, int line);
 
 extern void error();
 

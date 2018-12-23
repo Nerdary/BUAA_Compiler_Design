@@ -1278,8 +1278,8 @@ int assignSentence(){
             int tableLength = getArrayLength(assignID);
 //            printf(">>> check number2:%d\n", tableLength);
             if(checkArrayValue<0 || checkArrayValue>=tableLength){
-                symbolTableError(errArrayOutOfRange);
-                return -1;
+                symbolTableError(errArrayOutOfRange, lc);
+//                return -1;
             }
         }
 
@@ -1724,8 +1724,8 @@ int factor(){
                 int tableLength = getArrayLength(recordFactorID);
                 //printf(">>> check number2:%d\n", tableLength);
                 if(checkArrayValue<0 || checkArrayValue>=tableLength){
-                    symbolTableError(errArrayOutOfRange);
-                    return -1;
+                    symbolTableError(errArrayOutOfRange, lc);
+//                    return -1;
                 }
             }
 

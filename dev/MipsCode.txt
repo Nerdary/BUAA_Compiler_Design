@@ -1,5 +1,8 @@
                   li	                 $t1	                 100	                    
                   sw	                 $t1	             -4($gp)	                    
+                  li	                 $t1	                   4	                    
+                  li	                 $t2	                  10	                    
+                 mul	                 $t3	                 $t1	                 $t2
                    j	                main	                    	                    
                 foo:	                    	                    	                    
                   sw	                 $fp	              0($sp)	                    
@@ -123,6 +126,22 @@
                   sw	                 $t7	              0($sp)	                    
                 addi	                 $sp	                 $sp	                  -4
                 addi	                 $t7	               $zero	                   1
+                addi	                 $t8	               $zero	                   5
+                addi	                 $t9	               $zero	                   1
+                 add	                 $s1	                 $gp	               $zero
+                addi	                 $s1	                 $s1	                  -8
+                addi	                 $s2	               $zero	                   4
+                 mul	                 $s2	                 $s2	                 $t8
+                 sub	                 $s1	                 $s1	                 $s2
+                  sw	                 $t9	              0($s1)	                    
+                addi	                 $t1	               $zero	                  10
+                addi	                 $t2	               $zero	                   2
+                 add	                 $s1	                 $gp	               $zero
+                addi	                 $s1	                 $s1	                  -8
+                addi	                 $s2	               $zero	                   4
+                 mul	                 $s2	                 $s2	                 $t1
+                 sub	                 $s1	                 $s1	                 $s2
+                  sw	                 $t2	              0($s1)	                    
                 addi	                 $v0	               $zero	                  11
                 addi	                 $a0	               $zero	                 101
              syscall	                    	                    	                    

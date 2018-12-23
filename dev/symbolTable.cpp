@@ -4,6 +4,7 @@
 #include "symbolTable.h"
 #include "syntaxAnalysis.h"
 #include "error.h"
+#include "getsym.h"
 
 int globalFuncLevel = 0;            // 全局为0 main 为1
 string globalFuncField = "Global";  // 初始设置为全局
@@ -32,7 +33,7 @@ int pushConstantTable(string ID, int type, int value){
 
     // check
     if(checkDuplicate(ID)!=0){
-        symbolTableError(errDuplicate);
+        symbolTableError(errDuplicate, lc);
         return -1;
     }
 
@@ -67,7 +68,7 @@ int pushArrayTable(string ID, int type, int length, int offset){
 
     // check
     if(checkDuplicate(ID)!=0){
-        symbolTableError(errDuplicate);
+        symbolTableError(errDuplicate, lc);
         return -1;
     }
 
@@ -96,7 +97,7 @@ int pushFuncTable(string ID, int retType){
 
     // check
     if(checkDuplicate(ID)!=0){
-        symbolTableError(errDuplicate);
+        symbolTableError(errDuplicate, lc);
         return -1;
     }
 
@@ -123,7 +124,7 @@ int pushVarTable(string ID, int type, int offset, int isPara){
 
     // check
     if(checkDuplicate(ID)!=0){
-        symbolTableError(errDuplicate);
+        symbolTableError(errDuplicate, lc);
         return -1;
     }
 
@@ -254,7 +255,7 @@ int getArrayLength(string ID){
 
                 if(symbolTable.at(i).IDobject!=4){
                     // 不是array
-                    symbolTableError(errArrayLength);
+                    symbolTableError(errArrayLength, lc);
                     return -1;
                 }
                 else{

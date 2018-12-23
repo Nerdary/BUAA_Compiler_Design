@@ -1,4 +1,5 @@
 const int g_i = 100;
+int g_a[10];
 
 int foo(int aa, char cc){
 	return(1);
@@ -22,6 +23,9 @@ void main(){
     foo(a);
 
     g_i = 1;
+    g_a[5] = 1;
+    g_a[10] = 2;
+    
 
     printf("end of testBUG");
 

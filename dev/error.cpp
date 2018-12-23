@@ -88,19 +88,19 @@ void error(){
     printf("an temporary error output.\n");
 }
 
-void symbolTableError(TableError errorCode){
+void symbolTableError(TableError errorCode, int line){
     switch(errorCode){
         case(errDuplicate):
-            printf("Theres already an ele with same ID and field in the table.\n");
+            printf("Line:%d\tTheres already an ele with same ID and field in the table.\n", line);
             break;
         case(errArrayLength):
-            printf("Find an ele but it is not an array, cannot get length.\n");
+            printf("Line:%d\tFind an ele but it is not an array, cannot get length.\n", line);
             break;
         case(errArrayOutOfRange):
-            printf("The index is out of the range of array.\n");
+            printf("Line:%d\tThe index is out of the range of array.\n", line);
             break;
         default:
-            printf("An unknown error might have occurred.\n");
+            printf("Line:%d\tAn unknown error might have occurred.\n", line);
             break;
 
     }

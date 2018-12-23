@@ -1,6 +1,7 @@
 Contents of mid codes
            1           2           3           4
        const         int         g_i         100
+       array         int         g_a          10
        label       foo_1        func            
         func         int         foo            
         para         int          aa            
@@ -31,4 +32,10 @@ Contents of mid codes
          $t7           a                        
         push         $t7                        
          $t7           1                        
+         $t8           5                        
+         $t9           1                        
+         g_a          []         $t8         $t9
+         $t1          10                        
+         $t2           2                        
+         g_a          []         $t1         $t2
        printend of testBUG                        
