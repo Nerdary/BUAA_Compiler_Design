@@ -6,11 +6,11 @@
 
 // 词法分析错误处理
 enum LexicalError{
-    errSingleChar,      // 两个单引号之间多于一个字符
-    errIllegalChar,     // 两个单引号之间出现非法字符
-    errIllegalString,   // 非法的字符串
-    errTransInt,        // 转成整型数字过程中出错
-    errNotEqual,        // 不等于号出错，不允许单独的感叹号
+    errSingleChar,          // 两个单引号之间多于一个字符
+    errIllegalChar,         // 两个单引号之间出现非法字符
+    errIllegalString,       // 非法的字符串
+    errTransInt,            // 转成整型数字过程中出错
+    errNotEqual,            // 不等于号出错，不允许单独的感叹号
 };
 
 // 语法分析错误处理
@@ -44,6 +44,7 @@ enum SyntaxError{
     errAssignToConst,       // 给常量赋值
 
     errRetTypeNotMatch,     // 返回值类型与函数类型不相符
+    errNoRetInRetFunc,      // 有返回值函数定义没有ret
 
     errConditionType,       // 关系运算符两边必须都是int
 

@@ -38,7 +38,7 @@ int pushConstantTable(string ID, int type, int value){
     }
 
     symbolTable.push_back(tmp);
-    printf("Push constant:%s value:%d in symbolTable.\n", ID.c_str(), value);
+    //printf("Push constant:%s value:%d in symbolTable.\n", ID.c_str(), value);
     return 0;
 }
 // 数组
@@ -73,7 +73,7 @@ int pushArrayTable(string ID, int type, int length, int offset){
     }
 
     symbolTable.push_back(tmp);
-    printf("Push array:%s length:%d in symbolTable.\n", ID.c_str(), length);
+    //printf("Push array:%s length:%d in symbolTable.\n", ID.c_str(), length);
     return 0;
 }
 // 函数声明
@@ -102,7 +102,7 @@ int pushFuncTable(string ID, int retType){
     }
 
     symbolTable.push_back(tmp);
-    printf("Push function:%s type:%d in symbolTable.\n", ID.c_str(), retType);
+    //printf("Push function:%s type:%d in symbolTable.\n", ID.c_str(), retType);
     return 0;
 }
 // 变量、形参
@@ -129,7 +129,7 @@ int pushVarTable(string ID, int type, int offset, int isPara){
     }
 
     symbolTable.push_back(tmp);
-    printf("Push variable:%s type:%d isPara:%d in symbolTable.\n", ID.c_str(), type, isPara);
+    //printf("Push variable:%s type:%d isPara:%d in symbolTable.\n", ID.c_str(), type, isPara);
     return 0;
 }
 
@@ -203,11 +203,11 @@ int searchName2Type(string Name, int mode){
                 // 名字相同
                 if(symbolTable.at(i).field==globalFuncField){
                     // 作用域相同
-                    printf("search2type1: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
+                    //printf("search2type1: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
                     return symbolTable.at(i).IDType;
                 }else if(symbolTable.at(i).level<globalFuncLevel){
                     // 作用域不同，但有全局定义
-                    printf("search2type2: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
+                    //printf("search2type2: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
                     return symbolTable.at(i).IDType;
                 }else   continue;
             }
@@ -246,11 +246,11 @@ int getArrayLength(string ID){
                || symbolTable.at(i).level < globalFuncLevel){
 
                 // 输出检查
-                printf("///////////////////////\n");
-                printf("// ID:\t%s\n", ID.c_str());
-                printf("// field:\t%s\n",symbolTable.at(i).field.c_str());
-                printf("// obj:\t%d\n", symbolTable.at(i).IDobject);
-                printf("///////////////////////\n");
+//                printf("///////////////////////\n");
+//                printf("// ID:\t%s\n", ID.c_str());
+//                printf("// field:\t%s\n",symbolTable.at(i).field.c_str());
+//                printf("// obj:\t%d\n", symbolTable.at(i).IDobject);
+//                printf("///////////////////////\n");
 
 
                 if(symbolTable.at(i).IDobject!=4){
@@ -271,10 +271,15 @@ int getArrayLength(string ID){
 int judgeConst(string Name){
     int i, cntTable = symbolTable.size();
     for(i=0;i<cntTable;i++){
-        if(symbolTable.at(i).ID==Name && symbolTable.at(i).IDobject==1)
-               return 1;
+        if(symbolTable.at(i).ID==Name && symbolTable.at(i).IDobject==1){
+            if(symbolTable.at(i).field==globalFuncField
+               || symbolTable.at(i).level < globalFuncLevel){
+                return 1;
+            }
+        }
+
     }
-    // printf("No such func in symbol table, fail to trans name to type.\n");
+    // printf("No such const found in symbol table, fail to trans name to type.\n");
     return 0;
 }
 

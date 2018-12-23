@@ -43,19 +43,19 @@ void recordRead(){
     *backupFile = *fp;
 
     backupResult = result;
-    printf(">>> recorded.\tbk=%d\n", *backupFile);
+    //printf(">>> recorded.\tbk=%d\n", *backupFile);
 
     backupCharCount = charCount;
 }
 
 void resetRead(){
 //    printf("in resetRead.\n");
-    printf(">>> reset...\tfp=%d\t", *fp);
+    //printf(">>> reset...\tfp=%d\t", *fp);
     result = backupResult;
 //    *p = backupFile;
     *fp = *backupFile;
 //    fseek(fp,(backupCharCount - charCount),1);
-    printf("fp=%d\n", *fp);
+    //printf("fp=%d\n", *fp);
     charCount = backupCharCount;
 
 }
@@ -398,6 +398,7 @@ int getsym(int mode){
                             };
 
     if(result == -1)	;
+    /*
     else{
         // IDSY
         if(result == 20){
@@ -437,6 +438,7 @@ int getsym(int mode){
         }
     }
 
+    */
     return result;
 
 }
@@ -466,6 +468,7 @@ int getsym(){
                             };
 
     if(result == -1)	;
+    /*
     else{
         // IDSY
         if(result == 20){
@@ -507,6 +510,7 @@ int getsym(){
         }
     }
 
+    */
     return result;
 
 }

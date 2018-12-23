@@ -16,10 +16,10 @@ int main(){
 //    globalFuncField = "Global";
 
 	char path[1024] = "";
-//	printf("please input a file path:\n");
-//	scanf("%s",path);
-//	fp = fopen(path,"r");
-    fp = fopen("testBUG.txt", "r");
+	printf("please input a file path:\n");
+	scanf("%s",path);
+	fp = fopen(path,"r");
+//    fp = fopen("testBUG.txt", "r");
 
 	if (fp==NULL){
 		err(5);
@@ -31,7 +31,7 @@ int main(){
     getsym();
     programAnalysis();
     // 生成符号表
-    printSymbolTable();
+    //printSymbolTable();
     // 生成中间代码
     //printMidCode();
     MidCode2File();

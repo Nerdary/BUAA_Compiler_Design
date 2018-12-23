@@ -462,7 +462,7 @@ int paraValueList(){
     while(true){
         //
         expr();
-        printf("1. %d\n", paraSeqCnt);
+        //printf("1. %d\n", paraSeqCnt);
 
         if(paraSeqCnt>=res.size()){
              SyntaxAnalysisError(errParaAmount, lc);
@@ -477,10 +477,10 @@ int paraValueList(){
             return -1;
         }
 
-        printf("<<< 1:%d\n", stackCalc.size());
+        //printf("<<< 1:%d\n", stackCalc.size());
         // 最后有一个操作数应该取出来
         stackCalc.pop_back();
-        printf("<<< 2:%d\n", stackCalc.size());
+        //printf("<<< 2:%d\n", stackCalc.size());
 
         pushMidCodePara(tCount-1);
         tCount--;
@@ -602,9 +602,10 @@ int retValueFuncDefine(){
 
     // 语义分析，一定要有返回语句
     if(retExist==0){
-        error();
-        printf("No return sentence in retFuncDefinition.\n");
-        return -1;
+//        error();
+//        printf("No return sentence in retFuncDefinition.\n");
+        SyntaxAnalysisError(errNoRetInRetFunc, lc);
+//        return -1;
     }
 
     pushMidCodeFuncTail(currentFuncID);
@@ -1282,7 +1283,7 @@ int assignSentence(){
 
 
         // 检查数组越界
-        printf(">>> check number1:%d\n", factorType);
+        //printf(">>> check number1:%d\n", factorType);
         if(termCountFactor==1 && exprCountTerm==1 && factorType==1){
 //            printf(">>> check number1:%d\n", checkArrayValue);
             int tableLength = getArrayLength(assignID);
@@ -1328,7 +1329,7 @@ int assignSentence(){
     // legal:   int = (char);
     // 只判断是否违法就行
     int recordSecondType;
-    printf(">>> termCountFactor:%d exprCountTerm:%d\n", termCountFactor, exprCountTerm);
+    //printf(">>> termCountFactor:%d exprCountTerm:%d\n", termCountFactor, exprCountTerm);
     if(termCountFactor==1 && exprCountTerm==1){
         // 赋值语句右边是一个元素
         if(nestedExpr==1){
@@ -1472,7 +1473,7 @@ int printSentence(){
         stackCalc.pop_back();
 
         int getType = exprType;
-        printf(">>> check get out expr type:%d\n", getType);
+        //printf(">>> check get out expr type:%d\n", getType);
 
         if(result!=RPARSY){
             error();
@@ -1490,7 +1491,7 @@ int printSentence(){
             //     有返回值函数调用，应为单个标识符的情况已经在上一个分支解决了，
             // 这里只可能是返回值类型为char的函数调用
             pushMidCodePrintFuncCall(tCount);
-            printf("This is a func print sentence.\n");
+            printf("This is a function print sentence.\n");
             return 0;
 
         }else{
@@ -1524,7 +1525,7 @@ int retSentence(){
     getsym();
 
     int getFuncType;
-    int getTypeOfRet;
+    int getTypeOfRet = -1;
 
     if(result==LPARSY){
         // ret不为空
@@ -1543,19 +1544,23 @@ int retSentence(){
             return -1;
         }
         pushMidCodeRet(tCount);
-
+        getsym();
     }else{
         retNone = 0;
         pushMidCodeRet();
     }
-    getsym();
+
 
     // 检查返回值类型与函数类型是否相符
     getFuncType = searchName2Type(currentFuncID, 1);
     //printf("<><><><><><><><><><> func:%d ret:%d\n", getFuncType, getTypeOfRet);
-    if(getFuncType != getTypeOfRet){
-        SyntaxAnalysisError(errRetTypeNotMatch, lc);
+
+    if(getFuncType!=3 && getFuncType!=4 && getTypeOfRet!=-1){
+        if(getFuncType != getTypeOfRet){
+            SyntaxAnalysisError(errRetTypeNotMatch, lc);
+        }
     }
+
 
     retExist += 1;
     printf("This is a return sentence.\n");
@@ -1645,6 +1650,7 @@ int mainAnalysis(){
     globalOffset = 0;
 
     pushFuncTable("Main", 4);   // 4: main
+    currentFuncID = "Main";
 
     getsym();
     if(result!=LPARSY){
@@ -1742,7 +1748,7 @@ int factor(){
             // 检查数组越界
             if(termCountFactor==1 && exprCountTerm==1 && factorType==1){
                 //printf(">>> check number1:%d\n", checkArrayValue);
-                printf(">>> check recorded ID:%s\n", recordFactorID.c_str());
+                //printf(">>> check recorded ID:%s\n", recordFactorID.c_str());
                 int tableLength = getArrayLength(recordFactorID);
                 //printf(">>> check number2:%d\n", tableLength);
                 if(checkArrayValue<0 || checkArrayValue>=tableLength){
@@ -1757,7 +1763,7 @@ int factor(){
             // named as "getArrayValue"
             pushMidCodeGetArrayValue(tCount, recordFactorID, tCount-1);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+            //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
             checkConflict();
 
@@ -1832,7 +1838,7 @@ int factor(){
             ///////////////////////////////////////////////////////////////////////////////////////
             pushMidCodeRET(tCount);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+            //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
             checkConflict();
 
@@ -1846,7 +1852,7 @@ int factor(){
                 // 普通的标识符，是个变量
                 pushMidCodeGetValue(tCount, IDname);
                 stackCalc.push_back(tCount);
-                printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+                //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
                 checkConflict();
 
@@ -1862,7 +1868,7 @@ int factor(){
 
                 pushMidCodeRET(tCount);
                 stackCalc.push_back(tCount);
-                printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+                //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
                 tCount++;
                 checkConflict();
                 // ...
@@ -1873,7 +1879,7 @@ int factor(){
 
         }
     }else if(result==PLUSSY || result==MINUSSY){
-        printf(">>>>>> in this branch: factor: MINUSSY/PLUSSY\n");
+        //printf(">>>>>> in this branch: factor: MINUSSY/PLUSSY\n");
         // 判断一下符号
         int resultTag = 1;
         if(result==MINUSSY) resultTag = -1;
@@ -1891,7 +1897,7 @@ int factor(){
 
             pushMidCodeFactorValue(tCount, 1, checkArrayValue);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+            //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
             tCount++;
             checkConflict();
 
@@ -1908,7 +1914,7 @@ int factor(){
 
         pushMidCodeFactorValue(tCount, 1, checkArrayValue);
         stackCalc.push_back(tCount);
-        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+        //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
         tCount++;
         checkConflict();
 
@@ -1917,7 +1923,7 @@ int factor(){
     }else if(result==ACHARSY){
         pushMidCodeFactorValue(tCount, 2, globalChar);
         stackCalc.push_back(tCount);
-        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+        //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
         tCount++;
         checkConflict();
 
@@ -1945,7 +1951,7 @@ int term(){
     termType = factorType2;
 
     factorFirstTCount = transTCount2Register();
-    printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
+    //printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
 
     while(true){
         if(result==STARSY||result==DIVISY){
@@ -1959,24 +1965,24 @@ int term(){
             }
             // 此处可以进行值计算、栈操作、生成四元式
 
-            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+            //printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
 
             int n2 = stackCalc.back();
             stackCalc.pop_back();
-            printf("<<<<<< pop out :%d\n", n2);
+            //printf("<<<<<< pop out :%d\n", n2);
             int n1 = stackCalc.back();
             stackCalc.pop_back();
-            printf("<<<<<< pop out :%d\n", n1);
+            //printf("<<<<<< pop out :%d\n", n1);
             pushMidCodeCalc(tCount, n1, opTag, n2);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\n", tCount);
+            //printf("<<<<<< push in:%d\n", tCount);
 
-            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+            //printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
 
             tCount++;
             checkConflict();
             factorFirstTCount = transTCount2Register();
-            printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
+            //printf("\t\t====== CHECK FACTOR:%d\n", factorFirstTCount);
 
             termType = 1;   // 只要参与运算了就自动转化为int型
 
@@ -2015,7 +2021,7 @@ int expr(){
     }
 
     exprFirstTCount = transTCount2Register();
-    printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
+    //printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
     exprFirstTCountVector.push_back(exprFirstTCount);
 
     if(opTag==-1){
@@ -2024,9 +2030,9 @@ int expr(){
         // 将运算栈中那个数替换掉
         int n = stackCalc.back();
         stackCalc.pop_back();
-        printf("<<<<<< pop out :%d\n", n);
+        //printf("<<<<<< pop out :%d\n", n);
         stackCalc.push_back(tCount);
-        printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
+        //printf("<<<<<< push in:%d\tsize:%d\n", tCount, stackCalc.size());
 
 
         tCount++;
@@ -2059,27 +2065,27 @@ int expr(){
             // 此处可以进行值计算、栈操作、生成四元式
 //            printf(">>>> size:%d\n", stackCalc.size());
 
-            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+            //printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
 
             int n2 = stackCalc.back();
             stackCalc.pop_back();
-            printf("<<<<<< pop out :%d\n", n2);
+            //printf("<<<<<< pop out :%d\n", n2);
 //            printf(">>>> size:%d\n", stackCalc.size());
             int n1 = stackCalc.back();
             stackCalc.pop_back();
-            printf("<<<<<< pop out :%d\n", n1);
+            //printf("<<<<<< pop out :%d\n", n1);
 //            printf(">>>> size:%d\n", stackCalc.size());
             pushMidCodeCalc(tCount, n1, opFlag, n2);
             stackCalc.push_back(tCount);
-            printf("<<<<<< push in:%d\n", tCount);
+            //printf("<<<<<< push in:%d\n", tCount);
 
-            printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
+            //printf(">>>>>>>>>>>>>>>>>>>>>>>> check the length of stack:%d\n", stackCalc.size());
 
 //            printf(">>>> size:%d\n", stackCalc.size());
             tCount++;
             checkConflict();
             exprFirstTCount = transTCount2Register();
-            printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
+            //printf("\t\t====== CHECK EXPR:%d\n", exprFirstTCount);
             exprFirstTCountVector.pop_back();
             exprFirstTCountVector.push_back(exprFirstTCount);
 
@@ -2135,20 +2141,20 @@ void checkConflict(){
     // 放置在每一次tCount++后
     // 这里的 tCount 是即将被使用的tCount
     int i, tmpReg, tmpExpr;
-    printf("\t\t====== IN CHECK CONFLICT ====== factor: %d expr:%d\n", factorFirstTCount, exprFirstTCount);
+    //printf("\t\t====== IN CHECK CONFLICT ====== factor: %d expr:%d\n", factorFirstTCount, exprFirstTCount);
     if(factorFirstTCount!=0||exprFirstTCount!=0){
         while(true){
             tmpReg = transTCount2Register(1);
 
-            printf("\t\t======target:%d factor:%d ", tmpReg, factorFirstTCount);
-            for(i=0;i<exprFirstTCountVector.size();i++)
-                printf("%d ", exprFirstTCountVector.at(i));
-            printf("\n");
+            //printf("\t\t======target:%d factor:%d ", tmpReg, factorFirstTCount);
+//            for(i=0;i<exprFirstTCountVector.size();i++)
+//                printf("%d ", exprFirstTCountVector.at(i));
+//            printf("\n");
 
 
             if(factorFirstTCount==tmpReg){
                 // 发生了寄存器冲突
-                printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                //printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
                 tCount++;
             }else{
                 int conflictTag = 0;
@@ -2157,7 +2163,7 @@ void checkConflict(){
                     if(tmpExpr==tmpReg){
                         // 发生了寄存器冲突
                         conflictTag = 1;
-                        printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                        //printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
                         tCount++;
                         // 不能break
                     }
@@ -2213,20 +2219,20 @@ void checkConflict(int offset){
     // 放置在每一次tCount++后
     // 这里的 tCount 是即将被使用的tCount
     int i, tmpReg, tmpExpr;
-    printf("\t\t====== IN CHECK CONFLICT ====== factor: %d expr:%d\n", factorFirstTCount, exprFirstTCount);
+    //printf("\t\t====== IN CHECK CONFLICT ====== factor: %d expr:%d\n", factorFirstTCount, exprFirstTCount);
     if(factorFirstTCount!=0||exprFirstTCount!=0){
         while(true){
             tmpReg = transTCount2Register(offset);
 
-            printf("\t\t======target:%d factor:%d ", tmpReg, factorFirstTCount);
-            for(i=0;i<exprFirstTCountVector.size();i++)
-                printf("%d ", exprFirstTCountVector.at(i));
-            printf("\n");
+            //printf("\t\t======target:%d factor:%d ", tmpReg, factorFirstTCount);
+//            for(i=0;i<exprFirstTCountVector.size();i++)
+//                printf("%d ", exprFirstTCountVector.at(i));
+//            printf("\n");
 
 
             if(factorFirstTCount==tmpReg){
                 // 发生了寄存器冲突
-                printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                //printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
                 tCount++;
             }else{
                 int conflictTag = 0;
@@ -2235,7 +2241,7 @@ void checkConflict(int offset){
                     if(tmpExpr==tmpReg){
                         // 发生了寄存器冲突
                         conflictTag = 1;
-                        printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
+                        //printf("\t\t====== CONFLICT: $t%d, factor:%d, expr:%d\n", tmpReg, factorFirstTCount, exprFirstTCount);
                         tCount++;
                         // 不能break
                     }
@@ -2260,7 +2266,7 @@ vector<int> searchFuncPara(string funcName){
     }
 
     if(i==length){
-        printf("in function 'searchFuncPara' no such name:%s\n", funcName.c_str());
+        //printf("in function 'searchFuncPara' no such name:%s\n", funcName.c_str());
     }
 
     vector<int> nonsence;
@@ -2273,7 +2279,7 @@ void jump2SEMISY2(){
     int jumpCount = 0;
     int a = fgetc(fp);
     while(a!=';'){
-        printf("%d\n", a);
+        //printf("%d\n", a);
         a = fgetc(fp);
         jumpCount++;
 
@@ -2284,7 +2290,7 @@ void jump2SEMISY2(){
     // 将分号退回
     ungetc(a,fp);
 
-    printf(">>> Jump pass %d lexical characters.\n", jumpCount);
+    //printf(">>> Jump pass %d lexical characters.\n", jumpCount);
 
 }
 

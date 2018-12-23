@@ -51,8 +51,8 @@ void getMid(){
         return ;
     }
     tmp = midCodeVec.at(midCodeIndex++);
-    printf("> %d\t", midCodeIndex);
-    printMidCodeTmp(tmp);
+//    printf("> %d\t", midCodeIndex);
+//    printMidCodeTmp(tmp);
 }
 
 void pushGlobalRecord(string ID, int offset, string type){

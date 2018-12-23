@@ -1,49 +1,755 @@
 Contents of mid codes
            1           2           3           4
-       const         int         g_i         100
-       array         int         g_a          10
-       label       foo_1        func            
-        func         int         foo            
-        para         int          aa            
-        para        char          cc            
-         $t1          99                        
-         ret         $t1                        
-       label       foo_2        func            
-       label        ff_1        func            
-        func        void          ff            
-         $t2           1                        
+       const         int         _t1           1
+       const         int         _t2           2
+       const         int         _t3           3
+         var        char         _c1            
+         var        char         _c2            
+         var        char         _c3            
+         var        char         _c4            
+       label       ff1_1        func            
+        func        char         ff1            
+        para        char           c            
+       const        char      temp_c          98
+         $t1      temp_c                        
+         _c1         $t1                        
+         $t2           c                        
          ret         $t2                        
-       label        ff_2        func            
-        main        void        main            
-         var        char           z            
-         var        char           x            
-         var         int           a            
+       label       ff1_2        func            
+       label       ff2_1        func            
+        func         int         ff2            
+         $t3          45                        
+         _c2         $t3                        
+         $t4         _t1                        
+         $t5         _t2                        
+         $t6         $t4           +         $t5
+         $t7         _t3                        
+         $t8         $t6           +         $t7
+         ret         $t8                        
+       label       ff2_2        func            
+       label       ff3_1        func            
+        func        void         ff3            
+        para         int           a            
+        para         int           b            
+        para        char           c            
+        para         int           d            
+        para        char           e            
+        para        char           f            
+         $t9           a                        
+         $t1           b                        
+         $t2         $t9           +         $t1
+         $t3           c                        
+         $t4         $t2           +         $t3
+         $t5           d                        
+         $t6         $t4           +         $t5
+         $t7           e                        
+         $t8         $t6           +         $t7
+         $t9           f                        
+         $t1         $t8           +         $t9
+       print         $t1                        
+         ret                                    
+       label       ff3_2        func            
+       label       ff4_1        func            
+        func        void         ff4            
+       print       _ff4_                        
+       label       ff4_2        func            
+       label factorial_1        func            
+        func         int   factorial            
+        para         int           a            
+         var         int           b            
+         $t2           a                        
          $t3           1                        
-           a         $t3                        
-         $t4         122                        
-           z         $t4                        
-         $t5         120                        
-           x         $t5                        
-         $t6           a                        
-        push         $t6                        
-         $t6           z                        
-        push         $t6                        
-         $t6           a                        
-         $t7           a                        
-        push         $t7                        
-         $t7           1                        
-         $t8           5                        
-         $t9           1                        
-         g_a          []         $t8         $t9
-         $t1          10                        
-         $t2           2                        
-         g_a          []         $t1         $t2
-         $t3          97                        
-         $t4         122                        
-         $t3           >         $t4            
+         $t2          ==         $t3            
           BZ       label         2_1            
-       print        nope                        
+         $t4           1                        
+         ret         $t4                        
         GOTO       label         2_2            
        label         2_1        norm            
+         $t5           a                        
+         $t6           1                        
+         $t7         $t5           -         $t6
+        push         $t7                        
+        call   factorial                        
+         $t7         RET                        
+         $t8           a                        
+         $t9         $t7           *         $t8
+           b         $t9                        
+         $t1           b                        
+         ret         $t1                        
        label         2_2        norm            
-       printend of testBUG                        
+       label factorial_2        func            
+       label       ff5_1        func            
+        func        void         ff5            
+       const        char         _c2         122
+         var         int         _t1            
+         $t2           4                        
+         $t3         _t1                        
+         $t4         _c2                        
+         $t5         $t3           +         $t4
+         $t6         _c1                        
+         $t7         $t5           +         $t6
+       print         $t7                        
+       label       ff5_2        func            
+        main        void        main            
+       const         int     int_100         100
+       const        char      char_z         122
+         var         int        in_1            
+         var         int          t1            
+         var         int          t2            
+         var        char          c1            
+         var        char          c2            
+       array        charsingle_chars          10
+         var         int          t3            
+         var         int          t4            
+         var         int          t5            
+         var         int          t6            
+         var         int          t7            
+         var         int          t8            
+         var         int          t9            
+         var        char          c3            
+         var        char          c4            
+         var         int         t10            
+         var         int         t11            
+         var         int         t12            
+         var         int         t13            
+         var         int         t14            
+         var         int         t15            
+         var         int         t16            
+         var         int         t17            
+         var         int         t18            
+         var         int         t19            
+         var         int         t20            
+         var         int         t21            
+         var         int         t22            
+         var         int         t23            
+         var        char          c5            
+         var        char          c6            
+         var        char          c7            
+         var        char          c8            
+       array         int    t_array1         100
+       array        char    c_array1         100
+         var         int         _c4            
+         var         int           i            
+         var        char         _t1            
+       array         int    t_array2         100
+       array        char    c_array2         100
+        scan         int        in_1            
+         $t8        in_1                        
+         $t9           1                        
+         $t8          ==         $t9            
+          BZ       label         3_1            
+        scan         int          t1            
+        scan        char          c2            
+        scan        char          c1            
+        scan         int          t2            
+         $t1          c2                        
+         $t2          t1                        
+         $t3          c2                        
+         $t4         $t2           *         $t3
+         $t5         $t1           +         $t4
+         $t6          t1                        
+         $t7          c1                        
+         $t8         $t6           /         $t7
+         $t9         $t5           -         $t8
+       print         $t9                        
+       print___ !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~___\n\t\\\'___                        
+       print                                    
+       print       @@@@@                        
+         $t1          c2                        
+       print          c2        IDSY         $t1
+         $t2           0                        
+         $t3          43                        
+single_chars          []         $t2         $t3
+         $t4           1                        
+         $t5          45                        
+single_chars          []         $t4         $t5
+         $t6           2                        
+         $t7          42                        
+single_chars          []         $t6         $t7
+         $t8           3                        
+         $t9          47                        
+single_chars          []         $t8         $t9
+         $t1           4                        
+         $t2          48                        
+single_chars          []         $t1         $t2
+         $t3           5                        
+         $t4          57                        
+single_chars          []         $t3         $t4
+         $t5           6                        
+         $t6          97                        
+single_chars          []         $t5         $t6
+         $t7           7                        
+         $t8         122                        
+single_chars          []         $t7         $t8
+         $t9           8                        
+         $t1          65                        
+single_chars          []         $t9         $t1
+         $t2           9                        
+         $t3          90                        
+single_chars          []         $t2         $t3
+         $t4          43                        
+         _c1         $t4                        
+         $t5          97                        
+         _c3         $t5                        
+         $t6         _c1                        
+         $t7         _t2                        
+         $t8         $t6           +         $t7
+          t3         $t8                        
+         $t9         _c3                        
+         $t1           -         $t9            
+         $t2          77                        
+         $t3         $t1           +         $t2
+          t4         $t3                        
+         $t4           1                        
+         $t5           -         $t4            
+         $t6          45                        
+         $t7         $t5           +         $t6
+         $t8           1                        
+         $t9         $t7           +         $t8
+          t5         $t9                        
+         $t1          t3                        
+         $t2          t5                        
+         $t1          !=         $t2            
+          BZ       label         4_1            
+       print      error1                        
+        GOTO       label         4_2            
+       label         4_1        norm            
+       label         4_2        norm            
+         $t3          t3                        
+         $t4          t4                        
+         $t3          ==         $t4            
+          BZ       label         5_1            
+       print      error2                        
+        GOTO       label         5_2            
+       label         5_1        norm            
+       label         5_2        norm            
+         $t5          t3                        
+         $t6          t4                        
+         $t5          <=         $t6            
+          BZ       label         6_1            
+       print      error3                        
+        GOTO       label         6_2            
+       label         6_1        norm            
+       label         6_2        norm            
+         $t7          t3                        
+         $t8          t5                        
+         $t7           <         $t8            
+          BZ       label         7_1            
+       print      error4                        
+        GOTO       label         7_2            
+       label         7_1        norm            
+       label         7_2        norm            
+         $t9          t4                        
+         $t1          t5                        
+         $t9          >=         $t1            
+          BZ       label         8_1            
+       print      error5                        
+        GOTO       label         8_2            
+       label         8_1        norm            
+       label         8_2        norm            
+         $t2          t5                        
+         $t3          t3                        
+         $t2           >         $t3            
+          BZ       label         9_1            
+       print      error6                        
+        GOTO       label         9_2            
+       label         9_1        norm            
+       label         9_2        norm            
+         $t4          12                        
+          t6         $t4                        
+         $t5          23                        
+          t7         $t5                        
+         $t6          23                        
+         $t7           -         $t6            
+          t8         $t7                        
+         $t8          t8                        
+         $t9          t6                        
+         $t1         $t8           +         $t9
+         $t2          t7                        
+         $t3         $t1           +         $t2
+         $t4          12                        
+         $t3          !=         $t4            
+          BZ       label        10_1            
+       print      error7                        
+        GOTO       label        10_2            
+       label        10_1        norm            
+       label        10_2        norm            
+         $t5           3                        
+         $t6           5                        
+         $t5           >         $t6            
+          BZ       label        11_1            
+       print      error8                        
+        GOTO       label        11_2            
+       label        11_1        norm            
+       label        11_2        norm            
+         $t7           9                        
+          t9         $t7                        
+         $t8          51                        
+          c3         $t8                        
+         $t9          52                        
+          c4         $t9                        
+         $t1          c4                        
+         $t2          c3                        
+         $t3         $t1           -         $t2
+         $t4          t9                        
+         $t5         $t3           +         $t4
+         $t6          10                        
+         $t5          !=         $t6            
+          BZ       label        12_1            
+       print      error9                        
+        GOTO       label        12_2            
+       label        12_1        norm            
+       label        12_2        norm            
+        GOTO       label         3_2            
+       label         3_1        norm            
+       label         3_2        norm            
+         $t7        in_1                        
+         $t8           2                        
+         $t7          ==         $t8            
+          BZ       label        13_1            
+         $t9           0                        
+         $t1        2333                        
+    t_array1          []         $t9         $t1
+         $t2           0                        
+         $t3          47                        
+    c_array1          []         $t2         $t3
+         $t4           7                        
+         $t5           -         $t4            
+         $t6           9                        
+         $t7         $t5           +         $t6
+         t10         $t7                        
+         $t8          43                        
+          c5         $t8                        
+         $t9          c5                        
+          c6         $t9                        
+         $t1           0                        
+         $t2    c_array1          []         $t1
+          c7         $t2                        
+         $t3           7                        
+         $t4           -         $t3            
+         t11         $t4                        
+         $t5         t11                        
+         t12         $t5                        
+         $t6           0                        
+         $t7    t_array1          []         $t6
+         t13         $t7                        
+        call         ff2                        
+         $t8         RET                        
+         t14         $t8                        
+         $t9         121                        
+        push         $t9                        
+        call         ff1                        
+         $t9         RET                        
+          c8         $t9                        
+         $t1         t10                        
+         $t2          c5                        
+         $t3         $t1           +         $t2
+         $t4          c6                        
+         $t5         $t3           +         $t4
+         $t6          c7                        
+         $t7         $t5           +         $t6
+         $t8         t11                        
+         $t9         $t7           +         $t8
+         $t1         t12                        
+         $t2         $t9           +         $t1
+         $t3         t13                        
+         $t4         $t2           +         $t3
+         $t5         t14                        
+         $t6         $t4           +         $t5
+         $t7          c8                        
+         $t8         $t6           +         $t7
+         t14         $t8                        
+         $t9         t11                        
+         $t1          -7                        
+         $t2         $t9           *         $t1
+         $t3         t13                        
+         $t4         $t2           *         $t3
+         $t5          c8                        
+         $t6         $t4           /         $t5
+         $t7         t10                        
+         $t8         $t6           /         $t7
+         $t9         t12                        
+         $t1         $t8           *         $t9
+       print         $t1                        
+       print                                    
+         $t2           4                        
+         $t3         t14                        
+         $t4         $t2           +         $t3
+       print         $t4                        
+       print                                    
+         $t5           3                        
+         $t6          -2                        
+         $t7         $t5           /         $t6
+         $t8           -         $t7            
+       print         $t8                        
+         $t9           4                        
+         $t1           5                        
+         $t2         $t9           /         $t1
+         $s1         $t2                        
+          BZ       label        14_1            
+       print     error10                        
+        GOTO       label        14_2            
+       label        14_1        norm            
+         $t3           1                        
+         t15         $t3                        
+       label        14_2        norm            
+         $t4           3                        
+         $t5           4                        
+         $t4           <         $t5            
+          BZ       label        15_1            
+         $t6           4                        
+         $t7           4                        
+         $t6           <         $t7            
+          BZ       label        16_1            
+       print     error11                        
+        GOTO       label        16_2            
+       label        16_1        norm            
+         $t8           4                        
+         $t9           4                        
+         $t8          >=         $t9            
+          BZ       label        17_1            
+         $t1         t15                        
+         $t2           0                        
+         $t1           >         $t2            
+          BZ       label        18_1            
+         $t3         t15                        
+         $t4           0                        
+         $t3           <         $t4            
+          BZ       label        19_1            
+       print     error12                        
+        GOTO       label        19_2            
+       label        19_1        norm            
+       print        ojbk                        
+       label        19_2        norm            
+        GOTO       label        18_2            
+       label        18_1        norm            
+       label        18_2        norm            
+        GOTO       label        17_2            
+       label        17_1        norm            
+       label        17_2        norm            
+       label        16_2        norm            
+        GOTO       label        15_2            
+       label        15_1        norm            
+       print     error13                        
+       label        15_2        norm            
+         $t5           1                        
+         t16         $t5                        
+         $t6           0                        
+         t18         $t6                        
+       label        20_1        norm            
+         $t7         t16                        
+         $t8           4                        
+         $t7          <=         $t8            
+          BZ       label        20_2            
+         $t9           1                        
+         t17         $t9                        
+       label        21_1        norm            
+         $t1         t17                        
+         $t2         t16                        
+         $t1           <         $t2            
+          BZ       label        21_2            
+         $t3         t18                        
+         $t4         t17                        
+         $t5         $t3           +         $t4
+         t18         $t5                        
+         $t6         t17                        
+         $t7           1                        
+         $t8         $t6           +         $t7
+         t17         $t8                        
+        GOTO       label        21_1            
+       label        21_2        norm            
+         $t9         t16                        
+         $t1           1                        
+         $t2         $t9           +         $t1
+         t16         $t2                        
+        GOTO       label        20_1            
+       label        20_2        norm            
+         $t3           0                        
+         t19         $t3                        
+         $t4           2                        
+         t20         $t4                        
+        GOTO       label        22_1            
+       label        22_2        norm            
+         $t5         t20                        
+         $t6           5                        
+         $t5          <=         $t6            
+          BZ       label        22_3            
+       label        22_1        norm            
+         $t7           1                        
+         t22         $t7                        
+         $t8           2                        
+         t21         $t8                        
+        GOTO       label        23_1            
+       label        23_2        norm            
+         $t9         t21                        
+         $t1         t20                        
+         $t9           <         $t1            
+          BZ       label        23_3            
+       label        23_1        norm            
+         $t2         t22                        
+         $t3         t21                        
+         $t4         $t2           *         $t3
+         t22         $t4                        
+         $t5         t21                        
+         $t6           2                        
+         $t7         $t5           +         $t6
+         t21         $t7                        
+        GOTO       label        23_2            
+       label        23_3        norm            
+         $t8         t19                        
+         $t9         t22                        
+         $t1         $t8           +         $t9
+         t19         $t1                        
+         $t2         t20                        
+         $t3           1                        
+         $t4         $t2           +         $t3
+         t20         $t4                        
+        GOTO       label        22_2            
+       label        22_3        norm            
+         $t5         100                        
+         t20         $t5                        
+        GOTO       label        24_1            
+       label        24_2        norm            
+         $t6         t20                        
+         $t7          97                        
+         $t6          >=         $t7            
+          BZ       label        24_3            
+       label        24_1        norm            
+         $t8           1                        
+         t22         $t8                        
+         $t9         100                        
+         t21         $t9                        
+        GOTO       label        25_1            
+       label        25_2        norm            
+         $t1         t21                        
+         $t2         t20                        
+         $t1           >         $t2            
+          BZ       label        25_3            
+       label        25_1        norm            
+         $t3         t22                        
+         $t4         t21                        
+         $t5         $t3           *         $t4
+         t22         $t5                        
+         $t6         t21                        
+         $t7           2                        
+         $t8         $t6           -         $t7
+         t21         $t8                        
+        GOTO       label        25_2            
+       label        25_3        norm            
+         $t9         t19                        
+         $t1         t22                        
+         $t2         $t9           +         $t1
+         t19         $t2                        
+         $t3         t20                        
+         $t4           1                        
+         $t5         $t3           -         $t4
+         t20         $t5                        
+        GOTO       label        24_2            
+       label        24_3        norm            
+         $t6           1                        
+         $t7           0                        
+         $t8           -         $t7            
+         $t6           >         $t8            
+          BZ       label        26_1            
+       print        ojbk                        
+        GOTO       label        26_2            
+       label        26_1        norm            
+       label        26_2        norm            
+       label        27_1        norm            
+         $t9           1                        
+         $s1         $t9                        
+          BZ       label        27_2            
+         $t1           0                        
+         t23         $t1                        
+        GOTO       label        28_1            
+       label        28_2        norm            
+         $t2         t23                        
+         $t3         100                        
+         $t2           <         $t3            
+          BZ       label        28_3            
+       label        28_1        norm            
+         $t4         t23                        
+         $t5           2                        
+         $t6         $t4           +         $t5
+         t23         $t6                        
+         $t7         t23                        
+         $t8          60                        
+         $t7           >         $t8            
+          BZ       label        29_1            
+       print                                    
+         $t9         t18                        
+         $t1         t19                        
+         $t2         $t9           +         $t1
+         $t3         t23                        
+         $t4         $t2           +         $t3
+       print         $t4                        
+         ret                                    
+        GOTO       label        29_2            
+       label        29_1        norm            
+       label        29_2        norm            
+         $t5         t23                        
+         $t6           1                        
+         $t7         $t5           +         $t6
+         t23         $t7                        
+        GOTO       label        28_2            
+       label        28_3        norm            
+        GOTO       label        27_1            
+       label        27_2        norm            
+       print     error14                        
+        GOTO       label        13_2            
+       label        13_1        norm            
+       label        13_2        norm            
+         $t8        in_1                        
+         $t9           3                        
+         $t8          ==         $t9            
+          BZ       label        30_1            
+         $t1           1                        
+        push         $t1                        
+        call   factorial                        
+         $t1         RET                        
+         $t2           2                        
+        push         $t2                        
+        call   factorial                        
+         $t2         RET                        
+         $t3         $t1           +         $t2
+         $t4           5                        
+        push         $t4                        
+        call   factorial                        
+         $t4         RET                        
+         $t5         $t3           +         $t4
+       print         $t5                        
+         $t6          97                        
+         _c1         $t6                        
+         $t7          43                        
+        push         $t7                        
+        call         ff1                        
+         $t7         _c1                        
+       print         _c1        IDSY         $t7
+         $t8          98                        
+         _c2         $t8                        
+        call         ff2                        
+         $t9         _c2                        
+       print         _c2        IDSY         $t9
+         $t1           1                        
+        push         $t1                        
+         $t1           2                        
+        push         $t1                        
+         $t1          97                        
+        push         $t1                        
+         $t1           3                        
+        push         $t1                        
+         $t1          98                        
+        push         $t1                        
+         $t1          99                        
+        push         $t1                        
+        call         ff3                        
+        call         ff4                        
+         $t1          42                        
+         _c1         $t1                        
+        call         ff5                        
+         $t2          50                        
+         $t3         104                        
+    c_array2          []         $t2         $t3
+         $t4          50                        
+         $t5    c_array2          []         $t4
+       print         $t5        func            
+         $t6         103                        
+        push         $t6                        
+        call         ff1                        
+         $t6         RET                        
+       print         $t6        func            
+         $t7         114                        
+       print         $t7                        
+         $t8           0                        
+           i         $t8                        
+        GOTO       label        31_1            
+       label        31_2        norm            
+         $t9           i                        
+         $t1     int_100                        
+         $t9           <         $t1            
+          BZ       label        31_3            
+       label        31_1        norm            
+         $t2           i                        
+         $t3           i                        
+    t_array2          []         $t2         $t3
+         $t4           i                        
+         $t5           1                        
+         $t6         $t4           +         $t5
+           i         $t6                        
+        GOTO       label        31_2            
+       label        31_3        norm            
+         $t7          34                        
+         $t8           4                        
+         $t9         $t7           /         $t8
+         $t1           6                        
+         $t2         $t9           *         $t1
+         $t3      char_z                        
+         $t4          10                        
+         $t5         $t3           /         $t4
+         $t6         $t2           +         $t5
+         $t7    t_array2          []         $t6
+         $t8          23                        
+         $t9         $t7           /         $t8
+         $t1          22                        
+         $t2           i                        
+         $t3         $t1           *         $t2
+         $t4          23                        
+         $t5         $t3           /         $t4
+         $t6           1                        
+         $t7    t_array2          []         $t6
+         $t8        1000                        
+         $t1         $t7           *         $t8
+         $t2         $t5           *         $t1
+         $t3        1000                        
+         $t4         $t2           /         $t3
+         $t5          57                        
+         $t6          17                        
+         $t7         $t5           /         $t6
+         $t8         $t4           +         $t7
+         $t1    t_array2          []         $t9
+         $t2          30                        
+         $t3         $t1           /         $t2
+         $t4         $t9           +         $t3
+         $t5    t_array2          []         $t4
+           i         $t5                        
+         $t6          34                        
+         $t7           4                        
+         $t8         $t6           /         $t7
+         $t9           6                        
+         $t1         $t8           *         $t9
+         $t2      char_z                        
+         $t3          10                        
+         $t4         $t2           /         $t3
+         $t5         $t1           +         $t4
+         $t6    t_array2          []         $t5
+         $t7          23                        
+         $t8         $t6           /         $t7
+         $t9          22                        
+         $t1           i                        
+         $t2         $t9           *         $t1
+         $t3          23                        
+         $t4         $t2           /         $t3
+         $t5           1                        
+         $t6    t_array2          []         $t5
+         $t7        1000                        
+         $t9         $t6           *         $t7
+         $t1         $t4           *         $t9
+         $t2        1000                        
+         $t3         $t1           /         $t2
+         $t4          57                        
+         $t5          17                        
+         $t6         $t4           /         $t5
+         $t7         $t3           +         $t6
+         $t9    t_array2          []         $t8
+         $t1          30                        
+         $t2         $t9           /         $t1
+         $t3         $t8           +         $t2
+         $t4    t_array2          []         $t3
+        push         $t4                        
+        call   factorial                        
+         $t4         RET                        
+       print         $t4                        
+        GOTO       label        30_2            
+       label        30_1        norm            
+       label        30_2        norm            
+         ret                                    
