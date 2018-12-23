@@ -26,6 +26,8 @@ void main(){
     g_a[5] = 1;
     g_a[10] = 2;
     
+    if('a'>'z')
+	printf("nope");
 
     printf("end of testBUG");
 

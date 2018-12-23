@@ -79,6 +79,9 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
         case(errRetTypeNotMatch):
             printf("Line:%d\tReturn type not match with function type.\n", line);
             break;
+        case(errConditionType):
+            printf("Line:%d\tExpression of condition type error.\n", line);
+            break;
 
         case(errSomethingElse):
             printf("Line:%d\tSomething else occurred.\n", line);

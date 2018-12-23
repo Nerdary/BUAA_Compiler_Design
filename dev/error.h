@@ -45,6 +45,8 @@ enum SyntaxError{
 
     errRetTypeNotMatch,     // 返回值类型与函数类型不相符
 
+    errConditionType,       // 关系运算符两边必须都是int
+
     errSomethingElse,
 };
 

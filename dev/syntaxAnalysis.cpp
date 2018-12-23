@@ -982,6 +982,10 @@ int condition(){
 
         return -1;
     }
+    int getFirstExprType = exprType;
+    if(getFirstExprType!=1){
+        SyntaxAnalysisError(errConditionType, lc);
+    }
 
     // 最后有一个操作数应该取出来
     stackCalc.pop_back();
@@ -994,6 +998,11 @@ int condition(){
         int op = result;
         getsym();
         expr();
+
+        int getSecondExprType = exprType;
+        if(getSecondExprType!=1){
+            SyntaxAnalysisError(errConditionType, lc);
+        }
 
         // 最后有一个操作数应该取出来
         stackCalc.pop_back();
