@@ -462,7 +462,7 @@ int paraValueList(){
     while(true){
         //
         expr();
-        printf("1.\n");
+        printf("1. %d\n", paraSeqCnt);
 
         if(paraSeqCnt>=res.size()){
              SyntaxAnalysisError(errParaAmount, lc);
@@ -485,9 +485,10 @@ int paraValueList(){
         pushMidCodePara(tCount-1);
         tCount--;
 
+        paraSeqCnt++;
+
         if(result==COMMASY){
             getsym();
-            paraSeqCnt++;
             continue;
         }else{
             break;
@@ -1513,12 +1514,17 @@ int retSentence(){
     }
     getsym();
 
+    int getFuncType;
+    int getTypeOfRet;
+
     if(result==LPARSY){
         // ret不为空
         retNone = 1;
 
         getsym();
         expr();
+        getTypeOfRet = exprType;
+
 
         // 最后有一个操作数应该取出来
         stackCalc.pop_back();
@@ -1534,6 +1540,13 @@ int retSentence(){
         pushMidCodeRet();
     }
     getsym();
+
+    // 检查返回值类型与函数类型是否相符
+    getFuncType = searchName2Type(currentFuncID, 1);
+    //printf("<><><><><><><><><><> func:%d ret:%d\n", getFuncType, getTypeOfRet);
+    if(getFuncType != getTypeOfRet){
+        SyntaxAnalysisError(errRetTypeNotMatch, lc);
+    }
 
     retExist += 1;
     printf("This is a return sentence.\n");

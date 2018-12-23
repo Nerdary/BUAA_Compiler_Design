@@ -2,7 +2,7 @@ const int g_i = 100;
 int g_a[10];
 
 int foo(int aa, char cc){
-	return(1);
+	return('c');
 }
 
 void ff{

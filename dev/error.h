@@ -43,6 +43,8 @@ enum SyntaxError{
 
     errAssignToConst,       // 给常量赋值
 
+    errRetTypeNotMatch,     // 返回值类型与函数类型不相符
+
     errSomethingElse,
 };
 

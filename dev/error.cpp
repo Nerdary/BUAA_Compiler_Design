@@ -76,6 +76,9 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
         case(errAssignToConst):
             printf("Line:%d\tAssign value to a const.\n", line);
             break;
+        case(errRetTypeNotMatch):
+            printf("Line:%d\tReturn type not match with function type.\n", line);
+            break;
 
         case(errSomethingElse):
             printf("Line:%d\tSomething else occurred.\n", line);
