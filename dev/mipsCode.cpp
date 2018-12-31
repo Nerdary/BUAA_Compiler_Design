@@ -46,7 +46,7 @@ void printMidCodeTmp(midCodeItem tmp){
 
 void getMid(){
     if(midCodeIndex>=midCodeVec.size()){
-        printf(">>> out of midCodeVec's length\n");
+        //printf(">>> out of midCodeVec's length\n");
         tmp = nullItem;
         return ;
     }
@@ -269,14 +269,14 @@ void genMips(){     // 有点类似于 programAnalysis
         // 变量、数组定义部分
         while(tmp.one=="var" || tmp.one=="array"){
             if(tmp.one=="var"){
-                printf(">>> check value of VAR count:%d\n", funcSymbolCount);
+                //printf(">>> check value of VAR count:%d\n", funcSymbolCount);
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, "", tmp.two};
                 funcSymbolTable.push_back(tmp2);
                 //
                 addi("$sp", "$sp", -4);
                 getMid();
             }else{
-                printf(">>> check value of ARRAY count:%d\n", funcSymbolCount);
+                //printf(">>> check value of ARRAY count:%d\n", funcSymbolCount);
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, "", tmp.two};
                 funcSymbolCount += transNum(tmp.four).value;
                 funcSymbolTable.push_back(tmp2);

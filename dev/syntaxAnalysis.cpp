@@ -682,12 +682,6 @@ int unretValueFuncDefine(){
         printf("STACK BRACE ERROR: not match.\n");
     }
 
-    if(stackBrace.back()=='{'){
-        stackBrace.pop_back();
-    }else{
-        printf("STACK BRACE ERROR: not match.\n");
-    }
-
     getsym();
 
     // 恢复全局变量
@@ -1346,8 +1340,8 @@ int assignSentence(){
     // 检查是否违法
 
     if(recordFisrtType!=recordSecondType){
-        //printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test: %d=%d\n", recordFisrtType, recordSecondType);
-        //printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
+        printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test: %d=%d\n", recordFisrtType, recordSecondType);
+        printf(">>> test: %d=%d\n", recordFisrtType, recordSecondType);
         SyntaxAnalysisError(errAssignDifferType, lc);
         return -1;
     }

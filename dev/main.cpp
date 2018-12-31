@@ -13,13 +13,11 @@
 FILE* fp;
 
 int main(){
-//    globalFuncField = "Global";
-
-	char path[1024] = "";
-	printf("please input a file path:\n");
-	scanf("%s",path);
-	fp = fopen(path,"r");
-//    fp = fopen("testBUG.txt", "r");
+//	char path[1024] = "";
+//	printf("please input a file path:\n");
+//	scanf("%s",path);
+//	fp = fopen(path,"r");
+    fp = fopen("test.txt", "r");
 
 	if (fp==NULL){
 		err(5);
@@ -30,19 +28,22 @@ int main(){
 
     getsym();
     programAnalysis();
+
     // 生成符号表
     //printSymbolTable();
+
     // 生成中间代码
     //printMidCode();
+
     MidCode2File();
     printf("\n>>> FINISH MID CODE.\n");
+
     // 根据中间代码生成目标mips指令
     genMips();
     printf("\n>>> FINISH MIPS CODE.\n");
     Mips2File();
-    //printMipsCode();
-//    printGlobalRecord();
 
+    //printMipsCode();
 
 	return 0;
 }

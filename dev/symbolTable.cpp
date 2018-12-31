@@ -173,14 +173,16 @@ int searchName2Obj(string Name){
     // 0:default | 1:int | 2:char | 3:else/unknown
     int i, cntTable = symbolTable.size();
 
-    for(i=0;i<cntTable;i++){
+    for(i=cntTable-1;i>=0;i--){
         if(symbolTable.at(i).ID==Name){
             // 名字相同
             if(symbolTable.at(i).field==globalFuncField){
                 // 作用域相同
+                //printf(">> check 1\n");
                 return symbolTable.at(i).IDobject;
             }else if(symbolTable.at(i).level<globalFuncLevel){
                 // 作用域不同，但有全局定义
+                //printf(">> check 2\n");
                 return symbolTable.at(i).IDobject;
             }else   continue;
         }
@@ -198,7 +200,7 @@ int searchName2Type(string Name, int mode){
     int i, cntTable = symbolTable.size();
     switch(mode){
     case(0):
-        for(i=0;i<cntTable;i++){
+        for(i=cntTable-1;i>=0;i--){
             if(symbolTable.at(i).ID==Name){
                 // 名字相同
                 if(symbolTable.at(i).field==globalFuncField){
@@ -270,11 +272,14 @@ int getArrayLength(string ID){
 
 int judgeConst(string Name){
     int i, cntTable = symbolTable.size();
-    for(i=0;i<cntTable;i++){
-        if(symbolTable.at(i).ID==Name && symbolTable.at(i).IDobject==1){
+    for(i=cntTable-1;i>=0;i--){
+        if(symbolTable.at(i).ID==Name){
             if(symbolTable.at(i).field==globalFuncField
                || symbolTable.at(i).level < globalFuncLevel){
-                return 1;
+                if(symbolTable.at(i).IDobject==1)
+                    return 1;
+                else
+                    return 0;
             }
         }
 
