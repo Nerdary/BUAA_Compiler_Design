@@ -51,8 +51,8 @@ void getMid(){
         return ;
     }
     tmp = midCodeVec.at(midCodeIndex++);
-//    printf("> %d\t", midCodeIndex);
-//    printMidCodeTmp(tmp);
+    //printf("> %d\t", midCodeIndex);
+    //printMidCodeTmp(tmp);
 }
 
 void pushGlobalRecord(string ID, int offset, string type){
@@ -1121,7 +1121,7 @@ int searchIDType(string func, string ID){
     for(i=0;i<length;i++){
         tmpinfo = funcStack.at(i);
         if(tmpinfo.funcName==func){
-            // printf(">>> find func name in stack:%s\n", tmpinfo.funcName.c_str());
+            //printf(">>> find func name in stack:%s\n", tmpinfo.funcName.c_str());
             break;
         }
 
@@ -1131,12 +1131,12 @@ int searchIDType(string func, string ID){
     int symSize = tmpinfo.funcSymbolTable.size();
     for(j=0;j<symSize;j++){
         funcRecordItem ftmp = tmpinfo.funcSymbolTable.at(j);
-        //kf(">>> %s\n", ftmp.ID.c_str());
+        //printf(">>> %s\n", ftmp.ID.c_str());
         if(ftmp.ID==ID){
             //printf(">>> %s\n", ftmp.type.c_str());
-            if(ftmp.type=="int")
+            if(ftmp.type=="int" || ftmp.type=="1")
                 return 1;
-            else if(ftmp.type=="char")
+            else if(ftmp.type=="char" || ftmp.type=="2")
                 return 2;
             else
                 return -1;

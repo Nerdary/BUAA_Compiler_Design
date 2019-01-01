@@ -1,502 +1,264 @@
 Contents of mid codes
            1           2           3           4
-       const         int        num1          10
-       const         int        num2           1
-       const         int        num3          10
-       const         int        num4         -19
-       const        char       char1          97
-       const        char       char2          98
-         var         int        num5            
-         var         int        num6            
-       array         int      array1           9
-         var        char       char3            
-         var        char       char4            
-       array        char      array2          10
-       array        char  testresult          10
-       label   return1_1        func            
-        func         int     return1            
-         $t1           1                        
-         ret         $t1                        
-       label   return1_2        func            
-       label factorial_1        func            
-        func         int   factorial            
-        para         int           n            
-         $t2           n                        
-         $t3           1                        
-         $t2          ==         $t3            
+       const         int        zero           0
+       const         int         one           1
+       const         int   minus_two          -2
+       const        char        renn          48
+       const        char first_alpha          97
+       const        charfirst_captical          65
+         var         int           x            
+         var         int          yy            
+         var         int          zz            
+       array         int         yyy           7
+       label      fact_1        func            
+        func         int        fact            
+        para         int           t            
+         $t1           t                        
+         $t2           3                        
+         $t1           <         $t2            
           BZ       label         2_1            
-         $t4           n                        
-         ret         $t4                        
+         $t3           t                        
+         ret         $t3                        
         GOTO       label         2_2            
        label         2_1        norm            
-         $t5           n                        
-         $t6           n                        
+         $t4           t                        
+         $t5           1                        
+         $t6         $t4           -         $t5
+        push         $t6                        
+        call        fact                        
+         $t6         RET                        
+         $t7           t                        
+         $t8         $t6           *         $t7
+         ret         $t8                        
+       label         2_2        norm            
+       label      fact_2        func            
+       label      rt15_1        func            
+        func         int        rt15            
+       const         int        zero           1
+         $t9           3                        
+         $t1           5                        
+         $t2         $t9           *         $t1
+         $t3         one                        
+         $t4         $t2           /         $t3
+         $t5         one                        
+         $t6         $t4           +         $t5
+         $t7        zero                        
+         $t8         $t6           -         $t7
+         ret         $t8                        
+       label      rt15_2        func            
+       label      fun2_1        func            
+        func        char        fun2            
+        para         int           a            
+        para         int           b            
+        para         int           c            
+        para         int           d            
+        para         int           e            
+        para         int           f            
+         $t9           a                        
+         $t1           b                        
+         $t2           c                        
+         $t3         $t1           *         $t2
+         $t4           d                        
+         $t5         $t3           *         $t4
+         $t6           e                        
+         $t7         $t5           /         $t6
+         $t8         $t9           +         $t7
+         $t1           f                        
+         $t2         $t8           -         $t1
+       print         $t2                        
+         $t3          65                        
+         ret         $t3                        
+       label      fun2_2        func            
+        main        void        main            
+       const         int           b           1
+       const         int           c           2
+       const         int           d           3
+       const         int           e           4
+       array        char          ar           2
+         var         int           r            
+       array         int          m1           8
+         var         int          aa            
+         var         int           a            
+         $t4          -1                        
+           x         $t4                        
+         $t5           4                        
+         $t6           -         $t5            
+           r         $t6                        
+         $t7           6                        
+          aa         $t7                        
+       print!@#$%%abcd114514ABCD963287~;:                         
+         $t8          aa                        
+        push         $t8                        
+        call        fact                        
+         $t8         RET                        
+       print         $t8                        
+         $t9           d                        
+         $t1           e                        
+         $t2         $t9           *         $t1
+         $t3           6                        
+         $t4   minus_two                        
+         $t5           b                        
+         $t6         $t4           +         $t5
          $t7           1                        
          $t8         $t6           -         $t7
-        push         $t8                        
-        call   factorial                        
-         $t8         RET                        
-         $t9         $t5           *         $t8
-         ret         $t9                        
-       label         2_2        norm            
-       label factorial_2        func            
-       label   testvar_1        func            
-        func        void     testvar            
-       const         int       char2        -109
-         var        char        num1            
-         var         int      array2            
-       array         int       char1          10
-         $t1          10                        
-      array2         $t1                        
-         $t2          97                        
-        num1         $t2                        
-       label   testvar_2        func            
-       label   testfor_1        func            
-        func         int     testfor            
-        para         int           a            
-        para        char           b            
-        para         int           c            
-        para        char           d            
-        para         int           f            
-        para        char           e            
-         var         int           i            
+         $t9         $t3           *         $t8
+         $t1         $t2           +         $t9
+         $t3           x                        
+         $t4           r                        
+         $t5         $t3           -         $t4
+        push         $t5                        
+         $t5          aa                        
+        push         $t5                        
+         $t5           b                        
+        push         $t5                        
+         $t5           e                        
+        push         $t5                        
+         $t5           c                        
+        push         $t5                        
+         $t5   minus_two                        
+        push         $t5                        
+        call        fun2                        
+         $t5         RET                        
+          ar          []         $t1         $t5
+         $t6        zero                        
+         $t7           4                        
+        push         $t7                        
+        call        fact                        
+         $t7         RET                        
+         $t8         $t6           /         $t7
+         $t9          ar          []         $t8
+       print         $t9                        
+         $t1           1                        
+         $t2          48                        
+          ar          []         $t1         $t2
+         $t3           b                        
+         $t4           1                        
+         $t5          ar          []         $t4
+        call        rt15                        
+         $t6         RET                        
+         $t7         $t5           +         $t6
+         $t8         $t3           *         $t7
+         $t9           -         $t8            
+         $t1           c                        
+         $t2           e                        
          $t3           9                        
+         $t4         $t2           *         $t3
+         $t5         $t1           -         $t4
+         $t6         $t9           +         $t5
+         $t7           2                        
+         $t8         109                        
+         $t9         $t7           *         $t8
+         $t1         $t6           +         $t9
+          aa         $t1                        
+         $t2          aa                        
+       print          aa        IDSY         $t2
+         $t3          aa                        
            a         $t3                        
-         $t4           0                        
-           c         $t4                        
-         $t5         100                        
-           i         $t5                        
-        GOTO       label         3_1            
-       label         3_2        norm            
-         $t6           i                        
-         $t7          10                        
-         $t6           <         $t7            
-          BZ       label         3_3            
-       label         3_1        norm            
-         $t8           a                        
-         $t9           1                        
-         $t1         $t8           +         $t9
-           a         $t1                        
-         $t2           i                        
-         $t3           1                        
-         $t4         $t2           -         $t3
-           i         $t4                        
-        GOTO       label         3_2            
-       label         3_3        norm            
+        scan         int           a            
+        scan         int           x            
+         $t4           a                        
          $t5           0                        
-           i         $t5                        
-        GOTO       label         4_1            
-       label         4_2        norm            
-         $t6           i                        
-         $t7          10                        
-         $t6           <         $t7            
-          BZ       label         4_3            
-       label         4_1        norm            
-         $t8           c                        
-         $t9           1                        
-         $t1         $t8           +         $t9
-           c         $t1                        
-         $t2           i                        
-         $t3           1                        
-         $t4         $t2           +         $t3
-           i         $t4                        
+         $t4           >         $t5            
+          BZ       label         3_1            
+       print      1 hit                         
+         $t6           x                        
+         $t7           0                        
+         $t6          <=         $t7            
+          BZ       label         4_1            
+         $t8           a                        
+         $t9           x                        
+         $t1         $t8           /         $t9
+         $t2           a                        
+         $t3         $t1           *         $t2
+           r         $t3                        
+       print      2 hit                         
         GOTO       label         4_2            
-       label         4_3        norm            
-         $t5           a                        
-         $t6          10                        
-         $t5          ==         $t6            
+       label         4_1        norm            
+       label         4_2        norm            
+         $t4           r                        
+         $t5          aa                        
+         $t6         $t4           +         $t5
+           r         $t6                        
+        GOTO       label         3_2            
+       label         3_1        norm            
+       label         3_2        norm            
+         $t7           x                        
+         $t8           0                        
+         $t7          !=         $t8            
           BZ       label         5_1            
-         $t7           c                        
-         $t8          10                        
-         $t7          ==         $t8            
+       print      3 hit                         
+         $t9           a                        
+         $t1           4                        
+         $t2           -         $t1            
+         $t9          ==         $t2            
           BZ       label         6_1            
-         $t9           1                        
-         ret         $t9                        
+         $t3           r                        
+         $t4           1                        
+         $t5         $t3           +         $t4
+           r         $t5                        
+       print      4 hit                         
         GOTO       label         6_2            
        label         6_1        norm            
        label         6_2        norm            
         GOTO       label         5_2            
        label         5_1        norm            
        label         5_2        norm            
-         $t1           0                        
-         ret         $t1                        
-       label   testfor_2        func            
-       label testwhile_1        func            
-        func         int   testwhile            
-         var         int        num1            
-         var         int        num2            
-         var         int        num3            
-         var         int        num4            
-         $t2           0                        
-        num1         $t2                        
-         $t3          10                        
-        num2         $t3                        
-         $t4           1                        
-         $t5           -         $t4            
-        num3         $t5                        
-         $t6           0                        
-        num4         $t6                        
-       label         7_1        norm            
-         $t7        num1                        
-         $t8          10                        
-         $t7          !=         $t8            
-          BZ       label         7_2            
-         $t9        num2                        
-         $t1           1                        
-         $t2         $t9           -         $t1
-        num2         $t2                        
-         $t3        num1                        
-         $t4           1                        
-         $t5         $t3           +         $t4
-        num1         $t5                        
-        GOTO       label         7_1            
-       label         7_2        norm            
-       label         8_1        norm            
-         $t6        num3                        
+         $t6           a                        
          $t7           0                        
-         $t6           >         $t7            
-          BZ       label         8_2            
-         $t8        num4                        
-         $t9          10                        
-         $t1         $t8           +         $t9
-        num4         $t1                        
-         $t2        num3                        
-         $t3          10                        
-         $t4         $t2           -         $t3
-        num3         $t4                        
-        GOTO       label         8_1            
-       label         8_2        norm            
-         $t5        num2                        
-         $t6           0                        
-         $t5          ==         $t6            
-          BZ       label         9_1            
-         $t7        num4                        
-         $t8           0                        
-         $t7          ==         $t8            
-          BZ       label        10_1            
-         $t9           1                        
-         ret         $t9                        
-        GOTO       label        10_2            
-       label        10_1        norm            
-       label        10_2        norm            
-        GOTO       label         9_2            
-       label         9_1        norm            
-         $t1           0                        
-         ret         $t1                        
-       label         9_2        norm            
-       label testwhile_2        func            
-       labeltestexpression_1        func            
-        func         inttestexpression            
-         var         int           a            
-         var         int           c            
-         var        char           b            
-         $t2          10                        
-           a         $t2                        
-         $t3          97                        
-           b         $t3                        
-         $t4           0                        
-         $t5         100                        
-      array1          []         $t4         $t5
-         $t6           1                        
-         $t7          99                        
-      array1          []         $t6         $t7
-         $t8           a                        
-         $t9           b                        
-         $t1         $t8           -         $t9
-         $t2          97                        
-         $t3         $t1           +         $t2
-        call     return1                        
-         $t4         RET                        
-         $t5         $t3           *         $t4
-         $t6           0                        
-         $t7      array1          []         $t6
-         $t8          10                        
-         $t9         $t7           /         $t8
-         $t1         $t5           -         $t9
-         $t2           1                        
-         $t3         $t1           +         $t2
-           c         $t3                        
-         $t4           c                        
-         $t5      array1          []         $t4
-         $t6          99                        
-         $t5          ==         $t6            
-          BZ       label        11_1            
-         $t7           1                        
-         ret         $t7                        
-        GOTO       label        11_2            
-       label        11_1        norm            
-       label        11_2        norm            
-         $t8           0                        
-         ret         $t8                        
-       labeltestexpression_2        func            
-       label testarray_1        func            
-        func         int   testarray            
-         var         int           a            
-         var         int           b            
-         var         int           c            
-         $t9           1                        
-           a         $t9                        
-         $t1           2                        
-           b         $t1                        
-         $t2           3                        
-           c         $t2                        
-         $t3           0                        
-         $t4           1                        
-      array1          []         $t3         $t4
-         $t5           4                        
-         $t6           0                        
-         $t7      array1          []         $t6
-      array1          []         $t5         $t7
-         $t8           c                        
-         $t9           a                        
-         $t1           b                        
-        call     return1                        
-         $t2         RET                        
-         $t3         $t1           +         $t2
-         $t4         $t9           *         $t3
-         $t5         $t8           +         $t4
-         $t6           0                        
-         $t7      array1          []         $t6
-         $t8           2                        
-         $t9         $t7           *         $t8
-         $t1         $t5           -         $t9
-         $t2          10                        
-      array1          []         $t1         $t2
-         $t3           4                        
-         $t4      array1          []         $t3
-         $t5          10                        
-         $t4          ==         $t5            
-          BZ       label        12_1            
-         $t6           1                        
-         ret         $t6                        
-        GOTO       label        12_2            
-       label        12_1        norm            
-       label        12_2        norm            
-         $t7           0                        
-         ret         $t7                        
-       label testarray_2        func            
-       labeltestprintf_1        func            
-        func        void  testprintf            
-        para         int        flag            
-         $t8        flag                        
+         $t6           <         $t7            
+          BZ       label         7_1            
+       print      5 hit                         
+         $t8           x                        
          $t9           0                        
-         $t8          <=         $t9            
-          BZ       label        13_1            
-       printthis is a string, !#$%&'()*+,-./0123456789:;<=>?@[\]^_`{|}~|                        
-        GOTO       label        13_2            
-       label        13_1        norm            
-         $t1        flag                        
-         $t2           2                        
-         $t1          >=         $t2            
-          BZ       label        14_1            
-         $t3          97                        
-       print         $t3        func            
-         $t4          50                        
-       print         $t4        func            
-         $t5          42                        
-       print         $t5        func            
-        GOTO       label        14_2            
-       label        14_1        norm            
-       printthis is a string                         
-         $t6        num1                        
-         $t7           5                        
-         $t8         $t6           -         $t7
-       print         $t8                        
-       label        14_2        norm            
-       label        13_2        norm            
-       labeltestprintf_2        func            
-       labeltestfactorial_1        func            
-        func        chartestfactorial            
-         $t9           1                        
-        push         $t9                        
-        call   factorial                        
-         $t9         RET                        
-         $t1           1                        
-         $t9          ==         $t1            
-          BZ       label        15_1            
-         $t2           3                        
-        push         $t2                        
-        call   factorial                        
-         $t2         RET                        
-         $t3           6                        
-         $t2          ==         $t3            
-          BZ       label        16_1            
-         $t4          84                        
-         ret         $t4                        
-        GOTO       label        16_2            
-       label        16_1        norm            
-       label        16_2        norm            
-        GOTO       label        15_2            
-       label        15_1        norm            
-       label        15_2        norm            
-         $t5          70                        
-         ret         $t5                        
-       labeltestfactorial_2        func            
-        main        void        main            
-         var         int           i            
-         var         int        flag            
-         $t6           9                        
-        num5         $t6                        
-         $t7           8                        
-        num6         $t7                        
-         $t8          97                        
-       char3         $t8                        
-         $t9          98                        
-       char4         $t9                        
-        scan         int        flag            
-         $t1           0                        
-           i         $t1                        
-        GOTO       label        17_1            
-       label        17_2        norm            
-         $t2           i                        
-         $t3          10                        
-         $t2           <         $t3            
-          BZ       label        17_3            
-       label        17_1        norm            
-         $t4           i                        
-         $t5          84                        
-  testresult          []         $t4         $t5
-         $t6           i                        
+         $t8          >=         $t9            
+          BZ       label         8_1            
+         $t1           r                        
+         $t2           a                        
+         $t3         $t1           +         $t2
+           r         $t3                        
+       print      6 hit                         
+        GOTO       label         8_2            
+       label         8_1        norm            
+       label         8_2        norm            
+        GOTO       label         7_2            
+       label         7_1        norm            
+         $t4           r                        
+         $t5          -1                        
+         $t6         $t4           *         $t5
+           r         $t6                        
+         $t7           r                        
+       print           r        IDSY         $t7
+       label         7_2        norm            
+         $t8           2                        
+         $t9           -         $t8            
+           a         $t9                        
+        GOTO       label         9_1            
+       label         9_2        norm            
+         $t1           a                        
+         $t2           d                        
+         $t1           <         $t2            
+          BZ       label         9_3            
+       label         9_1        norm            
+         $t3           x                        
+         $t4           e                        
+         $t5         $t3           +         $t4
+           x         $t5                        
+         $t6           a                        
          $t7           1                        
          $t8         $t6           +         $t7
-           i         $t8                        
-        GOTO       label        17_2            
-       label        17_3        norm            
-         $t9           9                        
-        num5         $t9                        
-        GOTO       label        18_1            
-       label        18_2        norm            
-         $t1        num5                        
-         $t2           0                        
-         $t1          >=         $t2            
-          BZ       label        18_3            
-       label        18_1        norm            
-         $t3        num5                        
-         $t4        num5                        
-         $t5  testresult          []         $t4
-      array2          []         $t3         $t5
-         $t6        num5                        
-         $t7           1                        
-         $t8         $t6           -         $t7
-        num5         $t8                        
-        GOTO       label        18_2            
-       label        18_3        norm            
-         $t9           0                        
-        num6         $t9                        
-        GOTO       label        19_1            
-       label        19_2        norm            
-         $t1        num6                        
-         $t2           8                        
-         $t1          !=         $t2            
-          BZ       label        19_3            
-       label        19_1        norm            
-         $t3        num6                        
-         $t4           0                        
-      array1          []         $t3         $t4
-         $t5        num6                        
-         $t6           1                        
-         $t7         $t5           +         $t6
-        num6         $t7                        
-        GOTO       label        19_2            
-       label        19_3        norm            
-        call     testvar                        
-         $t8        num5                        
-        push         $t8                        
-         $t8       char1                        
-        push         $t8                        
-         $t8        num6                        
-        push         $t8                        
-         $t8       char2                        
-        push         $t8                        
-         $t8          10                        
-        push         $t8                        
-         $t8       char4                        
-        push         $t8                        
-        call     testfor                        
-         $t8         RET                        
-         $t9           1                        
-         $t8          ==         $t9            
-          BZ       label        20_1            
+           a         $t8                        
+        GOTO       label         9_2            
+       label         9_3        norm            
+       label        10_1        norm            
+         $t9           x                        
          $t1           0                        
-         $t2          84                        
-  testresult          []         $t1         $t2
-        GOTO       label        20_2            
-       label        20_1        norm            
-         $t3           0                        
-         $t4          70                        
-  testresult          []         $t3         $t4
-       label        20_2        norm            
-        call   testwhile                        
-         $t5         RET                        
-         $s1         $t5                        
-          BZ       label        21_1            
-         $t6           1                        
-         $t7          84                        
-  testresult          []         $t6         $t7
-        GOTO       label        21_2            
-       label        21_1        norm            
-         $t8           1                        
-         $t9          70                        
-  testresult          []         $t8         $t9
-       label        21_2        norm            
-        calltestfactorial                        
-         $t1         RET                        
-         $t2          84                        
-         $t1          ==         $t2            
-          BZ       label        22_1            
-         $t3           2                        
-         $t4          84                        
-  testresult          []         $t3         $t4
-        GOTO       label        22_2            
-       label        22_1        norm            
-         $t5           2                        
-         $t6          70                        
-  testresult          []         $t5         $t6
-       label        22_2        norm            
-        calltestexpression                        
-         $t7         RET                        
-         $s1         $t7                        
-          BZ       label        23_1            
-         $t8           3                        
-         $t9          84                        
-  testresult          []         $t8         $t9
-        GOTO       label        23_2            
-       label        23_1        norm            
-         $t1           3                        
-         $t2          70                        
-  testresult          []         $t1         $t2
-       label        23_2        norm            
-        call   testarray                        
-         $t3         RET                        
-         $s1         $t3                        
-          BZ       label        24_1            
-         $t4           4                        
-         $t5          84                        
-  testresult          []         $t4         $t5
-        GOTO       label        24_2            
-       label        24_1        norm            
-         $t6           4                        
-         $t7          70                        
-  testresult          []         $t6         $t7
-       label        24_2        norm            
-         $t8        flag                        
-        push         $t8                        
-        call  testprintf                        
-         $t8           0                        
-           i         $t8                        
-        GOTO       label        25_1            
-       label        25_2        norm            
-         $t9           i                        
-         $t1           5                        
-         $t9           <         $t1            
-          BZ       label        25_3            
-       label        25_1        norm            
-         $t2           i                        
-         $t3  testresult          []         $t2
-       print         $t3        func            
-         $t4           i                        
-         $t5           1                        
-         $t6         $t4           +         $t5
-           i         $t6                        
-        GOTO       label        25_2            
-       label        25_3        norm            
+         $t9           >         $t1            
+          BZ       label        10_2            
+         $t2           x                        
+         $t3           c                        
+         $t4         $t2           -         $t3
+           x         $t4                        
+        GOTO       label        10_1            
+       label        10_2        norm            
+         $t5           x                        
+       print           x        IDSY         $t5

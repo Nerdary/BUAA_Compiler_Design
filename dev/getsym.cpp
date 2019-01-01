@@ -398,7 +398,7 @@ int getsym(int mode){
                             };
 
     if(result == -1)	;
-    /*
+
     else{
         // IDSY
         if(result == 20){
@@ -438,7 +438,7 @@ int getsym(int mode){
         }
     }
 
-    */
+
     return result;
 
 }
@@ -468,7 +468,7 @@ int getsym(){
                             };
 
     if(result == -1)	;
-    /*
+
     else{
         // IDSY
         if(result == 20){
@@ -510,7 +510,7 @@ int getsym(){
         }
     }
 
-    */
+
     return result;
 
 }
