@@ -1316,7 +1316,7 @@ int assignSentence(){
     if(judgeIFConst==1){
         // 不生成四元式
     }else{
-        printf("\t\t\tassign check: recTCount:%d tCount:%d\n", recTCount, tCount);
+        //printf("\t\t\tassign check: recTCount:%d tCount:%d\n", recTCount, tCount);
         pushMidCodeAssign(assignID, isArray, recTCount, tCount);
     }
 

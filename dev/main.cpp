@@ -20,7 +20,7 @@ int main(){
 //    fp = fopen("test.txt", "r");
 
 	if (fp==NULL){
-		err(5);
+
 		return 0;
 	} else {
 		printf("successfully open the file\n");

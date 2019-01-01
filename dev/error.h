@@ -19,6 +19,7 @@ enum LexicalError{
     errVarDef,              //
     errVarState,            //
     errParaList,            //
+    errUnRetFuncDef,        //
 
 
 };
