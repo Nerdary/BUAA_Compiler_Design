@@ -13,11 +13,11 @@
 FILE* fp;
 
 int main(){
-//	char path[1024] = "";
-//	printf("please input a file path:\n");
-//	scanf("%s",path);
-//	fp = fopen(path,"r");
-    fp = fopen("test.txt", "r");
+	char path[1024] = "";
+	printf("please input a file path:\n");
+	scanf("%s",path);
+	fp = fopen(path,"r");
+//    fp = fopen("test.txt", "r");
 
 	if (fp==NULL){
 		err(5);

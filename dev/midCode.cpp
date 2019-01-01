@@ -24,22 +24,12 @@ void pushMidCodeConst(int type, string ID, int value){
     string tmpValue;
     if(type==1){
         tmpType="int";
-    //    itoa(value, tmpValue);
 
         tmpValue = to_string(value);
     }else{
         tmpType="char";
-    //    tmpValue[0] = value;
-    //    tmpValue[1] = '\0';
-
-    //    sprintf(tmpValue, "%c", value);
-//        char ctmp = value;
-//        string stmp(&ctmp, 1);
-//        tmpValue = stmp;
 
         tmpValue = to_string(value);
-
-    //    printf(">>>> %s\n", tmpValue.c_str());
     }
 
     midCodeItem tmp = {
@@ -50,7 +40,7 @@ void pushMidCodeConst(int type, string ID, int value){
     };
 
     midCodeVec.push_back(tmp);
-//    printf(">>> Push mid code: %s, %s, %s, %s\n", tmp.one.c_str(), tmp.two.c_str(), tmp.three.c_str(), tmp.four.c_str());
+
 }
 
 void pushMidCodeVar(int type, string ID){
@@ -74,14 +64,10 @@ void pushMidCodeArray(int type, string ID, int length){
     string tmpValue;
     if(type==1){
         tmpType="int";
-    //    itoa(value, tmpValue);
 
         tmpValue = to_string(length);
     }else{
         tmpType="char";
-//        char ctmp = value;
-//        string stmp(&ctmp, 1);
-//        tmpValue = stmp;
         tmpValue = to_string(length);
     }
     midCodeItem tmp = {
@@ -96,13 +82,8 @@ void pushMidCodeArray(int type, string ID, int length){
 
 void pushMidCodeFuncHead(int funcType, string ID){
     // 先生成一个label
-//    int i, len = strlen(ID.c_str());
     string labelName = ID + "_1";
-//    for(i=0;i<len;i++)
-//        labelName[i] = ID[i];
-//    labelName[len] = '_';
-//    labelName[len+1] = '1';
-//    labelName[len+2] = 0;
+
     midCodeItem tmp1 = {
         "label",
         labelName,
@@ -387,7 +368,6 @@ void pushMidCodeAssign(string ID, int isArray, int index, int tCount){
         tmp = {
             ID,
             "[]",
-            //to_string(index),
             t3,
             t1,
         };
@@ -475,9 +455,7 @@ void pushMidCodeFactorValue(int tCount, int type, int value){
         };
     }else{
         string t1 = "$t" + to_string(newCount);
-//        char ctmp = value;
-//        string stmp(&ctmp, 1);
-//        string tmpValue = stmp;
+
         tmp = {
             t1,
             //tmpValue,
@@ -532,33 +510,6 @@ void pushMidCodeGOTO(int labelCount, int index){
     };
     midCodeVec.push_back(tmp);
 }
-//
-//void pushMIdCodeCalStep(int tCount, string var, int op, int length){
-//    if(tCount>9){
-//        if(tCount%9==0) tCount = 9;
-//        else    tCount %= 9;
-//    }
-//
-//    string t1 = "$t" + to_string(tCount+1);
-//    string opt = "+";
-//    if(op==2)   opt = "-";
-//
-//    midCodeItem tmp = {
-//        t1,
-//        var,
-//        opt,
-//        to_string(length),
-//    };
-//    midCodeVec.push_back(tmp);
-//
-//    midCodeItem tmp2 = {
-//        var,
-//        t1,
-//        "",
-//        "",
-//    };
-//    midCodeVec.push_back(tmp2);
-//}
 
 void pushMidCodeScan(int type, string ID){
     string tmpType;
@@ -688,6 +639,7 @@ void MidCode2File(){
     int i, cntMidCode = midCodeVec.size();
     ofstream ofile;
     ofile.open("midCode.txt");
+
     // setw(6)<<i  1\t2\t3\t4\n
     ofile<<"Contents of mid codes"<<endl;
     ofile<<setw(12)<<"1"<<setw(12)<<"2"<<setw(12)<<"3"<<setw(12)<<"4"<<endl;

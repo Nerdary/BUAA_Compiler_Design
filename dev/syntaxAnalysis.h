@@ -74,5 +74,32 @@ void checkConflict(int offset);
 vector<int> searchFuncPara(string funcName);
 void jump2SEMISY2();
 
+// º¯ÊýÉùÃ÷Çø
+int unsignedInt();
+int signedInt();
+int constDefine();
+int constState();
+int factor();
+int item();
+int expr();
+int varDefine();
+int varState();
+int paraList();
+int complexSentence();
+int sentenceSequence();
+int retValueFuncDefine();
+int condSentence();
+int condition();
+int loopSentence();
+int retValueFuncCall();
+int unretValueFuncCall();
+int assignSentence();
+int scanSentence();
+int printSentence();
+int nullSentence();
+int retSentence();
+int programAnalysis();
+int mainAnalysis();
+
 
 #endif // SYNTAXANALYSIS_H_INCLUDED

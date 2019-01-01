@@ -11,6 +11,16 @@ enum LexicalError{
     errIllegalString,       // 非法的字符串
     errTransInt,            // 转成整型数字过程中出错
     errNotEqual,            // 不等于号出错，不允许单独的感叹号
+
+    errUnsignInt,           //
+    errConstDef,            //
+    errConstState,          //
+    errDecHead,             //
+    errVarDef,              //
+    errVarState,            //
+    errParaList,            //
+
+
 };
 
 // 语法分析错误处理
@@ -20,6 +30,7 @@ enum SyntaxError{
                             // 指一般处理中遇到错误，需要终止子程序
                             // 的情况
     errUnfitTypeSymbol,     // 不匹配的类型标识符
+    errLackLeftBracket,     // 缺少左中括号
     errLackRightBracket,    // 缺少右中括号
     errLackRightBrace,      // 缺少右大括号
     errLackRightParen,      // 缺少右小括号

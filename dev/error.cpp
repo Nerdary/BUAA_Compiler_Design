@@ -23,6 +23,31 @@ void LexicalAnalysisError(LexicalError errorCode, int line){
             printf("Line:%d\tIllegal unequal symbol, single exclamation mark.\n", line);
             break;
 
+        case(errUnsignInt):
+            printf("Line:%d\tIllegal unsigned integer.\n", line);
+            break;
+        case(errConstDef):
+            printf("Line:%d\tIllegal constant definition.\n", line);
+            break;
+        case(errConstState):
+            printf("Line:%d\tIllegal constant statement.\n", line);
+            break;
+        case(errDecHead):
+            printf("Line:%d\tIllegal head declaration.\n", line);
+            break;
+        case(errVarDef):
+            printf("Line:%d\tIllegal variable definition.\n", line);
+            break;
+        case(errVarState):
+            printf("Line:%d\tIllegal variable statement.\n", line);
+            break;
+        case(errParaList):
+            printf("Line:%d\tIllegal parameter list.\n", line);
+            break;
+        case(errUnRetFuncDef):
+            printf("Line:%d\tIllegal unret-function definition.\n", line);
+            break;
+
         default:
             printf("An unknown error might have occurred.\n");
             break;
@@ -36,6 +61,15 @@ void SyntaxAnalysisError(SyntaxError errorCode, int line){
             break;
         case(errLackSemiSymbol):
             printf("Line:%d\tExpected Semi Symbol not exist.\n", line);
+            break;
+        case(errLackRightParen):
+            printf("Line:%d\tExpected right parent symbol not exist.\n", line);
+            break;
+        case(errLackLeftBracket):
+            printf("Line:%d\tExpected left bracket symbol not exist.\n", line);
+            break;
+        case(errLackRightBracket):
+            printf("Line:%d\tExpected right bracket symbol not exist.\n", line);
             break;
         case(errFactorNotComplete):
             printf("Line:%d\tFactor does not finished normally.\n", line);

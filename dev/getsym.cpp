@@ -6,18 +6,6 @@
 #include "syntaxAnalysis.h"
 #include "midCode.h"
 
-//
-//void clearToken();
-//int isSpace(char a);
-//int isNewline(char a);
-//int isTab(char a);
-//int isLetter(char a);
-//int isDigit(char a);
-//void catToken(char a);
-//int isReserved();
-//int transNum(char* token);
-
-// global items
 int result;
 int lc = 1;
 int IntValue = 0;
@@ -38,23 +26,16 @@ char globalChar;
 
 // 预读功能的实现
 void recordRead(){
-//    printf("in recordRead.\n");
-
     *backupFile = *fp;
-
     backupResult = result;
     //printf(">>> recorded.\tbk=%d\n", *backupFile);
-
     backupCharCount = charCount;
 }
 
 void resetRead(){
-//    printf("in resetRead.\n");
     //printf(">>> reset...\tfp=%d\t", *fp);
     result = backupResult;
-//    *p = backupFile;
     *fp = *backupFile;
-//    fseek(fp,(backupCharCount - charCount),1);
     //printf("fp=%d\n", *fp);
     charCount = backupCharCount;
 
@@ -62,9 +43,7 @@ void resetRead(){
 
 // 词法分析子程序
 int myGetsym(int mode){
-//    printf("getsym used.\n");
 	char a = fgetc(fp);
-//	printf("in getsym fp=%ld\n", *fp);								// 读入一个字符
 	charCount += 1;
 
 	if(a==EOF){
@@ -84,7 +63,6 @@ int myGetsym(int mode){
 	if(isLetter(a)){
 		while(isLetter(a) || isDigit(a)){				// 如果是字母数字，拼接起来
 			catToken(a);
-		//	a = getchar();
 			a = fgetc(fp);
 			charCount += 1;
 		}
@@ -126,7 +104,6 @@ int myGetsym(int mode){
 	else if(isDigit(a)){								// 如果是数字，拼接起来
 		while(isDigit(a)){
 			catToken(a);
-			//a = getchar();
 			a = fgetc(fp);
 			charCount += 1;
 		}
@@ -134,7 +111,6 @@ int myGetsym(int mode){
 		charCount -= 1;
 		int num = transNum(token);
 		if (num==-1){
-//			err(1);										// transNum 出错
 			LexicalAnalysisError(errTransInt, lc);
 			result = -1;
 			return -1;
@@ -191,8 +167,6 @@ int myGetsym(int mode){
 		else{
 			ungetc(a,fp);
 			charCount -= 1;
-		//	printf("illegal '!=' \n");
-//		err(6);
             LexicalAnalysisError(errNotEqual, lc);
             jump2SEMISY(a);
 
@@ -213,7 +187,6 @@ int myGetsym(int mode){
 			} else{
 				//err(2);
 				LexicalAnalysisError(errIllegalString, lc);
-			//	printf("illegal charactor while dealing string\n");
                 jump2SEMISY(a);
                 result = -1;
 				return -1;
@@ -221,19 +194,6 @@ int myGetsym(int mode){
 		}
 		strings[index] = '\0';
 		globalString = strings;
-//		int i, length = strlen(strings);
-////		globalString[length] = '\0';
-//        globalString = "";
-//        for(i=0;i<length;i++){
-//            globalString[i] = strings[i];
-//        }
-
-//        string tmpString = new string(strings);
-//        string tmpString(strings);
-
-//        globalString = tmpString;
-//        globalString.assign(strings);
-//        printf("check strings:%s\t\tglo:%s\n", strings, globalString.c_str());
 
 		strcpy(symbol, "STRINGSY");
 		result = 21;
@@ -258,8 +218,6 @@ int myGetsym(int mode){
 				ungetc(b,fp);
 				ungetc(a,fp);
 				charCount -= 2;
-				//err(3);
-			//	printf("more than one charactor\n");
                 LexicalAnalysisError(errSingleChar, lc);
                 jump2SEMISY(a);
 
@@ -268,9 +226,8 @@ int myGetsym(int mode){
 				return -1;
 			}
 		} else{
-			//err(4);
+
 			LexicalAnalysisError(errIllegalChar, lc);
-		//	printf("illegal charactor in single char\n");
             jump2SEMISY(a);
             result = -1;
 			return -1;
@@ -337,21 +294,12 @@ int myGetsym(int mode){
 		strcpy(symbol, "LBRACESY");
 		result = 42;
 		// 大括号入栈
-//		stackBrace.push_back('{');
-//		return 42;
+		stackBrace.push_back('{');
+		return 42;
 	}
 	else if(a=='}'){
 		strcpy(symbol, "RBRACESY");
 		result = 43;
-		// 对符号栈进行操作
-//		char last = stackBrace.back();
-//		if(last=='{')   stackBrace.pop_back();
-//		else    printf("STACK BRACE ERROR: not match.\n");
-//		// 然后判断是否已经全部出栈
-//		if(stackBrace.size()==0){
-//            globalMidCodeInFunc = 0;
-//		}
-
 		return 43;
 	}
 	else if(a=='['){
@@ -398,6 +346,7 @@ int getsym(int mode){
                             };
 
     if(result == -1)	;
+    // 需要输出词法分析内容时取消注释
 /*
     else{
         // IDSY
@@ -468,6 +417,7 @@ int getsym(){
                             };
 
     if(result == -1)	;
+    // 需要输出词法分析内容时取消注释
 /*
     else{
         // IDSY
@@ -513,21 +463,6 @@ int getsym(){
 */
     return result;
 
-}
-
-// 错误处理
-void err(int index){
-	switch(index){
-		case(0):	printf("an unknown error occurred.\n");								break;
-		case(1):	printf("error while transforming string into integer.(USINTSY)\n");	break;
-		case(2):	printf("illegal character or without end_mark while dealing string.(STRINGSY)\n");		break;
-		case(3):	printf("more than one character in ''.(ACHARSY)\n");				break;
-		case(4):	printf("illegal character or without end_mark while dealing single char.(ACHARSY)\n");	break;
-		case(5):	printf("unable to open the file.(FILE IO)\n");						break;
-		case(6):	printf("illegal '!=' \n");											break;
-		case(7):    printf("illegal or unexpected character in code.\n");               break;
-		default:	printf("an illegal index in err.\n");								break;
-	}
 }
 
 // 跳读到下一个分号
@@ -611,7 +546,6 @@ int isReserved(){
 		else
 			tmp[i] = token[i];
 	}
-//	printf("DEBUG_MODE:	token:%s tmp:%s\n", token, tmp);
 
 	if(strcmp(tmp,"const")==0)
 		return 1;
@@ -650,7 +584,6 @@ int transNum(char* token){
 			num *= 10;
 			num += (token[i] - '0');
 		} else{
-		//	printf("wrong character in transNum\n");
 			return -1;
 		}
 	}

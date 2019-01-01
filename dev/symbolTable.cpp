@@ -10,8 +10,6 @@ int globalFuncLevel = 0;            // 全局为0 main 为1
 string globalFuncField = "Global";  // 初始设置为全局
 
 using namespace std;
-//
-//vector<paralistItem> paralistVector;
 
 // 常量 int char
 int pushConstantTable(string ID, int type, int value){
@@ -38,19 +36,12 @@ int pushConstantTable(string ID, int type, int value){
     }
 
     symbolTable.push_back(tmp);
-    //printf("Push constant:%s value:%d in symbolTable.\n", ID.c_str(), value);
     return 0;
 }
+
 // 数组
 int pushArrayTable(string ID, int type, int length, int offset){
-/*
-    arrayTableItem atmp = {
-        type,
-        length,
-    };
-    arrayTable.push_back(atmp);
-    int asize = arrayTable.size();
-*/
+
     symbolTableItem tmp = {
         ID,                 // ID name
         0,                  // value
@@ -73,7 +64,6 @@ int pushArrayTable(string ID, int type, int length, int offset){
     }
 
     symbolTable.push_back(tmp);
-    //printf("Push array:%s length:%d in symbolTable.\n", ID.c_str(), length);
     return 0;
 }
 // 函数声明
@@ -102,7 +92,6 @@ int pushFuncTable(string ID, int retType){
     }
 
     symbolTable.push_back(tmp);
-    //printf("Push function:%s type:%d in symbolTable.\n", ID.c_str(), retType);
     return 0;
 }
 // 变量、形参
@@ -127,20 +116,17 @@ int pushVarTable(string ID, int type, int offset, int isPara){
         symbolTableError(errDuplicate, lc);
         return -1;
     }
-
     symbolTable.push_back(tmp);
-    //printf("Push variable:%s type:%d isPara:%d in symbolTable.\n", ID.c_str(), type, isPara);
+
     return 0;
 }
 
 int checkDuplicate(string ID){
     int i, cntTable = symbolTable.size();
     for(i=0;i<cntTable;i++){
-//        if(strcmp(symbolTable.at(i).ID.c_str(), ID)==0
         if(symbolTable.at(i).ID==ID
-        //    && symbolTable.at(i).IDobject==object
-//            && strcmp(symbolTable.at(i).field, globalFuncField)){
             && symbolTable.at(i).field==globalFuncField){
+
             // 标识符相同，作用域相同，直接报错
             return -1;
         }
@@ -178,17 +164,14 @@ int searchName2Obj(string Name){
             // 名字相同
             if(symbolTable.at(i).field==globalFuncField){
                 // 作用域相同
-                //printf(">> check 1\n");
                 return symbolTable.at(i).IDobject;
             }else if(symbolTable.at(i).level<globalFuncLevel){
                 // 作用域不同，但有全局定义
-                //printf(">> check 2\n");
                 return symbolTable.at(i).IDobject;
             }else   continue;
         }
     }
     printf("No such ID in symbol table, fail to trans name to type.\n");
-
 
     return 0;
 }
@@ -205,11 +188,9 @@ int searchName2Type(string Name, int mode){
                 // 名字相同
                 if(symbolTable.at(i).field==globalFuncField){
                     // 作用域相同
-                    //printf("search2type1: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
                     return symbolTable.at(i).IDType;
                 }else if(symbolTable.at(i).level<globalFuncLevel){
                     // 作用域不同，但有全局定义
-                    //printf("search2type2: name:%s type:%d\n",Name.c_str(),symbolTable.at(i).IDType);
                     return symbolTable.at(i).IDType;
                 }else   continue;
             }
@@ -236,7 +217,7 @@ int searchIsFunc(string Name){
         if(symbolTable.at(i).ID==Name && symbolTable.at(i).IDobject==3)
                return symbolTable.at(i).funcType;
     }
-    // printf("No such func in symbol table, fail to trans name to type.\n");
+
     return -1;
 }
 
@@ -284,7 +265,7 @@ int judgeConst(string Name){
         }
 
     }
-    // printf("No such const found in symbol table, fail to trans name to type.\n");
+
     return 0;
 }
 

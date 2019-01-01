@@ -11,58 +11,50 @@
 #include "midCode.h"
 
 
-extern FILE* fp;                // 用于跳读
+/*
+    有很多古老的代码，没有调整格式、删减注释，便于调试
+*/
 
 
-vector<symbolTableItem> symbolTable;
-//vector<arrayTableItem> arrayTable;
-//vector<funcTableItem> funcTable;
+extern FILE* fp;                    // 用于跳读
+
+
 
 // 栈区
-vector<char> stackBrace;        // 大括号栈，用于函数定义判断
-vector<int> stackCalc;          // 计算表达式用的运算栈，用来存储将要进行运算的$t的值
-
-vector<int> stackIfElse;        // 用来处理ifelse嵌套的标签问题
-vector<funcInfoItem> AllFuncInfo;
-                                // 用于在函数定义时存储所有（一部分）信息
+vector<symbolTableItem> symbolTable;
+vector<char> stackBrace;            // 大括号栈，用于函数定义判断
+vector<int> stackCalc;              // 计算表达式用的运算栈，用来存储将要进行运算的$t的值
+vector<int> stackIfElse;            // 用来处理ifelse嵌套的标签问题
+vector<funcInfoItem> AllFuncInfo;   // 用于在函数定义时存储所有（一部分）信息
 vector<int> res;
-
+vector<int> factorFirstTCountVector;
+vector<int> exprFirstTCountVector;
 
 // 局部变量区
     // 无符号整数值
-int unsignValue = 0;
+    int unsignValue = 0;
     // 常量
-int constValue = 0;
+    int constValue = 0;
     // 偏移量
-int globalOffset = 1;
+    int globalOffset = 1;
 
 // 语义分析
-    //
-int retExist = 0;
-int retNone = 0;
+    int retExist = 0;
+    int retNone = 0;
+    int factorType = 0;
+    int factorType2 = 0;
+    int termType = 0;
+    int exprType = 0;   // 0:default | 1:int | 2:char | 3:else
 
 // 值计算
-int tCount = 0;
-//int factorValue = 0;
-//int termValue = 0;
-//int exprValue = 0;
-// 其实只需要类型就可以进行语义分析了
-int factorType = 0;
-int factorType2 = 0;
-int termType = 0;
-int exprType = 0;   // 0:default | 1:int | 2:char | 3:else
+    int tCount = 0;
 
 // 数组越界检查，用两个变量来记一下值和tag
-int checkArrayValue = 0;
-//int checkArrayTag = 0;
-//
-int exprCountTerm = 0;
-int termCountFactor = 0;
+    int checkArrayValue = 0;
+    int exprCountTerm = 0;
+    int termCountFactor = 0;
 
-
-//
 //int factorType = 0; // default:0 int:1 char:2 else:3
-
 string currentFuncID;
 string callFuncID;
 vector<int> funcParaType;
@@ -70,43 +62,12 @@ vector<int> funcParaType;
 // 生成标签计数器
 int labelCount = 1;
 
-// 防止寄存器冲突
-int factorFirstTCount = 0;
-int exprFirstTCount = 0;
+// 处理寄存器冲突
+    int factorFirstTCount = 0;
+    int exprFirstTCount = 0;
+    // 用来记录因子与表达式的嵌套是否发生
+    int nestedExpr = 0;
 
-vector<int> factorFirstTCountVector;
-vector<int> exprFirstTCountVector;
-
-int nestedExpr = 0;     // 用来记录因子与表达式的嵌套是否发生
-
-
-
-// 函数声明区
-int unsignedInt();
-int signedInt();
-int constDefine();
-int constState();
-int factor();
-int item();
-int expr();
-int varDefine();
-int varState();
-int paraList();
-int complexSentence();
-int sentenceSequence();
-int retValueFuncDefine();
-int condSentence();
-int condition();
-int loopSentence();
-int retValueFuncCall();
-int unretValueFuncCall();
-int assignSentence();
-int scanSentence();
-int printSentence();
-int nullSentence();
-int retSentence();
-int programAnalysis();
-int mainAnalysis();
 
 
 int unsignedInt(){                  // 文法中的无符号整数
@@ -122,7 +83,7 @@ int unsignedInt(){                  // 文法中的无符号整数
         }
 
     }else{
-        error();
+        LexicalAnalysisError(errUnsignInt, lc);
         return -1;
     }
 
@@ -196,11 +157,11 @@ int constDefine(){
                                     break;
                                 }
                             }else{
-                                error();
+                                LexicalAnalysisError(errConstDef, lc);
                                 return -1;
                             }
                         }else{
-                            error();
+                            LexicalAnalysisError(errConstDef, lc);
                             return -1;
                         }
                     }
@@ -241,20 +202,20 @@ int constDefine(){
                                             break;
                                         }else    break;
                                     }else {
-                                        error();
+                                        LexicalAnalysisError(errConstDef, lc);
                                         return -1;
                                     }
                                 }else{
-                                    error();
+                                    LexicalAnalysisError(errConstDef, lc);
                                     return -1;
                                 }
                             }else{
-                                error();
+                                LexicalAnalysisError(errConstDef, lc);
                                 return -1;
                             }
                         }
     }else{
-        error();
+        LexicalAnalysisError(errConstDef, lc);
         return -1;
     }
 
@@ -265,14 +226,14 @@ int constDefine(){
 int constState(){
     int constStateCount = 0;
     if(result!=CONSTSY){
-        error();
+        LexicalAnalysisError(errConstState, lc);
         return -1;
     }
     getsym();
     constDefine();
 
     if(result!=SEMISY){
-        error();
+        SyntaxAnalysisError(errLackSemiSymbol, lc);
         return -1;
     }
     getsym();
@@ -290,7 +251,7 @@ int constState(){
         }
 
         if(result!=SEMISY){
-            error();
+            SyntaxAnalysisError(errLackSemiSymbol, lc);
             return -1;
         }
         getsym();
@@ -309,7 +270,7 @@ int declareHead(){
         retType = 1;
         getsym();
         if(result!=IDSY){
-            error();
+            LexicalAnalysisError(errDecHead, lc);
             return -1;
         }else{
             getsym();
@@ -318,13 +279,13 @@ int declareHead(){
         retType = 2;
         getsym();
         if(result!=IDSY){
-            error();
+            LexicalAnalysisError(errDecHead, lc);
             return -1;
         }else{
             getsym();
         }
     }else{
-        error();
+        LexicalAnalysisError(errDecHead, lc);
         return -1;
     }
 
@@ -346,8 +307,8 @@ int varDefine(){
 //    printf("in varDefine 1\n");
 //    printf(">>>result=%d.\n", result);
     int typeTag = 0;    // 0:default | 1:int | 2:char
-    if(result!=INTSY&&result!=CHARSY){
-        error();
+    if(result!=INTSY && result!=CHARSY){
+        LexicalAnalysisError(errVarDef, lc);
         return -1;
     }
 
@@ -359,7 +320,7 @@ int varDefine(){
 //    printf(">>>result=%d.\n", result);
     while(true){
         if(result!=IDSY){
-            error();
+            LexicalAnalysisError(errVarDef, lc);
             return -1;
         }
 //        printf("in varDefine 3\n");
@@ -372,7 +333,7 @@ int varDefine(){
 //            printf("in varDefine 4\n");
             if(result!=RBRACSY){
 //                printf("in varDefine 5\n");
-                error();
+                LexicalAnalysisError(errVarDef, lc);
                 return -1;
             }else{
                 //
@@ -409,14 +370,14 @@ int varState(){
 
     if(varDefine()!=0){
     //    printf("something went wrong in the first variable definition.\n");
-        error();
+        LexicalAnalysisError(errVarState, lc);
         return -1;
     }
 
     if(result==SEMISY){
         getsym();
     }else{
-        error();
+        SyntaxAnalysisError(errLackSemiSymbol, lc);
         return -1;
     }
 
@@ -443,7 +404,7 @@ int varState(){
         }else{
             varDefine();
             if(result!=SEMISY){
-                error();
+                SyntaxAnalysisError(errLackSemiSymbol, lc);
                 return -1;
             }
             getsym();
@@ -513,7 +474,7 @@ int paraList(){
     while(true){
         int paraType = 0;   // 0:default | 1:int | 2;char
         if(result!=INTSY&&result!=CHARSY){
-            error();
+            LexicalAnalysisError(errParaList, lc);
             return -1;
         }
 
@@ -526,7 +487,7 @@ int paraList(){
 
         getsym();
         if(result!=IDSY){
-            error();
+            LexicalAnalysisError(errParaList, lc);
             return -1;
         }
 
@@ -564,15 +525,15 @@ int retValueFuncDefine(){
         getsym();
         paraList();
         if(result!=RPARSY){
-            error();
-            return -1;
+            SyntaxAnalysisError(errLackRightParen, lc);
+//            return -1;
         }
         getsym();
     }
 //    printf("pass tag 1\n");
     if(result!=LBRACESY){   // "{"
-        error();
-        return -1;
+        SyntaxAnalysisError(errLackLeftBracket, lc);
+//        return -1;
     }
 
     // 记录函数信息
@@ -590,8 +551,8 @@ int retValueFuncDefine(){
     complexSentence();
 //    printf(">>>>>>>>>>>result = %d\n", result);
     if(result!=RBRACESY){   // "}"
-        error();
-        return -1;
+        SyntaxAnalysisError(errLackRightBracket, lc);
+//        return -1;
     }
     getsym();
 
@@ -616,12 +577,12 @@ int retValueFuncDefine(){
 int unretValueFuncDefine(){
 //    printf("in unretValueFuncDefine.\n");
     if(result!=VOIDSY){
-        error();
-        return -1;
+        LexicalAnalysisError(errUnRetFuncDef, lc);
+//        return -1;
     }
     getsym();
     if(result!=IDSY){
-        error();
+        LexicalAnalysisError(errUnRetFuncDef, lc);
         return -1;
     }
 
@@ -641,15 +602,15 @@ int unretValueFuncDefine(){
         getsym();
         paraList();
         if(result!=RPARSY){
-            error();
+            SyntaxAnalysisError(errLackRightParen, lc);
             return -1;
         }
         getsym();
     }
 
     if(result!=LBRACESY){   // "{"
-        error();
-        return -1;
+        SyntaxAnalysisError(errLackLeftBracket, lc);
+//        return -1;
     }
 
 
@@ -672,8 +633,8 @@ int unretValueFuncDefine(){
 //    printf("check void complex 2.\n");
 //    printf("________________result = %d\n", result);
     if(result!=RBRACESY){   // "}"
-        error();
-        return -1;
+        SyntaxAnalysisError(errLackRightBracket, lc);
+//        return -1;
     }
 
     if(stackBrace.back()=='{'){
@@ -729,7 +690,7 @@ int sentence(){
             getsym();
             sentenceSequence();
             if(result!=RBRACESY){
-                error();
+                SyntaxAnalysisError(errLackRightBracket, lc);
                 return -1;
             }else{
                 if(stackBrace.back()=='{'){
@@ -747,7 +708,7 @@ int sentence(){
         case(PRINTSY):          // 写语句
             printSentence();
             if(result!=SEMISY){
-                error();
+                SyntaxAnalysisError(errLackSemiSymbol, lc);
                 return -1;
             }else{
                 getsym();
@@ -756,7 +717,7 @@ int sentence(){
         case(SCANFSY):          // 读语句
             scanSentence();
             if(result!=SEMISY){
-                error();
+                SyntaxAnalysisError(errLackSemiSymbol, lc);
                 return -1;
             }else{
                 getsym();
@@ -766,7 +727,7 @@ int sentence(){
             retSentence();
 
             if(result!=SEMISY){
-                error();
+                SyntaxAnalysisError(errLackSemiSymbol, lc);
                 return -1;
             }else{
                 getsym();
