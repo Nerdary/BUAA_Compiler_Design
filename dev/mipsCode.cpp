@@ -97,9 +97,11 @@ void genMips(){   //¿‡À∆”⁄ programAnalysis
             if(tmp.two=="int"){
                 li("$t1", tmp.four);
             }else{
-                char ctmp = tmp.four[0];
-                int itmp = ctmp;
-                li("$t1", to_string(itmp));
+//                char ctmp = tmp.four[0];
+//                int itmp = ctmp;
+//                li("$t1", to_string(itmp));
+
+                li("$t1", tmp.four);
             }
             sw("$t1", offsetGp, "$gp");
 

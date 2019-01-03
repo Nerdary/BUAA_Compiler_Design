@@ -22,7 +22,9 @@ int compute(int a, int b, char op)
 }
 
 void main(){
-    int n;
-    n = compute(10, 1, '+');
+    int n, a, b;
+    char op;
+    scanf(a, b, op);
+    n = compute(a, b, op);
     printf(n);
 }
