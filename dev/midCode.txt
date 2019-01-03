@@ -1,403 +1,347 @@
 Contents of mid codes
            1           2           3           4
-       const         intmax_stack_num          10
-       const         intmax_choose_num          10
-       const        char      divide          95
-       array         int       stack          12
-       array         int        used          12
-         var         int           n            
-         var         int           m            
-         var         int         sum            
-       labelpermutations_1        func            
-        func        voidpermutations            
-        para         int           a            
-         var         int           i            
-         $t1           0                        
-           i         $t1                        
-         $t2           a                        
-         $t3           m                        
-         $t2          ==         $t3            
+       const         int     max_num        1024
+       label factorial_1        func            
+        func         int   factorial            
+        para         int           n            
+         $t1           n                        
+         $t2           1                        
+         $t1          <=         $t2            
           BZ       label         2_1            
-       label         3_1        norm            
-         $t4           i                        
-         $t5           m                        
-         $t4           <         $t5            
-          BZ       label         3_2            
-       print                                    
-         $t6           i                        
-         $t7       stack          []         $t6
-       print         $t7                        
-         $t8           i                        
-         $t9           1                        
-         $t1         $t8           +         $t9
-           i         $t1                        
-        GOTO       label         3_1            
-       label         3_2        norm            
-       print ___________                        
-         ret                                    
+         $t3           1                        
+         ret         $t3                        
         GOTO       label         2_2            
        label         2_1        norm            
        label         2_2        norm            
-         $t2           1                        
-           i         $t2                        
-        GOTO       label         4_1            
-       label         4_2        norm            
-         $t3           i                        
          $t4           n                        
-         $t3          <=         $t4            
-          BZ       label         4_3            
+         $t5           n                        
+         $t6           1                        
+         $t7         $t5           -         $t6
+        push         $t7                        
+        call   factorial                        
+         $t7         RET                        
+         $t8         $t4           *         $t7
+         ret         $t8                        
+       label factorial_2        func            
+       label       mod_1        func            
+        func         int         mod            
+        para         int           x            
+        para         int           y            
+         $t9           x                        
+         $t1           x                        
+         $t2           y                        
+         $t3         $t1           /         $t2
+         $t4           y                        
+         $t5         $t3           *         $t4
+         $t6         $t9           -         $t5
+           x         $t6                        
+         $t7           x                        
+         ret         $t7                        
+       label       mod_2        func            
+       label      swap_1        func            
+        func        void        swap            
+        para         int           x            
+        para         int           y            
+         var         int        temp            
+       print        x =                         
+         $t8           x                        
+       print           x        IDSY         $t8
+       print        y =                         
+         $t9           y                        
+       print           y        IDSY         $t9
+         $t1           x                        
+        temp         $t1                        
+         $t2           y                        
+           x         $t2                        
+         $t3        temp                        
+           y         $t3                        
+       print   SWAP x =                         
+         $t4           x                        
+       print           x        IDSY         $t4
+       print   SWAP y =                         
+         $t5           y                        
+       print           y        IDSY         $t5
+       label      swap_2        func            
+       labelcomplete_num_1        func            
+        func        voidcomplete_num            
+        para         int         val            
+       array         int           k         128
+         var         int           i            
+         var         int           j            
+         var         int           n            
+         var         int           s            
+         var         int          x1            
+         var         int           m            
+         var         int          k2            
+         var         int           h            
+         var         int        leap            
+         var         int          x2            
+         var         int           a            
+         var         int           b            
+         var         int           c            
+         $t6         val                        
+           j         $t6                        
+       label         3_1        norm            
+         $t7           j                        
+         $t8     max_num                        
+         $t7           <         $t8            
+          BZ       label         3_2            
+         $t9           1                        
+         $t1           -         $t9            
+           n         $t1                        
+         $t2           j                        
+           s         $t2                        
+         $t3           1                        
+           i         $t3                        
        label         4_1        norm            
-         $t5           i                        
-         $t6        used          []         $t5
-         $t7           0                        
-         $t6          !=         $t7            
+         $t4           i                        
+         $t5           j                        
+         $t4           <         $t5            
+          BZ       label         4_2            
+         $t6           j                        
+         $t7           i                        
+         $t8         $t6           /         $t7
+         $t9           i                        
+         $t1         $t8           *         $t9
+          x1         $t1                        
+         $t2           j                        
+        push         $t2                        
+         $t2           i                        
+        push         $t2                        
+        call         mod                        
+         $t2         RET                        
+         $t3           0                        
+         $t2          ==         $t3            
           BZ       label         5_1            
+         $t4           n                        
+         $t5           1                        
+         $t6         $t4           +         $t5
+           n         $t6                        
+         $t7           s                        
+         $t8           i                        
+         $t9         $t7           -         $t8
+           s         $t9                        
+         $t1           n                        
+         $t2         128                        
+         $t1          >=         $t2            
+          BZ       label         6_1            
+       print OVERFLOW!                                  
+        GOTO       label         6_2            
+       label         6_1        norm            
+       label         6_2        norm            
+         $t3           n                        
+         $t4         128                        
+         $t3           <         $t4            
+          BZ       label         7_1            
+         $t5           n                        
+         $t6           i                        
+           k          []         $t5         $t6
+        GOTO       label         7_2            
+       label         7_1        norm            
+       label         7_2        norm            
         GOTO       label         5_2            
        label         5_1        norm            
-         $t8           a                        
-         $t9           i                        
-       stack          []         $t8         $t9
-         $t1           i                        
-         $t2           1                        
-        used          []         $t1         $t2
-         $t3           a                        
-         $t4           1                        
-         $t5         $t3           +         $t4
-        push         $t5                        
-        callpermutations                        
-         $t5           i                        
-         $t6           0                        
-        used          []         $t5         $t6
        label         5_2        norm            
          $t7           i                        
          $t8           1                        
          $t9         $t7           +         $t8
            i         $t9                        
-        GOTO       label         4_2            
-       label         4_3        norm            
-       labelpermutations_2        func            
-       labelget_max_num_1_1        func            
-        func         intget_max_num_1            
-         $t1max_stack_num                        
-         ret         $t1                        
-       labelget_max_num_1_2        func            
-       labelget_max_num_2_1        func            
-        func         intget_max_num_2            
-         var         int     max_num            
-         $t2max_choose_num                        
-     max_num         $t2                        
-         $t3     max_num                        
-         ret         $t3                        
-       labelget_max_num_2_2        func            
-       label     get_2_1        func            
-        func         int       get_2            
-       const         int           m           2
-         $t4           m                        
-         ret         $t4                        
-       label     get_2_2        func            
-       label   compute_1        func            
-        func         int     compute            
-        para         int           a            
-        para         int           b            
-        para        char          op            
-         $t5          op                        
-         $t6          43                        
-         $t5          ==         $t6            
-          BZ       label         6_1            
-         $t7           a                        
-         $t8           2                        
-         $t9           b                        
-         $t1         $t8           *         $t9
-         $t2         $t7           +         $t1
-         $t3           b                        
-         $t4         $t2           -         $t3
-         ret         $t4                        
-        GOTO       label         6_2            
-       label         6_1        norm            
-         $t5          op                        
-         $t6          45                        
-         $t5          ==         $t6            
-          BZ       label         7_1            
-         $t7           a                        
-         $t8           b                        
-         $t9           b                        
-         $t1         $t8           +         $t9
-         $t2           2                        
-         $t3         $t1           /         $t2
-         $t4         $t7           -         $t3
-         ret         $t4                        
-        GOTO       label         7_2            
-       label         7_1        norm            
-         $t5          op                        
-         $t6          42                        
-         $t5          ==         $t6            
+        GOTO       label         4_1            
+       label         4_2        norm            
+         $t1           s                        
+         $t2           0                        
+         $t1          ==         $t2            
           BZ       label         8_1            
-         $t7           a                        
-         $t8           b                        
-         $t9         $t7           *         $t8
-         ret         $t9                        
+       print complete number:                         
+         $t3           j                        
+       print           j        IDSY         $t3
+         $t4           0                        
+           i         $t4                        
+       label         9_1        norm            
+         $t5           i                        
+         $t6           n                        
+         $t5          <=         $t6            
+          BZ       label         9_2            
+       print                                    
+         $t7           i                        
+         $t8           k          []         $t7
+       print         $t8                        
+         $t9           i                        
+         $t1           1                        
+         $t2         $t9           +         $t1
+           i         $t2                        
+        GOTO       label         9_1            
+       label         9_2        norm            
+       print                                    
         GOTO       label         8_2            
        label         8_1        norm            
-         $t1           b                        
-         $s1         $t1                        
-          BZ       label         9_1            
-         $t2           a                        
-         $t3           b                        
-         $t4         $t2           /         $t3
-         ret         $t4                        
-        GOTO       label         9_2            
-       label         9_1        norm            
-         $t5           1                        
-         $t6           2                        
-         $t7         $t5           +         $t6
-         $t8           3                        
-         $t9         $t7           *         $t8
-         $t1           4                        
-         $t2         $t9           -         $t1
-         $t3           5                        
-         $t4         $t2           /         $t3
-         $t5           6                        
-         $t6         $t4           *         $t5
-         $t7          -7                        
-         $t8         $t6           +         $t7
-         $t9           1                        
-         $t1         $t8           +         $t9
-         ret         $t1                        
-       label         9_2        norm            
        label         8_2        norm            
-       label         7_2        norm            
-       label         6_2        norm            
-       label   compute_2        func            
-       labelget_permutations_sy_1        func            
-        func        charget_permutations_sy            
-       const        charpermutations_sy          84
-         $t2permutations_sy                        
-         ret         $t2                        
-       labelget_permutations_sy_2        func            
-       label     judge_1        func            
-        func        char       judge            
-        para         int           n            
-        para         int           m            
-       const        char      divide          42
-         $t3      divide                        
-       print      divide        IDSY         $t3
-         $t4           n                        
-        callget_max_num_1                        
-         $t5         RET                        
-         $t6           1                        
-         $t7         $t5           +         $t6
-         $t4          >=         $t7            
-          BZ       label        10_1            
-         $t8          70                        
-         ret         $t8                        
-        GOTO       label        10_2            
+         $t3           j                        
+         $t4           1                        
+         $t5         $t3           +         $t4
+           j         $t5                        
+        GOTO       label         3_1            
+       label         3_2        norm            
+       print ---------------------------------------------------------------                                  
+         $t6           0                        
+           a         $t6                        
+         $t7           0                        
+           i         $t7                        
        label        10_1        norm            
-       label        10_2        norm            
-         $t9           m                        
-         $t1           n                        
-         $t9           >         $t1            
-          BZ       label        11_1            
-         $t2          70                        
-         ret         $t2                        
-        GOTO       label        11_2            
-       label        11_1        norm            
-       label        11_2        norm            
-         $t3           m                        
-         $t4           0                        
-         $t3          <=         $t4            
-          BZ       label        12_1            
-         $t5          70                        
-         ret         $t5                        
-        GOTO       label        12_2            
-       label        12_1        norm            
-       label        12_2        norm            
-         $t6          84                        
-         ret         $t6                        
-       label     judge_2        func            
-       labelpreparation_1        func            
-        func        void preparation            
-       const         int        zero           0
-         var         int           n            
-         var         int           i            
-       array         int       array          12
-        callget_max_num_1                        
-         $t7         RET                        
-        push         $t7                        
-         $t7           1                        
-        push         $t7                        
-         $t7          43                        
-        push         $t7                        
-        call     compute                        
-         $t7         RET                        
-           n         $t7                        
-       label        13_1        norm            
-         $t8           n                        
-         $s1         $t8                        
-          BZ       label        13_2            
-         $t9           1                        
-         $t1           -         $t9            
-         $t2           n                        
+         $t8           i                        
+         $t9     max_num                        
+         $t8           <         $t9            
+          BZ       label        10_2            
+         $t1           a                        
+         $t2           i                        
+         $t3         $t1           *         $t2
+           b         $t3                        
+         $t4           j                        
+         $t5           n                        
+         $t6         $t4           *         $t5
+           c         $t6                        
+         $t7           a                        
+         $t8           i                        
+         $t9         $t7           *         $t8
+           a         $t9                        
+         $t1           a                        
+         $t2           b                        
          $t3         $t1           +         $t2
-           n         $t3                        
-         $t4           n                        
-         $t5        zero                        
-        used          []         $t4         $t5
-         $t6           n                        
-         $t7       10086                        
-       array          []         $t6         $t7
+         $t4           c                        
+         $t5         $t3           +         $t4
+           a         $t5                        
+         $t6           i                        
+         $t7           1                        
+         $t8         $t6           +         $t7
+           i         $t8                        
+        GOTO       label        10_1            
+       label        10_2        norm            
+         $t9           a                        
+           b         $t9                        
+         $t1           0                        
+           i         $t1                        
+       label        11_1        norm            
+         $t2           i                        
+         $t3     max_num                        
+         $t2           <         $t3            
+          BZ       label        11_2            
+         $t4           b                        
+         $t5           i                        
+         $t6         $t4           +         $t5
+           b         $t6                        
+         $t7           i                        
+         $t8           1                        
+         $t9         $t7           +         $t8
+           i         $t9                        
+        GOTO       label        11_1            
+       label        11_2        norm            
+       print        b =                         
+         $t1           b                        
+       print           b        IDSY         $t1
+       print ---------------------------------------------------------------                                  
+         $t2           0                        
+           h         $t2                        
+         $t3           1                        
+        leap         $t3                        
+         $t4           2                        
+           m         $t4                        
+       label        12_1        norm            
+         $t5           m                        
+         $t6     max_num                        
+         $t5          <=         $t6            
+          BZ       label        12_2            
+         $t7           m                        
+         $t8           2                        
+         $t9         $t7           /         $t8
+          k2         $t9                        
+         $t1           2                        
+           i         $t1                        
+       label        13_1        norm            
+         $t2           i                        
+         $t3          k2                        
+         $t2          <=         $t3            
+          BZ       label        13_2            
+         $t4           m                        
+         $t5           i                        
+         $t6         $t4           /         $t5
+         $t7           i                        
+         $t8         $t6           *         $t7
+          x2         $t8                        
+         $t9           m                        
+        push         $t9                        
+         $t9           i                        
+        push         $t9                        
+        call         mod                        
+         $t9         RET                        
+         $t1           0                        
+         $t9          ==         $t1            
+          BZ       label        14_1            
+         $t2           0                        
+        leap         $t2                        
+        GOTO       label        14_2            
+       label        14_1        norm            
+       label        14_2        norm            
+         $t3           i                        
+         $t4           1                        
+         $t5         $t3           +         $t4
+           i         $t5                        
         GOTO       label        13_1            
        label        13_2        norm            
-         $t8max_choose_num                        
-        push         $t8                        
-        call       get_2                        
-         $t8         RET                        
-        push         $t8                        
-         $t8          43                        
-        push         $t8                        
-        call     compute                        
-         $t8         RET                        
-         $t9           1                        
-         $t1         $t8           -         $t9
-           n         $t1                        
-        GOTO       label        14_1            
-       label        14_2        norm            
-         $t2           n                        
-         $s1         $t2                        
-          BZ       label        14_3            
-       label        14_1        norm            
-         $t3           n                        
-         $t4           1                        
-         $t5         $t3           -         $t4
-         $t6           n                        
-         $t7           6                        
-         $t8           4                        
-         $t9         $t7           /         $t8
-         $t1           -         $t9            
-         $t2           2                        
-         $t3           3                        
-         $t4         $t2           *         $t3
-         $t5         $t1           +         $t4
-         $t7           4                        
-         $t8         $t5           *         $t7
-         $t9         $t6           +         $t8
-         $t1          21                        
-         $t2         $t9           -         $t1
-         $t3       array          []         $t2
-         $t4       10086                        
-         $t5         $t3           -         $t4
-       stack          []         $t5         $t5
-         $t6           n                        
+         $t6        leap                        
          $t7           1                        
-         $t8         $t6           -         $t7
-           n         $t8                        
-        GOTO       label        14_2            
-       label        14_3        norm            
-         ret                                    
-       labelpreparation_2        func            
-       label  test_for_1        func            
-        func        void    test_for            
-         var         int           i            
-         $t9           1                        
-           i         $t9                        
-        GOTO       label        15_1            
-       label        15_2        norm            
-         $t1           0                        
-         $s1         $t1                        
-          BZ       label        15_3            
-       label        15_1        norm            
-       printtest for success                        
-         $t2           i                        
-         $t3           1                        
-         $t4         $t2           +         $t3
-           i         $t4                        
-        GOTO       label        15_2            
-       label        15_3        norm            
-       label  test_for_2        func            
-       labeltest_6_para_1        func            
-        func         int test_6_para            
-        para         int          a1            
-        para         int          a2            
-        para         int          a3            
-        para         int          a4            
-        para         int          a5            
-        para         int          a6            
-         $t5          a1                        
-         $t6          a2                        
-         $t7         $t5           +         $t6
-         $t8          a3                        
-         $t9         $t7           +         $t8
-         $t1          a4                        
+         $t6          ==         $t7            
+          BZ       label        15_1            
+       print                                    
+         $t8           m                        
+       print           m        IDSY         $t8
+         $t9           h                        
+         $t1           1                        
          $t2         $t9           +         $t1
-         $t3          a5                        
-         $t4         $t2           +         $t3
-         $t5          a6                        
-         $t6         $t4           +         $t5
-         ret         $t6                        
-       labeltest_6_para_2        func            
-        main        void        main            
-         var         int           a            
-         var         int           b            
-         var        char          op            
-         var        char          sy            
-         var        char      nor_sy            
-        call    test_for                        
-        scan         int           a            
-        scan         int           b            
-        scan        char          op            
-         $t7           a                        
-        push         $t7                        
-         $t7           b                        
-        push         $t7                        
-         $t7          op                        
-        push         $t7                        
-        call     compute                        
-         $t7         RET                        
-           n         $t7                        
-         $t8      divide                        
-       print      divide        IDSY         $t8
-         $t9           n                        
-       print           n        IDSY         $t9
-        scan         int           m            
-         $t1           n                        
-        push         $t1                        
-         $t1           m                        
-        push         $t1                        
-        call       judge                        
-         $t1         RET                        
-          sy         $t1                        
-         $t2           a                        
-        push         $t2                        
-         $t2           b                        
-        push         $t2                        
-         $t2           n                        
-        push         $t2                        
-         $t2           m                        
-        push         $t2                        
-         $t2           1                        
-        push         $t2                        
-         $t2           2                        
-        push         $t2                        
-        call test_6_para                        
-         $t2         RET                        
-         sum         $t2                        
-         $t3         sum                        
-       print         sum        IDSY         $t3
-       printYou can choose m numbers permutations from n numbers ?                         
-         $t4          sy                        
-       print          sy        IDSY         $t4
-       print ___________                        
-        callget_permutations_sy                        
-         $t5         RET                        
-      nor_sy         $t5                        
-         $t6          sy                        
-         $t7      nor_sy                        
-         $t6          !=         $t7            
+           h         $t2                        
+         $t3           h                        
+         $t4          10                        
+         $t5         $t3           /         $t4
+         $t6          10                        
+         $t7         $t5           *         $t6
+          x2         $t7                        
+         $t8          x2                        
+         $t9           h                        
+         $t8          ==         $t9            
           BZ       label        16_1            
-       printerror input: 0 < m <= n <= 10                        
+       print                                    
         GOTO       label        16_2            
        label        16_1        norm            
-        call preparation                        
-         $t8           0                        
-        push         $t8                        
-        callpermutations                        
        label        16_2        norm            
+        GOTO       label        15_2            
+       label        15_1        norm            
+       label        15_2        norm            
+         $t1           1                        
+        leap         $t1                        
+         $t2           m                        
+         $t3           1                        
+         $t4         $t2           +         $t3
+           m         $t4                        
+        GOTO       label        12_1            
+       label        12_2        norm            
+       print          The total is                         
+         $t5           h                        
+       print           h        IDSY         $t5
+       labelcomplete_num_2        func            
+        main        void        main            
+         var         int           n            
+         $t6          10                        
+        push         $t6                        
+        call   factorial                        
+         $t6         RET                        
+           n         $t6                        
+       print      10! =                         
+         $t7           n                        
+       print           n        IDSY         $t7
+         $t8           5                        
+        push         $t8                        
+         $t8          10                        
+        push         $t8                        
+        call        swap                        
+         $t8           2                        
+        push         $t8                        
+        callcomplete_num                        
