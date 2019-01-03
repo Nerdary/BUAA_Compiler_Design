@@ -1,0 +1,28 @@
+int compute(int a, int b, char op)    
+{
+    if ((op) == ('+'))
+        return ((a + 2 * b) - b);
+    else
+    {
+        if ((op) == ('-'))
+            return (a - (b + b) / 2);
+        else
+        {
+            if ((op) == ('*'))
+                return (a * b);
+            else
+            {
+                if (b)
+                    return (a / b);
+                else
+                    return (((1+2)*3-4)/5*6 + -7 + 1);
+            }
+        }
+    }
+}
+
+void main(){
+    int n;
+    n = compute(10, 1, '+');
+    printf(n);
+}

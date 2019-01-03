@@ -731,7 +731,7 @@ void handleMidCode(){
 
                     // if(res1.isMain!=1){offset1 += 8;}
                     if(res1.isMain!=1)
-                    addi("$s2", "$s1", (8+36));
+                    addi("$s2", "$s2", (8+36));
 
                     // 以上只取出了ID，还有index
                     addi("$s1", "$zero", 4);
@@ -841,7 +841,7 @@ void handleMidCode(){
                     mul("$s2", "$s1", "$s2");
 
                     if(res1.isMain!=1)
-                    addi("$s2", "$s1", (8+36));
+                    addi("$s2", "$s2", (8+36));
 
                     // 以上只取出了ID，还有index
                     addi("$s1", "$zero", 4);
