@@ -23,6 +23,9 @@ int offsetGp = 0;               // 全局变量、常量的偏移量，因为要访问，所以$gp最
 int offsetFp = 0;
 int offsetSp = 0;
 
+int global_v0 = -1;             // 优化：减少不必要的v0赋值 v0
+int global_a0 = -1;             // 优化：减少不必要的a0赋值
+
 string currentFuncName = "global";
 
 funcInfoItem tmpAnaInfo;
@@ -237,21 +240,27 @@ void genMips(){   //类似于 programAnalysis
         }
 
         // 变量、数组定义部分
+        int optimize_cnt = 0;
         while(tmp.one=="var" || tmp.one=="array"){
             if(tmp.one=="var"){
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount++, 0, "", tmp.two};
                 funcSymbolTable.push_back(tmp2);
 
-                addi("$sp", "$sp", -4);
+//                addi("$sp", "$sp", -4);
+                optimize_cnt += 1;
                 getMid();
             }else{
                 funcRecordItem tmp2 = {tmp.three, funcSymbolCount, 0, "", tmp.two};
                 funcSymbolCount += transNum(tmp.four).value;
                 funcSymbolTable.push_back(tmp2);
 
-                addi("$sp", "$sp", -4*transNum(tmp.four).value);
+//                addi("$sp", "$sp", -4*transNum(tmp.four).value);
+                optimize_cnt += transNum(tmp.four).value;
                 getMid();
             }
+
+            // optimization: add together
+            addi("$sp", "$sp", -4*optimize_cnt);
         }
 
         functionInfo tmpfunc = {currentFuncName,    // name / ID
@@ -280,6 +289,9 @@ void genMips(){   //类似于 programAnalysis
                 handleMidCode();
         }
 
+        // v0
+        global_v0 = -1;
+
         // 恢复所有局部变量
         lw("$t1",  -8, "$fp");
         lw("$t2", -12, "$fp");
@@ -295,13 +307,11 @@ void genMips(){   //类似于 programAnalysis
         lw("$ra", -4, "$fp");
 
         // 暂时以这种方式恢复sp
-        //addi("$sp", "$fp", -4);
         add("$sp", "$zero", "$fp");
         /*  本来需要保存sp
             现在有一个替代的方案：
             恢复sp时sp=fp+paraCount*4
             paraCount   */
-
         addi("$sp", "$sp", paraCount*4);
 
         // 将参数计数器清零
@@ -426,8 +436,11 @@ void handleMidCode(){
         }else{
             // 返回值存入寄存器
             add("$v0", "$zero", tmp.two);
-
         }
+
+        // 将global v0设置为-1， 表示下次使用syscall时一定要给v0赋值
+        global_v0 = -1;
+        // printf("set global v0 to -1\n");
 
         if(currentFuncName!="main"){
             // 恢复所有局部变量
@@ -469,7 +482,11 @@ void handleMidCode(){
         // print $ti
         if(tmp.two[0]=='$' && tmp.two[1]=='t' && tmp.three!="func"){
             // v0 = 1, a0 = int
-            addi("$v0", "$zero", 1);
+            if(global_v0 != 1){
+                addi("$v0", "$zero", 1);
+                global_v0 = 1;
+            }
+
             add("$a0", "$zero", tmp.two);
             syscall();
 
@@ -477,24 +494,38 @@ void handleMidCode(){
         }else if(tmp.two[0]=='$' && tmp.two[1]=='t' && tmp.three=="func"){
             // print $ti func
             // 返回值类型为char的函数调用
-            addi("$v0", "$zero", 11);
+            if(global_v0 != 11){
+                addi("$v0", "$zero", 11);
+                global_v0 = 11;
+            }
+
             add("$a0", "$zero", tmp.two);
             syscall();
 
             nextLine();
         }else if(tmp.three=="IDSY"){
+            // printf("check: PRINT IDSY: global_v0: %d\n", global_v0);
+
             // 对象是单个标识符，判断是int还是char
             int thisPrintType = searchIDType(currentFuncName, tmp.two);
             if(thisPrintType==1){
                 // int
-                addi("$v0", "$zero", 1);
+                if(global_v0 != 1){
+                    addi("$v0", "$zero", 1);
+                    global_v0 = 1;
+                }
+
                 add("$a0", "$zero", tmp.four);
                 syscall();
 
                 nextLine();
             }else if(thisPrintType==2){
                 // ! char
-                addi("$v0", "$zero", 11);
+                if(global_v0 != 11){
+                    addi("$v0", "$zero", 11);
+                    global_v0 = 11;
+                }
+
                 add("$a0", "$zero", tmp.four);
                 syscall();
 
@@ -511,7 +542,11 @@ void handleMidCode(){
             for(i=0;i<content.length();i++){
                 tmpc = content[i];
                 tmpi = tmpc;
-                addi("$v0", "$zero", 11);
+                if(global_v0 != 11){
+                    addi("$v0", "$zero", 11);
+                    global_v0 = 11;
+                }
+
                 addi("$a0", "$zero", tmpi);
                 syscall();
             }
@@ -523,10 +558,12 @@ void handleMidCode(){
     }else if(tmp.one=="scan"){
         // v0 = 5
         if (tmp.two=="int"){
-            addi("$v0", "$zero", 5);
+            addi("$v0", "$zero", 5);        // scan 里面一定要给v0重新赋值，v0是不能重复利用的
         }else if(tmp.two=="char"){
             addi("$v0", "$zero", 12);
         }
+
+        global_v0 = -1;
         syscall();
 
 
@@ -770,6 +807,8 @@ void handleMidCode(){
                 add(tmp.one, "$v0", "$zero");
                 getMid();
 
+                global_v0 = -1;
+
             }else{
                 // 尚未考虑到的情况
                 printf(">>> ERROR: what the fuck is this mid code?\n");
@@ -990,8 +1029,15 @@ int searchIDType(string func, string ID){
 void nextLine(){
     char nextLineSymC = '\n';
     int nextLineSymI = nextLineSymC;
-    addi("$v0", "$zero", 11);
+
+    if(global_v0 != 11){
+        addi("$v0", "$zero", 11);
+        global_v0 = 11;
+    }
+
     addi("$a0", "$zero", nextLineSymI);
+
+    global_v0 = -1;
     syscall();
 }
 

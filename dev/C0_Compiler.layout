@@ -2,9 +2,19 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="main.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="417" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="getsym.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="475" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="getsym.cpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="13819" topLine="609" />
+			<Cursor1 position="13015" topLine="531" />
 		</Cursor>
 	</File>
 	<File name="error.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
@@ -17,34 +27,14 @@
 			<Cursor1 position="1382" topLine="15" />
 		</Cursor>
 	</File>
-	<File name="getsym.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="syntaxAnalysis.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="475" topLine="0" />
+			<Cursor1 position="2190" topLine="61" />
 		</Cursor>
 	</File>
-	<File name="midCode.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="13109" topLine="611" />
-		</Cursor>
-	</File>
-	<File name="midCode.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1242" topLine="17" />
-		</Cursor>
-	</File>
-	<File name="syntaxAnalysis.cpp" open="1" top="1" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="syntaxAnalysis.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="35518" topLine="1167" />
-		</Cursor>
-	</File>
-	<File name="mipsCode.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="669" topLine="37" />
-		</Cursor>
-	</File>
-	<File name="symbolTable.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8069" topLine="232" />
 		</Cursor>
 	</File>
 	<File name="symbolTable.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -52,19 +42,29 @@
 			<Cursor1 position="2710" topLine="24" />
 		</Cursor>
 	</File>
-	<File name="syntaxAnalysis.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="midCode.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2190" topLine="61" />
+			<Cursor1 position="1242" topLine="17" />
 		</Cursor>
 	</File>
-	<File name="mipsCode.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="midCode.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="34289" topLine="1207" />
+			<Cursor1 position="13109" topLine="611" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+	<File name="mipsCode.cpp" open="1" top="1" tabpos="8" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="417" topLine="9" />
+			<Cursor1 position="31022" topLine="1226" />
+		</Cursor>
+	</File>
+	<File name="mipsCode.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="703" topLine="37" />
+		</Cursor>
+	</File>
+	<File name="symbolTable.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8069" topLine="232" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
