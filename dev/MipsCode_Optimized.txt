@@ -9,10 +9,7 @@
                    j	                main	                    	                    
                main:	                    	                    	                    
                 addu	                 $fp	                 $sp	               $zero
-                addi	                 $sp	                 $sp	                  -4
-                addi	                 $sp	                 $sp	                  -4
-                addi	                 $sp	                 $sp	                  -4
-                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                  -8
                 addi	                 $t1	               $zero	                   1
                   sw	                 $t1	             -4($fp)	                    
                   lw	                 $t2	             -4($fp)	                    

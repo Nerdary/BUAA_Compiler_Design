@@ -30,7 +30,7 @@ void pushMidCodeGetValue(int tCount, int value);
 void pushMidCodeGetValue(int tCount); //
 void pushMidCodeGetArrayValue(int tCount, string arrayID, int tCount2);
 void pushMidCodeCalc(int tCount, int n1, int op, int n2);
-void pushMidCodePara(int tCount);    // ÷ÿ‘ÿ
+void pushMidCodePara(int tCount);    // –∂–∏–¥–∏
 void pushMidCodeFuncCall(string FuncID);
 void pushMidCodeRet(int tCount);
 void pushMidCodeRet();
@@ -53,5 +53,9 @@ void pushMidCodeGetMinusExpr(int tCount);
 
 void MidCode2File();
 void printMidCode();
+
+// ‰ºòÂåñ
+void optimize_const();
+
 
 #endif // MIDCODE_H_INCLUDED

@@ -85,6 +85,8 @@ struct searchResult{
     int isMain;
 };
 
+transResult transNum(string token);
+
 void handleMain();
 void handleMidCode();
 
@@ -120,7 +122,10 @@ void syscall();
 
 void printGlobalRecord();
 void Mips2File();
+void Mips2File_optimize();
 
 void SplitString(const string& s, vector<string>& v, const string& c);
+void optimize_sp();
+
 
 #endif // MIPSCODE_H_INCLUDED

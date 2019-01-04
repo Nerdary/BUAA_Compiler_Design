@@ -12,8 +12,13 @@
 #include "syntaxAnalysis.h"
 #include "error.h"
 #include "midCode.h"
+#include "mipsCode.h"
 
 vector<midCodeItem> midCodeVec;
+vector<midCodeItem> midCodeVec_Optimize;
+vector<midCodeItem> midCodeVec_tmp;
+
+using namespace std;
 
 int globalMidCodeInFunc = 0;
 
@@ -274,6 +279,9 @@ void pushMidCodeCalc(int tCount, int n1, int op, int n2){
         t4,
     };
     midCodeVec.push_back(tmp);
+
+    // 优化： 常数合并
+
 
 }
 
@@ -642,10 +650,119 @@ void MidCode2File(){
 
     // setw(6)<<i  1\t2\t3\t4\n
     ofile<<"Contents of mid codes"<<endl;
-    ofile<<setw(12)<<"1"<<setw(12)<<"2"<<setw(12)<<"3"<<setw(12)<<"4"<<endl;
+    ofile<<setw(20)<<"1"<<setw(20)<<"2"<<setw(20)<<"3"<<setw(20)<<"4"<<endl;
     for(i=0;i<cntMidCode;i++){
         midCodeItem tmp = midCodeVec.at(i);
-        ofile<<setw(12)<<tmp.one.c_str()<<setw(12)<<tmp.two.c_str()<<setw(12)<<tmp.three.c_str()<<setw(12)<<tmp.four.c_str()<<endl;
+        ofile<<setw(20)<<tmp.one.c_str()<<"\t"<<setw(20)<<tmp.two.c_str()<<"\t"<<setw(20)<<tmp.three.c_str()<<"\t"<<setw(20)<<tmp.four.c_str()<<endl;
     }
     ofile.close();
+
+    // 因为该函数是一定会被调用的，所以不妨放在这里赋值
+    // 如有不妥，以后再修改orz
+    midCodeVec_Optimize = midCodeVec;
 }
+
+void optimize_const(){
+    midCodeVec_tmp.clear();
+    int i, cnt = midCodeVec_Optimize.size(), optimize_count = 0;
+
+    for(i=0;i<cnt;i++){
+        midCodeItem tmp = midCodeVec_Optimize.at(i);
+        /* target:
+                $t1     integer / constant
+                $t2     integer / constant
+                $t3     $t1     opt     $t2
+           into:
+                $t3     integer
+        */
+        if(tmp.one[0]=='$' && tmp.two[0]=='$' && tmp.four[0]=='$' &&
+           tmp.one[1]=='t' && tmp.two[1]=='t' && tmp.four[1]=='t' && i>2
+           && (tmp.three=="+" || tmp.three=="-" || tmp.three=="*" ||tmp.three=="/")){
+            // 判断前两条
+            midCodeItem tmp1 = midCodeVec_Optimize.at(i-2);
+            midCodeItem tmp2 = midCodeVec_Optimize.at(i-1);
+//            if(tmp1.one[0:1]=="$t" && tmp2.one[0:1]=="$t"){
+            if(tmp1.one==tmp.two && tmp2.one==tmp.four){
+                int opt_judge1 = 0, opt_judge2 = 0;
+                int opt_value1, opt_value2, result_value;
+
+                if(transNum(tmp1.two).success!=1){
+                    // judge whether is a constant
+                    if(judgeConst(tmp1.two)){
+                        // is a constant
+                        opt_value1 = getConstValue(tmp1.two);
+                        opt_judge1 = 1; // success
+                    }else{
+                        // failed
+                        continue;
+                    }
+                }else{
+                    // tmp1.two is an integer
+                    opt_value1 = transNum(tmp1.two).value;
+                    opt_judge1 = 1; // success
+                }
+
+                if(!transNum(tmp2.two).success){
+                    // judge whether is a constant
+                    if(judgeConst(tmp2.two)){
+                        // is a constant
+                        opt_value2 = getConstValue(tmp2.two);
+                        opt_judge2 = 1; // success
+                    }else{
+                        // failed
+                        continue;
+                    }
+                }else{
+                    // tmp1.two is an integer
+                    opt_value2 = transNum(tmp2.two).value;
+                    opt_judge2 = 1; // success
+                }
+
+                // 两者结合起来判断
+                if(opt_judge1 && opt_judge2){
+
+                    if(tmp.three=="+"){
+                        result_value = opt_value1 + opt_value2;
+                    }else if(tmp.three=="-"){
+                        result_value = opt_value1 - opt_value2;
+                    }else if(tmp.three=="*"){
+                        result_value = opt_value1 * opt_value2;
+                    }else{
+                        result_value = opt_value1 / opt_value2;
+                    }
+
+                    // 替换成 $t3  result_value
+
+                    // pop
+                    midCodeVec_tmp.pop_back();
+                    midCodeVec_tmp.pop_back();
+                    // push
+                    midCodeItem new_tmp = {tmp.one, to_string(result_value), "", ""};
+                    midCodeVec_tmp.push_back(new_tmp);
+
+                    optimize_count += 2;
+                    continue;
+
+                }else{
+                    // failed (but it shall not come in this branch)
+                    continue;
+                }
+
+            }
+        }
+
+
+        midCodeVec_tmp.push_back(tmp);
+    }
+
+    // 赋值
+    midCodeVec_Optimize = midCodeVec_tmp;
+    printf(">>> optimize_const reduce %d mid code instructions.\n", optimize_count);
+}
+
+
+
+
+
+
+

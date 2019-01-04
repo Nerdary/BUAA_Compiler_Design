@@ -29,10 +29,10 @@ int main(){
     getsym();
     programAnalysis();
 
-    // 生成符号表
+    // 输出符号表
     //printSymbolTable();
 
-    // 生成中间代码
+    // 输出中间代码
     //printMidCode();
 
     MidCode2File();
@@ -44,6 +44,16 @@ int main(){
     Mips2File();
 
     //printMipsCode();
+
+    // 优化部分
+    printf("\n>>> BEGIN OPTIMIZATION.\n");
+    printf("\n>>> BEGIN OPTIMIZATION MID CODE.\n");
+    optimize_const();
+
+    printf("\n>>> BEGIN OPTIMIZATION MIPS CODE.\n");
+    optimize_sp();
+
+    Mips2File_optimize();
 
 	return 0;
 }

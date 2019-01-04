@@ -32,6 +32,8 @@ funcInfoItem tmpAnaInfo;
 midCodeItem nullItem = {"", "", "", ""};
 midCodeItem tmp;
 vector<mipsItem> mipsCodeVector;
+vector<mipsItem> mipsCodeVector_Optimize;   // 优化后结果
+vector<mipsItem> mipsCodeVector_tmp;        // 优化中间产物
 vector<globalRecordItem> globalRecordVector;
 vector<functionInfo> allFuncInfoVector;
 vector<functionInfo> funcStack;
@@ -87,6 +89,8 @@ transResult transNum(string token){
 }
 
 void genMips(){   //类似于 programAnalysis
+    // 添加开关：0: normal 1: optimized
+
     getMid();
 
     // 处理全局 常量定义
@@ -404,6 +408,9 @@ void handleMain(){
     }
     handleMidCode();
     mipsEndLabel();
+
+    // 尚未优化
+    mipsCodeVector_Optimize = mipsCodeVector;
 }
 
 // 即处理复杂语句，处理一条的四元式，生成大部分MIPS
@@ -1053,7 +1060,7 @@ void addi(string res, string in, int value){
 
 void add(string res, string n1, string n2){
     mipsItem tmp = {
-        "add",
+        "addu",
         res,
         n1,
         n2,
@@ -1241,9 +1248,9 @@ void syscall(){
 }
 
 void printMipsCode(){
-    printf("\nContents of MIPS codes\n");
-    printf(".data\n");
-    printf(".text\n");
+    //printf("\nContents of MIPS codes\n");
+    //printf(".data\n");
+    //printf(".text\n");
     int i, cntMips = mipsCodeVector.size();
     for(i=0;i<cntMips;i++){
         mipsItem tmp = mipsCodeVector.at(i);
@@ -1265,6 +1272,18 @@ void Mips2File(){
 
     for(i=0;i<cntMips;i++){
         mipsItem tmp = mipsCodeVector.at(i);
+        ofile<<setw(20)<<tmp.one.c_str()<<"\t"<<setw(20)<<tmp.two.c_str()<<"\t"<<setw(20)<<tmp.three.c_str()<<"\t"<<setw(20)<<tmp.four.c_str()<<endl;
+    }
+    ofile.close();
+}
+
+void Mips2File_optimize(){
+    int i, cntMips = mipsCodeVector_Optimize.size();
+    ofstream ofile;
+    ofile.open("MipsCode_Optimized.txt");
+
+    for(i=0;i<cntMips;i++){
+        mipsItem tmp = mipsCodeVector_Optimize.at(i);
         ofile<<setw(20)<<tmp.one.c_str()<<"\t"<<setw(20)<<tmp.two.c_str()<<"\t"<<setw(20)<<tmp.three.c_str()<<"\t"<<setw(20)<<tmp.four.c_str()<<endl;
     }
     ofile.close();
@@ -1293,3 +1312,44 @@ void SplitString(const string& s, vector<string>& v, const string& c){
     if(pos1 != s.length())
         v.push_back(s.substr(pos1));
 }
+
+void optimize_sp(){
+    mipsCodeVector_tmp.clear();
+    int i, cntMips = mipsCodeVector_Optimize.size(), optimize_count = 0;
+    for(i=0;i<cntMips;i++){
+        mipsItem tmp = mipsCodeVector_Optimize.at(i);
+        if(tmp.one=="addi" && tmp.two=="$sp" && tmp.three=="$sp" && i>0){
+            mipsItem tmp2 = mipsCodeVector_Optimize.at(i-1);
+            if(tmp2.one=="addi" && tmp2.two=="$sp" && tmp2.three=="$sp"){
+                // 合并两条mips指令
+                // 取出上一条
+                mipsCodeVector_tmp.pop_back();
+                // 处理当前两条
+                int tmp_int_1 = transNum(tmp2.four).value;
+                int tmp_int_2 = transNum(tmp.four).value;
+                string new_four = to_string(tmp_int_1 + tmp_int_2);
+                // push
+                mipsCodeVector_tmp.push_back(tmp);
+                // modify
+                mipsCodeVector_tmp.back().four = new_four;
+                optimize_count++;
+
+                continue;
+            }
+        }
+
+        // else
+        mipsCodeVector_tmp.push_back(tmp);
+    }
+
+    // 赋值
+    mipsCodeVector_Optimize = mipsCodeVector_tmp;
+    printf(">>> optimize_sp reduce %d mips code instructions.\n", optimize_count);
+}
+
+
+
+
+
+
+

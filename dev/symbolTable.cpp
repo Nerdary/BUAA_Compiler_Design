@@ -252,6 +252,9 @@ int getArrayLength(string ID){
 }
 
 int judgeConst(string Name){
+    /*
+
+    */
     int i, cntTable = symbolTable.size();
     for(i=cntTable-1;i>=0;i--){
         if(symbolTable.at(i).ID==Name){
@@ -267,6 +270,24 @@ int judgeConst(string Name){
     }
 
     return 0;
+}
+
+int getConstValue(string Name){
+    // ´îÅä judgeConst Ê¹ÓÃ
+
+    int i, cntTable = symbolTable.size(), ret_value = 0;
+    for(i=cntTable-1;i>=0;i--){
+        if(symbolTable.at(i).ID==Name){
+            if(symbolTable.at(i).field==globalFuncField
+               || symbolTable.at(i).level < globalFuncLevel){
+                if(symbolTable.at(i).IDobject==1)
+                    ret_value = symbolTable.at(i).value;
+            }
+        }
+
+    }
+
+    return ret_value;
 }
 
 
