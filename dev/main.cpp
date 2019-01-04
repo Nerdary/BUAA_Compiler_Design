@@ -47,12 +47,17 @@ int main(){
 
     // 优化部分
     printf("\n>>> BEGIN OPTIMIZATION.\n");
-    printf("\n>>> BEGIN OPTIMIZATION MID CODE.\n");
+/*
+    // 优化中间代码
     optimize_const();
-
-    printf("\n>>> BEGIN OPTIMIZATION MIPS CODE.\n");
+    // 优化完中间代码后需要在这里手动赋值并再次调用genmips
+    midCodeVec.clear();
+    midCodeVec = midCodeVec_Optimize;
+    genMips();
+    Mips2File_optimize();
+*/
+    // 优化mips
     optimize_sp();
-
     Mips2File_optimize();
 
 	return 0;

@@ -17,6 +17,7 @@ struct midCodeItem{
 };
 
 extern vector<midCodeItem> midCodeVec;
+extern vector<midCodeItem> midCodeVec_Optimize;
 extern int globalMidCodeInFunc;
 
 void pushMidCodeConst(int type, string ID, int value);
@@ -52,6 +53,7 @@ void pushMidCodeMain();
 void pushMidCodeGetMinusExpr(int tCount);
 
 void MidCode2File();
+void MidCode2File_optimize();
 void printMidCode();
 
 // 优化

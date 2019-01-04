@@ -1,30 +1,1170 @@
-                  li	                 $t1	                  10	                    
+                  li	                 $t1	                1024	                    
                   sw	                 $t1	             -4($gp)	                    
-                  li	                 $t1	               10086	                    
-                  sw	                 $t1	             -8($gp)	                    
-                  li	                 $t1	                 119	                    
-                  sw	                 $t1	            -12($gp)	                    
-                  li	                 $t1	                  97	                    
-                  sw	                 $t1	            -16($gp)	                    
                    j	                main	                    	                    
+          factorial:	                    	                    	                    
+                  sw	                 $fp	              0($sp)	                    
+                addu	                 $fp	                 $sp	               $zero
+                addi	                 $sp	                 $sp	                  -4
+                  sw	                 $ra	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                 -36
+                  sw	                 $t1	             36($sp)	                    
+                  sw	                 $t2	             32($sp)	                    
+                  sw	                 $t3	             28($sp)	                    
+                  sw	                 $t4	             24($sp)	                    
+                  sw	                 $t5	             20($sp)	                    
+                  sw	                 $t6	             16($sp)	                    
+                  sw	                 $t7	             12($sp)	                    
+                  sw	                 $t8	              8($sp)	                    
+                  sw	                 $t9	              4($sp)	                    
+                addi	                 $s1	                 $sp	                  48
+                  lw	                 $t1	              0($s1)	                    
+                  sw	                 $t1	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                  lw	                 $t1	            -44($fp)	                    
+                addi	                 $t2	               $zero	                   1
+                 sub	                 $s1	                 $t2	                 $t1
+                bltz	                 $s1	            label2_1	                    
+                addi	                 $t3	               $zero	                   1
+                addu	                 $v0	               $zero	                 $t3
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
+                   j	            label2_2	                    	                    
+           label2_1:	                    	                    	                    
+           label2_2:	                    	                    	                    
+                  lw	                 $t4	            -44($fp)	                    
+                  lw	                 $t5	            -44($fp)	                    
+                addi	                 $t6	               $zero	                   1
+                 sub	                 $t7	                 $t5	                 $t6
+                  sw	                 $t7	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                 jal	           factorial	                    	                    
+                addu	                 $t7	                 $v0	               $zero
+                 mul	                 $t8	                 $t4	                 $t7
+                addu	                 $v0	               $zero	                 $t8
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
+                mod:	                    	                    	                    
+                  sw	                 $fp	              0($sp)	                    
+                addu	                 $fp	                 $sp	               $zero
+                addi	                 $sp	                 $sp	                  -4
+                  sw	                 $ra	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                 -36
+                  sw	                 $t1	             36($sp)	                    
+                  sw	                 $t2	             32($sp)	                    
+                  sw	                 $t3	             28($sp)	                    
+                  sw	                 $t4	             24($sp)	                    
+                  sw	                 $t5	             20($sp)	                    
+                  sw	                 $t6	             16($sp)	                    
+                  sw	                 $t7	             12($sp)	                    
+                  sw	                 $t8	              8($sp)	                    
+                  sw	                 $t9	              4($sp)	                    
+                addi	                 $s1	                 $sp	                  52
+                  lw	                 $t1	              0($s1)	                    
+                  sw	                 $t1	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $s1	                 $sp	                  52
+                  lw	                 $t1	              0($s1)	                    
+                  sw	                 $t1	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                  lw	                 $t9	            -44($fp)	                    
+                  lw	                 $t1	            -44($fp)	                    
+                  lw	                 $t2	            -48($fp)	                    
+                 div	                 $t3	                 $t1	                 $t2
+                  lw	                 $t4	            -48($fp)	                    
+                 mul	                 $t5	                 $t3	                 $t4
+                 sub	                 $t6	                 $t9	                 $t5
+                  sw	                 $t6	            -44($fp)	                    
+                  lw	                 $t7	            -44($fp)	                    
+                addu	                 $v0	               $zero	                 $t7
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   8
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   8
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
+               swap:	                    	                    	                    
+                  sw	                 $fp	              0($sp)	                    
+                addu	                 $fp	                 $sp	               $zero
+                addi	                 $sp	                 $sp	                  -4
+                  sw	                 $ra	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                 -36
+                  sw	                 $t1	             36($sp)	                    
+                  sw	                 $t2	             32($sp)	                    
+                  sw	                 $t3	             28($sp)	                    
+                  sw	                 $t4	             24($sp)	                    
+                  sw	                 $t5	             20($sp)	                    
+                  sw	                 $t6	             16($sp)	                    
+                  sw	                 $t7	             12($sp)	                    
+                  sw	                 $t8	              8($sp)	                    
+                  sw	                 $t9	              4($sp)	                    
+                addi	                 $s1	                 $sp	                  52
+                  lw	                 $t1	              0($s1)	                    
+                  sw	                 $t1	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $s1	                 $sp	                  52
+                  lw	                 $t1	              0($s1)	                    
+                  sw	                 $t1	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 120
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  61
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t8	            -44($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t8
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 121
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  61
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t9	            -48($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t9
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t1	            -44($fp)	                    
+                  sw	                 $t1	            -52($fp)	                    
+                  lw	                 $t2	            -48($fp)	                    
+                  sw	                 $t2	            -44($fp)	                    
+                  lw	                 $t3	            -52($fp)	                    
+                  sw	                 $t3	            -48($fp)	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  83
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  87
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  65
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  80
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 120
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  61
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t4	            -44($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t4
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  83
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  87
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  65
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  80
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 121
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  61
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t5	            -48($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t5
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   8
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
+       complete_num:	                    	                    	                    
+                  sw	                 $fp	              0($sp)	                    
+                addu	                 $fp	                 $sp	               $zero
+                addi	                 $sp	                 $sp	                  -4
+                  sw	                 $ra	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                 -36
+                  sw	                 $t1	             36($sp)	                    
+                  sw	                 $t2	             32($sp)	                    
+                  sw	                 $t3	             28($sp)	                    
+                  sw	                 $t4	             24($sp)	                    
+                  sw	                 $t5	             20($sp)	                    
+                  sw	                 $t6	             16($sp)	                    
+                  sw	                 $t7	             12($sp)	                    
+                  sw	                 $t8	              8($sp)	                    
+                  sw	                 $t9	              4($sp)	                    
+                addi	                 $s1	                 $sp	                  48
+                  lw	                 $t1	              0($s1)	                    
+                  sw	                 $t1	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                addi	                 $sp	                 $sp	                -512
+                addi	                 $sp	                 $sp	                -516
+                addi	                 $sp	                 $sp	                -520
+                addi	                 $sp	                 $sp	                -524
+                addi	                 $sp	                 $sp	                -528
+                addi	                 $sp	                 $sp	                -532
+                addi	                 $sp	                 $sp	                -536
+                addi	                 $sp	                 $sp	                -540
+                addi	                 $sp	                 $sp	                -544
+                addi	                 $sp	                 $sp	                -548
+                addi	                 $sp	                 $sp	                -552
+                addi	                 $sp	                 $sp	                -556
+                addi	                 $sp	                 $sp	                -560
+                addi	                 $sp	                 $sp	                -564
+                  lw	                 $t6	            -44($fp)	                    
+                  sw	                 $t6	           -564($fp)	                    
+           label3_1:	                    	                    	                    
+                  lw	                 $t7	           -564($fp)	                    
+                  lw	                 $t8	             -4($gp)	                    
+                 sub	                 $s1	                 $t8	                 $t7
+                blez	                 $s1	            label3_2	                    
+                addi	                 $t9	               $zero	                   1
+                 sub	                 $t1	               $zero	                 $t9
+                  sw	                 $t1	           -568($fp)	                    
+                  lw	                 $t2	           -564($fp)	                    
+                  sw	                 $t2	           -572($fp)	                    
+                addi	                 $t3	               $zero	                   1
+                  sw	                 $t3	           -560($fp)	                    
+           label4_1:	                    	                    	                    
+                  lw	                 $t4	           -560($fp)	                    
+                  lw	                 $t5	           -564($fp)	                    
+                 sub	                 $s1	                 $t5	                 $t4
+                blez	                 $s1	            label4_2	                    
+                  lw	                 $t6	           -564($fp)	                    
+                  lw	                 $t7	           -560($fp)	                    
+                 div	                 $t8	                 $t6	                 $t7
+                  lw	                 $t9	           -560($fp)	                    
+                 mul	                 $t1	                 $t8	                 $t9
+                  sw	                 $t1	           -576($fp)	                    
+                  lw	                 $t2	           -564($fp)	                    
+                  sw	                 $t2	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                  lw	                 $t2	           -560($fp)	                    
+                  sw	                 $t2	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                 jal	                 mod	                    	                    
+                addu	                 $t2	                 $v0	               $zero
+                addi	                 $t3	               $zero	                   0
+                 sub	                 $s1	                 $t2	                 $t3
+                 bne	                 $s1	               $zero	            label5_1
+                  lw	                 $t4	           -568($fp)	                    
+                addi	                 $t5	               $zero	                   1
+                addu	                 $t6	                 $t4	                 $t5
+                  sw	                 $t6	           -568($fp)	                    
+                  lw	                 $t7	           -572($fp)	                    
+                  lw	                 $t8	           -560($fp)	                    
+                 sub	                 $t9	                 $t7	                 $t8
+                  sw	                 $t9	           -572($fp)	                    
+                  lw	                 $t1	           -568($fp)	                    
+                addi	                 $t2	               $zero	                 128
+                 sub	                 $s1	                 $t1	                 $t2
+                bltz	                 $s1	            label6_1	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  79
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  86
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  69
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  82
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  70
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  76
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  79
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  87
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  33
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                   j	            label6_2	                    	                    
+           label6_1:	                    	                    	                    
+           label6_2:	                    	                    	                    
+                  lw	                 $t3	           -568($fp)	                    
+                addi	                 $t4	               $zero	                 128
+                 sub	                 $s1	                 $t4	                 $t3
+                blez	                 $s1	            label7_1	                    
+                  lw	                 $t5	           -568($fp)	                    
+                  lw	                 $t6	           -560($fp)	                    
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                   1
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s2	                 $s2	                  44
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t5
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  sw	                 $t6	              0($s1)	                    
+                   j	            label7_2	                    	                    
+           label7_1:	                    	                    	                    
+           label7_2:	                    	                    	                    
+                   j	            label5_2	                    	                    
+           label5_1:	                    	                    	                    
+           label5_2:	                    	                    	                    
+                  lw	                 $t7	           -560($fp)	                    
+                addi	                 $t8	               $zero	                   1
+                addu	                 $t9	                 $t7	                 $t8
+                  sw	                 $t9	           -560($fp)	                    
+                   j	            label4_1	                    	                    
+           label4_2:	                    	                    	                    
+                  lw	                 $t1	           -572($fp)	                    
+                addi	                 $t2	               $zero	                   0
+                 sub	                 $s1	                 $t1	                 $t2
+                 bne	                 $s1	               $zero	            label8_1
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  99
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 111
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 109
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 112
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 108
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 101
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 116
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 101
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 110
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 117
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 109
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  98
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 101
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 114
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  58
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t3	           -564($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t3
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $t4	               $zero	                   0
+                  sw	                 $t4	           -560($fp)	                    
+           label9_1:	                    	                    	                    
+                  lw	                 $t5	           -560($fp)	                    
+                  lw	                 $t6	           -568($fp)	                    
+                 sub	                 $s1	                 $t6	                 $t5
+                bltz	                 $s1	            label9_2	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t7	           -560($fp)	                    
+                addi	                 $s1	               $zero	                   4
+                addi	                 $s2	               $zero	                   1
+                 mul	                 $s2	                 $s1	                 $s2
+                addi	                 $s2	                 $s2	                  44
+                addi	                 $s1	               $zero	                   4
+                 mul	                 $s1	                 $s1	                 $t7
+                 sub	                 $s1	                 $fp	                 $s1
+                 sub	                 $s1	                 $s1	                 $s2
+                  lw	                 $t8	              0($s1)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t8
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t9	           -560($fp)	                    
+                addi	                 $t1	               $zero	                   1
+                addu	                 $t2	                 $t9	                 $t1
+                  sw	                 $t2	           -560($fp)	                    
+                   j	            label9_1	                    	                    
+           label9_2:	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                   j	            label8_2	                    	                    
+           label8_1:	                    	                    	                    
+           label8_2:	                    	                    	                    
+                  lw	                 $t3	           -564($fp)	                    
+                addi	                 $t4	               $zero	                   1
+                addu	                 $t5	                 $t3	                 $t4
+                  sw	                 $t5	           -564($fp)	                    
+                   j	            label3_1	                    	                    
+           label3_2:	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $t6	               $zero	                   0
+                  sw	                 $t6	           -600($fp)	                    
+                addi	                 $t7	               $zero	                   0
+                  sw	                 $t7	           -560($fp)	                    
+          label10_1:	                    	                    	                    
+                  lw	                 $t8	           -560($fp)	                    
+                  lw	                 $t9	             -4($gp)	                    
+                 sub	                 $s1	                 $t9	                 $t8
+                blez	                 $s1	           label10_2	                    
+                  lw	                 $t1	           -600($fp)	                    
+                  lw	                 $t2	           -560($fp)	                    
+                 mul	                 $t3	                 $t1	                 $t2
+                  sw	                 $t3	           -604($fp)	                    
+                  lw	                 $t4	           -564($fp)	                    
+                  lw	                 $t5	           -568($fp)	                    
+                 mul	                 $t6	                 $t4	                 $t5
+                  sw	                 $t6	           -608($fp)	                    
+                  lw	                 $t7	           -600($fp)	                    
+                  lw	                 $t8	           -560($fp)	                    
+                 mul	                 $t9	                 $t7	                 $t8
+                  sw	                 $t9	           -600($fp)	                    
+                  lw	                 $t1	           -600($fp)	                    
+                  lw	                 $t2	           -604($fp)	                    
+                addu	                 $t3	                 $t1	                 $t2
+                  lw	                 $t4	           -608($fp)	                    
+                addu	                 $t5	                 $t3	                 $t4
+                  sw	                 $t5	           -600($fp)	                    
+                  lw	                 $t6	           -560($fp)	                    
+                addi	                 $t7	               $zero	                   1
+                addu	                 $t8	                 $t6	                 $t7
+                  sw	                 $t8	           -560($fp)	                    
+                   j	           label10_1	                    	                    
+          label10_2:	                    	                    	                    
+                  lw	                 $t9	           -600($fp)	                    
+                  sw	                 $t9	           -604($fp)	                    
+                addi	                 $t1	               $zero	                   0
+                  sw	                 $t1	           -560($fp)	                    
+          label11_1:	                    	                    	                    
+                  lw	                 $t2	           -560($fp)	                    
+                  lw	                 $t3	             -4($gp)	                    
+                 sub	                 $s1	                 $t3	                 $t2
+                blez	                 $s1	           label11_2	                    
+                  lw	                 $t4	           -604($fp)	                    
+                  lw	                 $t5	           -560($fp)	                    
+                addu	                 $t6	                 $t4	                 $t5
+                  sw	                 $t6	           -604($fp)	                    
+                  lw	                 $t7	           -560($fp)	                    
+                addi	                 $t8	               $zero	                   1
+                addu	                 $t9	                 $t7	                 $t8
+                  sw	                 $t9	           -560($fp)	                    
+                   j	           label11_1	                    	                    
+          label11_2:	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  98
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  61
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t1	           -604($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t1
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  45
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $t2	               $zero	                   0
+                  sw	                 $t2	           -588($fp)	                    
+                addi	                 $t3	               $zero	                   1
+                  sw	                 $t3	           -592($fp)	                    
+                addi	                 $t4	               $zero	                   2
+                  sw	                 $t4	           -580($fp)	                    
+          label12_1:	                    	                    	                    
+                  lw	                 $t5	           -580($fp)	                    
+                  lw	                 $t6	             -4($gp)	                    
+                 sub	                 $s1	                 $t6	                 $t5
+                bltz	                 $s1	           label12_2	                    
+                  lw	                 $t7	           -580($fp)	                    
+                addi	                 $t8	               $zero	                   2
+                 div	                 $t9	                 $t7	                 $t8
+                  sw	                 $t9	           -584($fp)	                    
+                addi	                 $t1	               $zero	                   2
+                  sw	                 $t1	           -560($fp)	                    
+          label13_1:	                    	                    	                    
+                  lw	                 $t2	           -560($fp)	                    
+                  lw	                 $t3	           -584($fp)	                    
+                 sub	                 $s1	                 $t3	                 $t2
+                bltz	                 $s1	           label13_2	                    
+                  lw	                 $t4	           -580($fp)	                    
+                  lw	                 $t5	           -560($fp)	                    
+                 div	                 $t6	                 $t4	                 $t5
+                  lw	                 $t7	           -560($fp)	                    
+                 mul	                 $t8	                 $t6	                 $t7
+                  sw	                 $t8	           -596($fp)	                    
+                  lw	                 $t9	           -580($fp)	                    
+                  sw	                 $t9	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                  lw	                 $t9	           -560($fp)	                    
+                  sw	                 $t9	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                 jal	                 mod	                    	                    
+                addu	                 $t9	                 $v0	               $zero
+                addi	                 $t1	               $zero	                   0
+                 sub	                 $s1	                 $t9	                 $t1
+                 bne	                 $s1	               $zero	           label14_1
+                addi	                 $t2	               $zero	                   0
+                  sw	                 $t2	           -592($fp)	                    
+                   j	           label14_2	                    	                    
+          label14_1:	                    	                    	                    
+          label14_2:	                    	                    	                    
+                  lw	                 $t3	           -560($fp)	                    
+                addi	                 $t4	               $zero	                   1
+                addu	                 $t5	                 $t3	                 $t4
+                  sw	                 $t5	           -560($fp)	                    
+                   j	           label13_1	                    	                    
+          label13_2:	                    	                    	                    
+                  lw	                 $t6	           -592($fp)	                    
+                addi	                 $t7	               $zero	                   1
+                 sub	                 $s1	                 $t6	                 $t7
+                 bne	                 $s1	               $zero	           label15_1
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t8	           -580($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t8
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t9	           -588($fp)	                    
+                addi	                 $t1	               $zero	                   1
+                addu	                 $t2	                 $t9	                 $t1
+                  sw	                 $t2	           -588($fp)	                    
+                  lw	                 $t3	           -588($fp)	                    
+                addi	                 $t4	               $zero	                  10
+                 div	                 $t5	                 $t3	                 $t4
+                addi	                 $t6	               $zero	                  10
+                 mul	                 $t7	                 $t5	                 $t6
+                  sw	                 $t7	           -596($fp)	                    
+                  lw	                 $t8	           -596($fp)	                    
+                  lw	                 $t9	           -588($fp)	                    
+                 sub	                 $s1	                 $t8	                 $t9
+                 bne	                 $s1	               $zero	           label16_1
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                   j	           label16_2	                    	                    
+          label16_1:	                    	                    	                    
+          label16_2:	                    	                    	                    
+                   j	           label15_2	                    	                    
+          label15_1:	                    	                    	                    
+          label15_2:	                    	                    	                    
+                addi	                 $t1	               $zero	                   1
+                  sw	                 $t1	           -592($fp)	                    
+                  lw	                 $t2	           -580($fp)	                    
+                addi	                 $t3	               $zero	                   1
+                addu	                 $t4	                 $t2	                 $t3
+                  sw	                 $t4	           -580($fp)	                    
+                   j	           label12_1	                    	                    
+          label12_2:	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  84
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 104
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 101
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 116
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 111
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 116
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  97
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 108
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 105
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                 115
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t5	           -588($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t5
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t1	             -8($fp)	                    
+                  lw	                 $t2	            -12($fp)	                    
+                  lw	                 $t3	            -16($fp)	                    
+                  lw	                 $t4	            -20($fp)	                    
+                  lw	                 $t5	            -24($fp)	                    
+                  lw	                 $t6	            -28($fp)	                    
+                  lw	                 $t7	            -32($fp)	                    
+                  lw	                 $t8	            -36($fp)	                    
+                  lw	                 $t9	            -40($fp)	                    
+                  lw	                 $ra	             -4($fp)	                    
+                addu	                 $sp	               $zero	                 $fp
+                addi	                 $sp	                 $sp	                   4
+                  lw	                 $fp	              0($fp)	                    
+                  jr	                 $ra	                    	                    
                main:	                    	                    	                    
                 addu	                 $fp	                 $sp	               $zero
                 addi	                 $sp	                 $sp	                  -4
+                addi	                 $t6	               $zero	                  10
+                  sw	                 $t6	              0($sp)	                    
                 addi	                 $sp	                 $sp	                  -4
+                 jal	           factorial	                    	                    
+                addu	                 $t6	                 $v0	               $zero
+                  sw	                 $t6	              0($fp)	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  49
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  48
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  33
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  61
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  32
+             syscall	                    	                    	                    
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                  lw	                 $t7	              0($fp)	                    
+                addi	                 $v0	               $zero	                   1
+                addu	                 $a0	               $zero	                 $t7
+             syscall	                    	                    	                    
+                addi	                 $v0	               $zero	                  11
+                addi	                 $a0	               $zero	                  10
+             syscall	                    	                    	                    
+                addi	                 $t8	               $zero	                   5
+                  sw	                 $t8	              0($sp)	                    
                 addi	                 $sp	                 $sp	                  -4
+                addi	                 $t8	               $zero	                  10
+                  sw	                 $t8	              0($sp)	                    
                 addi	                 $sp	                 $sp	                  -4
-                addi	                 $t1	               $zero	                   1
-                  sw	                 $t1	             -4($fp)	                    
-                  lw	                 $t2	             -4($fp)	                    
-                addi	                 $t3	               $zero	                   2
-                addu	                 $t4	                 $t2	                 $t3
-                  sw	                 $t4	             -8($fp)	                    
-                  lw	                 $t5	             -4($gp)	                    
-                  lw	                 $t6	            -16($gp)	                    
-                addu	                 $t7	                 $t5	                 $t6
-                  lw	                 $t8	            -12($gp)	                    
-                  lw	                 $t9	             -8($gp)	                    
-                 mul	                 $t1	                 $t8	                 $t9
-                addu	                 $t2	                 $t7	                 $t1
-                  sw	                 $t2	              0($fp)	                    
+                 jal	                swap	                    	                    
+                addi	                 $t8	               $zero	                   2
+                  sw	                 $t8	              0($sp)	                    
+                addi	                 $sp	                 $sp	                  -4
+                 jal	        complete_num	                    	                    
 THIS_IS_THE_END_OF_ALL:	                    	                    	                    

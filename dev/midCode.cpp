@@ -662,6 +662,20 @@ void MidCode2File(){
     midCodeVec_Optimize = midCodeVec;
 }
 
+void MidCode2File_optimize(){
+    int i, cntMidCode = midCodeVec_Optimize.size();
+    ofstream ofile;
+    ofile.open("midCode_optimize.txt");
+
+    ofile<<"Contents of mid codes"<<endl;
+    ofile<<setw(20)<<"1"<<setw(20)<<"2"<<setw(20)<<"3"<<setw(20)<<"4"<<endl;
+    for(i=0;i<cntMidCode;i++){
+        midCodeItem tmp = midCodeVec_Optimize.at(i);
+        ofile<<setw(20)<<tmp.one.c_str()<<"\t"<<setw(20)<<tmp.two.c_str()<<"\t"<<setw(20)<<tmp.three.c_str()<<"\t"<<setw(20)<<tmp.four.c_str()<<endl;
+    }
+    ofile.close();
+}
+
 void optimize_const(){
     midCodeVec_tmp.clear();
     int i, cnt = midCodeVec_Optimize.size(), optimize_count = 0;
